@@ -1,0 +1,171 @@
+\version "2.19.32"
+
+\header{
+  % title = "Etüde Op. 38, Nr. 15"
+  composer = "Phoebe Violet"
+  title = "I dance to the Rhythm of my Soul"
+  subtitle = "Gesang etc"
+  tagline = "this is the tagline"
+}
+\language "deutsch"
+\include "ChangePitch.ly"
+% Hier das Papierformat nach Erfordernis
+%A4 21 cm x 29,7 cm = 8.27 x 11.69 in
+
+#(set! paper-alist (cons '("mein Format" . (cons (* 8.27 in) (* 8.27 in))) paper-alist))
+
+\layout {
+  %indent = #'0
+  %line-width = #190
+  ragged-last-bottom = ##t
+  %ragged-bottom = ##t
+  ragged-last = ##t
+  %ragged-right = ##t
+  ragged-bottom = ##t
+
+  \context {
+    \Staff
+    % weglassen der kleinen 8en, falls Notenschlüssel bass^8 etc.
+    \omit ClefModifier
+    % Takte am Zeilenende nicht anzeigen
+    \override TimeSignature #'break-visibility = #end-of-line-invisible
+    %Notenschlüssel nur am Zeilenanfang
+    \override Clef #'break-visibility = #begin-of-line-visible
+    %kein Versetzungszeichen zulassen (nur für Spezialanwendungen gedacht!)
+    %\remove "Accidental_engraver"
+    %#(override-auto-beam-setting '(end 1 8 * *) 2 8)
+    %\override Mark.fontSize = #10
+    %\override extraNatural = ##f
+  }
+
+  \context {
+    \Score
+    \remove "Bar_number_engraver" % Taktnummerierung
+    \override Score.BarNumber.break-visibility = #'#(#f #f #f)
+    \override Score.proportionalNotationDuration = #(ly:make-moment 1/2)
+    % Alle Zeilen- und Seitenumbrüche ausschalten
+    %müssen manuell mit \break und \Pagebreak erzeugt werden
+    %dafür wird eine eigene unsichtbare Stimme verwendet
+    \override NonMusicalPaperColumn.line-break-permission = ##f
+    \override NonMusicalPaperColumn.page-break-permission = ##f
+  }
+}
+\language "deutsch"
+
+FootLeft = #(string-append " " )
+FootRight = #(string-append " " )
+FootCenter = #(string-append "gesetzt mit Lilypond 2.18")
+
+\paper {
+  #(set-paper-size "a4")
+  %für abweichende Papierformate die A4-Anweisung auskommentieren
+  %#(set-paper-size "mein Format")
+  %system-system-spacing = #'((padding . 0) (basic-distance . 8))
+  %system-count = #6
+  %page-count = #1
+  %top-margin = 1.5\cm
+  oddFooterMarkup = \markup \fill-line {
+    \abs-fontsize #9.5 { \FootLeft }
+    \abs-fontsize #7.0 { \italic { \FootCenter } }
+    \abs-fontsize #9.5 { \FootRight }
+  }
+}
+
+myRhythm= { c4. c8 c4 c8 c4. c8. c16 c2. }
+
+RH = \relative c' {
+
+  \numericTimeSignature \time 3/4
+  \clef treble
+  \key des \major
+  %\autoBeamOff % wenn das Timing richtig gewählt wurde, kann \autoBeamOff weggelassen werden
+  \set Staff.beatStructure = #'(2) % abhängig vom Takt
+  %wird hier die Länge der automatischen Balken gewählt, ausprobieren ob 1 oder 2
+  \set Staff.instrumentName = #"  "
+  % hier kommt die Melodie
+  \partial 4
+  f4 b4. f8 des4 ges8 f4. e8. f16 des2. r4 r4
+
+  f b f des ges f e8 f c2.
+  r4 r f b2 ges4 f2 es4 f2.
+  r4 r f4 \changePitch \myRhythm { b ges f e f }
+}
+
+% hier kommt die 1. Strophe
+StropheI =
+\lyricmode {
+  \set stanza = #"1. "
+  I dance to the rhy -- thm of my soul
+  I feel my e -- mot -- ions as a goal
+  from dreams of yes -- ter -- day
+  they won't have much to say
+  if to -- morrows time is the way
+  I dance to the rhy -- thm of my soul
+  where e -- ver she might take me I will go
+  this might be a phan -- ta -- sie
+  if pro -- mi -- ses kept me a -- way
+  this might be a tra -- ge -- die
+  if pro -- mi -- ses kept me a -- way
+}
+
+% Hier kommt die 2. Strophe
+StropheII=
+\lyricmode {
+  \set stanza = #"2. "
+  Oh! __ Zwei -- te Ka-ta -- stro -- phe
+}
+
+% hier kommen die Akkordbezeichnungen
+AK = {
+  \chordmode {
+    \germanChords
+    s2 d:m
+  }
+}
+
+% hier kommt die Dateistruktur als eigene Stimme
+% für Zeilenumbrüche etc.
+Struktur =
+{
+  s4
+  s2. * 3 \break
+  s2. * 4 \break
+  s2. * 4 \break
+  s2. * 4 \break
+  s2. * 4
+  s2. * 3
+
+}
+\score
+{
+  \new PianoStaff
+  <<
+    \set PianoStaff.instrumentName = #"only one line"
+    \new Staff = "RH"
+    <<
+      \new Voice = "upper" { \RH }
+      \new Lyrics \lyricsto "upper" { \StropheI }
+      \new Lyrics  \with
+      {
+        % wir setzen den Text möglichst dicht
+        \override VerticalAxisGroup.nonstaff-relatedstaff-spacing = #'((basic-distance . 1))
+      } \lyricsto "upper" { \StropheII }
+
+      \new Voice
+      {
+        \Struktur
+      }
+      %   \new Lyrics \lyricsto "upper" { \StropheII }
+    >>
+
+  >>
+  \layout {
+
+  }
+
+  \midi { \tempo 4 = 180 }
+  \header {
+    piece = \markup { \fontsize #2 \bold "hier der Stücktitel" }
+    opus = \markup { \italic "Traditional hier der Komponist" }
+  }
+}
