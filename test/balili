@@ -1,0 +1,134 @@
+\include "paper20.ly"
+\paper  {
+  indent = 0.0\mm
+  papersize = "letter"
+}
+
+\version "2.1.6"
+
+% Modified Chord Name Definitions 
+chExceptionMusic = \notes {
+  <c ees ges bes>1-\markup { "m" \super { "7 " \smaller \musicglyph #"accidentals--2" "5"}}
+  <c e g b>1-\markup { "maj" \super "7" }
+  <c e g bes d' fis'>1-\markup { \super { "9 " \raise #0.5 {\smaller \musicglyph #"accidentals-2"} "11"}}
+  <c e g bes d' fis' a'>1-\markup { \super { "13 " \raise #0.5 {\smaller \musicglyph #"accidentals-2"} "11"}}
+}
+
+% Add Modified Chord Names to existing exceptions.
+chExceptions = #(append
+  (sequential-music-to-chord-exceptions chExceptionMusic #t)
+  ignatzekExceptions)
+
+% Macro to hide and unhide accidentals for tweaking output
+HideAccidentals   = \property Staff.Accidental \override #'transparent = ##t
+UnHideAccidentals = \property Staff.Accidental \revert #'transparent
+
+
+
+\header {
+  title = "Balilli Island"
+  subtitle = "lead sheet"
+  composer = "Composer: Gail Selkirk \\copyright\\ 2002"
+  maintainer = " Gail Selkirk"
+  pagenumber = "no"  % don't need page numbering on a 1 page lead sheet
+
+  tagline = "\\parbox{\\hsize}{\\thefooter\\quad\\small\\noindent\\hspace{\\stretch{1}} 
+             \\texttt{http://www.songbirdofswing.com/} \\hspace{\\stretch{1}}Typeset by Gail Selkirk\\\\ 
+             \\makebox[\\textwidth][c]{To listen to this and other songs and to obtain more of my 
+             Selkirk Song Folio lead sheets, please visit my website.} \\makebox[\\textwidth][c]
+             {Licensing and distribution terms are available upon request.}}"
+
+  footer = "\\small{Engraved by LilyPond v2.1.6}"
+
+}
+
+melody = \notes \relative c' {
+%1 
+   r4 r8 ^"medium swing" g ~ g g' e b  \bar "||" 
+   c c4. ~ c2
+   r2 c8 ees d c 
+   e! g,4. ~ g2 
+%5 
+   r2 c8 d e g 
+   \times 2/3 { a4 e a } bes2 
+   \times 2/3 { g4 d g } aes2 
+   \times 2/3 { f4 c f } \times 2/3 { fis4 cis fis }
+   f!8 bes aes g ~ g4. e8 
+%10
+   g g f g e d r8 a 
+   a4 c8 b ~ b4. g'8 
+   g g f g e d r8 c 
+   r8 c a b ~ b4. g8 
+   g' g f g e d r4 
+%15
+   bes'8 bes aes bes g f r8 des' ~ 
+   \HideAccidentals des \UnHideAccidentals ees ces des bes ces aes bes 
+   g a! f g e f d e 
+   c c4. ~ c2 
+   c8 d ees f \times 2/3 { fis8 g bes ~ } bes a 
+%20
+   aes1 
+   f8 g aes bes \times 2/3 { b!8 d c } \times 2/3 { f8 d ees } 
+   r8 g4. r8 g,4. 
+   \times 2/3 { bes4 aes g } \times 2/3 {aes4 ees b } 
+   g1 
+%25
+   r1 \bar "||"
+
+} %notes
+
+
+
+accompaniment = \chords {
+  \property Current.chordNameExceptions = #chExceptions
+
+%1  
+   r1 d:7 aes:7 c2:6 f2:7 bes2:7 a2:min7 
+%5
+   fis:min7.5- g:9+ e:m5-.7 f:9+ bes:7 a:13 aes:13 g:13 d1:min7 g2:7.4^3 g:7 d1:min7 
+%10
+   g2:7.4^3 g:7 d1:min7 f:min7 
+%15
+   aes:min7 d2:min7 bes:9.11+ a1:min7 c:min7 
+%20
+   b:11+.13 d:m5-.7 des:11+.13 d2:min7.5- g:7.5+ c:7+  
+%25
+   \skip 2.
+
+} %chords
+
+
+
+text = \lyrics {
+  Dar -- ling, take me with you to Ba -- lil -- li Is -- land.
+  Where the wat -- er spar -- kles like jewels, blue ev' -- ry -- where,
+  breath -- ing all that fresh Ba -- lil -- li -- an air.
+  The sand feels hot and grit -- ty a -- long the bay.
+  The ve -- ge -- ta -- tion's pret -- ty in its own way. 
+  Ver -- mil -- lion sun is bla -- zing, yes, we'll get a day's in.
+  Find a lit -- tle beach sub -- lime and then re -- lax and spend the
+  time just la -- zing, watch -- ing ev' -- ry cloud car -- ess the
+  sky, pay -- ing bills un -- til I can fi -- nal -- ly lie on
+  Ba -- lil -- li Is -- land with you. 
+
+} %lyrics
+
+
+\score {
+  <<
+    \context ChordNames \accompaniment
+    \addlyrics
+      \context Staff { \melody }
+      \context Lyrics \text
+  >>
+
+   \paper { 
+      \translator { 
+          \ChordNamesContext
+      } % translator
+   } % paper
+
+  \midi  { \tempo 4 = 120 }
+
+} %score
+
