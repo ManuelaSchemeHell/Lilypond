@@ -1,0 +1,166 @@
+\bookpart
+{
+  \markuplist
+  {
+    % put some space here
+    \vspace#3.5
+    \abs-fontsize #20
+    {
+      \bold \smallCaps
+      "Dreiklänge"
+    }
+    \vspace#3.5
+    \wordwrap {
+      \fontsize #1.5 {
+        Zwei übereinandergestellte Terzen ergeben einen Dreiklang.
+        Da es große, kleine und verminderte
+        Terzen gibt, ergeben sich daraus verschiedene Kombinationsmöglichkeiten.
+      }
+    }
+    \vspace#2
+    \justify      {
+      \fontsize #1.7 {
+        \char-space #1 { "Durdreiklang: " }
+        {
+          "große + kleine Terz"
+        }
+      }
+    }
+    % put some space here
+    \vspace#0.5
+    \justify {
+      \override #'(line-width . 20)
+      \score {
+        \new Staff
+        \with {
+          \remove "Time_signature_engraver"
+          %\remove "Clef_engraver"
+          \remove "Bar_engraver"
+        }
+        \relative c' { s1  < c e g >1  }
+        \layout {}
+      }
+    }
+
+    \vspace#1.5
+    \justify      {
+      \fontsize #1.7 {
+        \char-space #1 { "Molldreiklang: " }
+        {
+          "kleine + große Terz"
+        }
+      }
+    }
+    % put some space here
+    \vspace#0.5
+    \justify {
+      \override #'(line-width . 20)
+      \score {
+        \new Staff
+        \with {
+          \remove "Time_signature_engraver"
+          %\remove "Clef_engraver"
+          \remove "Bar_engraver"
+        }
+        \relative c' { s1  < c es g >1  }
+        \layout {}
+      }
+    }
+
+    \vspace#1.5
+    \justify      {
+      \fontsize #1.7 {
+        "ü " \char-space #1 { "berm" } "ä ß " \char-space #1 { "iger Dreiklang: " }
+        {
+          "große + große Terz"
+        }
+      }
+    }
+    \vspace#0.5
+    \justify {
+      \override #'(line-width . 20)
+      \score {
+        \new Staff
+        \with {
+          \remove "Time_signature_engraver"
+          %\remove "Clef_engraver"
+          \remove "Bar_engraver"
+        }
+        \relative c' { s1  < c e gis >1  }
+        \layout {}
+      }
+    }
+
+    \vspace#1.5
+    \justify      {
+      \fontsize #1.7 {
+        \char-space #1 { "verminderter Dreiklang: " }
+        {
+          "kleine + kleine Terz"
+        }
+      }
+    }
+    \vspace#0.5
+    \justify {
+      \override #'(line-width . 20)
+      \score {
+        \new Staff
+        \with {
+          \remove "Time_signature_engraver"
+          %\remove "Clef_engraver"
+          \remove "Bar_engraver"
+        }
+        \relative c' { s1  < c es ges >1  }
+        \layout {}
+      }
+    }
+
+    \vspace#1.5
+    \justify      {
+      \fontsize #1.7 {
+        \char-space #1 { "hartverminderter Dreiklang: " }
+        {
+          "große + verminderte Terz"
+        }
+      }
+    }
+    \vspace#0.5
+    \justify {
+      \override #'(line-width . 20)
+      \score {
+        \new Staff
+        \with {
+          \remove "Time_signature_engraver"
+          %\remove "Clef_engraver"
+          \remove "Bar_engraver"
+        }
+        \relative c' { s1  < c e geses >1  }
+        \layout {}
+      }
+    }
+
+    \vspace#1.5
+    \justify      {
+      \fontsize #1.7 {
+        \char-space #1 { "hartverminderter Dreiklang: " }
+        {
+          "verminderte + große Terz"
+        }
+      }
+    }
+    \vspace#0.5
+    \justify {
+      \override #'(line-width . 20)
+      \score {
+        \new Staff
+        \with {
+          \remove "Time_signature_engraver"
+          %\remove "Clef_engraver"
+          \remove "Bar_engraver"
+        }
+        \relative c' { s1  < cis es g >1  }
+        \layout { }
+      }
+    }
+  }
+}
