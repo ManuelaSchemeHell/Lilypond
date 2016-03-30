@@ -1,0 +1,267 @@
+
+\bookpart
+{
+  \markuplist
+  {
+    % put some space here
+    \vspace#3.5
+    \abs-fontsize #15
+    {
+      \bold \smallCaps
+      "Definition von Stellung und Lage"
+    }
+    \vspace#1.5
+    \wordwrap {
+      \fontsize #1.5 {
+        Die \bold \italic Lage eines Akkordes wird durch seinen
+        \char-space #1 { " h" } " ö " \char-space #1 { "chsten " }
+        Ton festgelegt.
+      }
+    }
+    \vspace#1.5
+    \justify      {
+      \fontsize #1.7 {
+        \char-space #1 { "Oktavlage: " }
+        {
+          "an höchster Stelle steht der Grundton"
+        }
+      }
+    }
+    % put some space here
+    \vspace#0.5
+    \justify {
+      \override #'(line-width . 20)
+      \score {
+        \new Staff
+        \with {
+          \remove "Time_signature_engraver"
+          %\remove "Clef_engraver"
+          \remove "Bar_engraver"
+        }
+
+        \relative c' {
+          \override Staff.InstrumentName.font-size = #1
+          \override Staff.InstrumentName.self-alignment-X = #CENTER
+          \set Staff.instrumentName= \markup \left-column {
+            \bold
+            "C-Dur"
+            \bold "Dreiklang"
+          }
+          s1  < c e g c >1
+        }
+        \layout { indent = #'30 }
+      }
+    }
+
+    \vspace#1.5
+    \justify      {
+      \fontsize #1.7 {
+        \char-space #1 { "Terzlage: " }
+        {
+          "an höchster Stelle steht die Terz"
+        }
+      }
+    }
+    % put some space here
+    \vspace#0.5
+    \justify {
+      \override #'(line-width . 20)
+      \score {
+        \new Staff
+        \with {
+          \remove "Time_signature_engraver"
+          %\remove "Clef_engraver"
+          \remove "Bar_engraver"
+        }
+
+        \relative c' {
+          \override Staff.InstrumentName.font-size = #1
+          \override Staff.InstrumentName.self-alignment-X = #CENTER
+          \set Staff.instrumentName= \markup \left-column {
+            \bold
+            "C-Dur"
+            \bold "Dreiklang"
+          }
+          s1  < c g' c e >1
+        }
+        \layout { indent = #'30 }
+      }
+    }
+
+    \vspace#1.5
+    \justify      {
+      \fontsize #1.7 {
+        \char-space #1 { "Quintlage: " }
+        {
+          "an höchster Stelle steht die Quinte"
+        }
+      }
+    }
+    % put some space here
+    \vspace#0.5
+    \justify {
+      \override #'(line-width . 20)
+      \score {
+        \new Staff
+        \with {
+          \remove "Time_signature_engraver"
+          %\remove "Clef_engraver"
+          \remove "Bar_engraver"
+        }
+
+        \relative c' {
+          \override Staff.InstrumentName.font-size = #1
+          \override Staff.InstrumentName.self-alignment-X = #CENTER
+          \set Staff.instrumentName= \markup \left-column {
+            \bold
+            "C-Dur"
+            \bold "Dreiklang"
+          }
+          s1  < c e g c g' >1
+        }
+        \layout { indent = #'30 }
+      }
+    }
+
+    \vspace#2
+    \wordwrap {
+      \fontsize #1.5 {
+        Die \bold \italic Stellung eines Akkordes wird durch seinen
+        \char-space #1 { " tiefsten " }
+        Ton festgelegt. Steht an der tiefsten Stelle ein anderer als der Grundton,
+        spricht man "von " \char-space #1 { "Umkehrung " } des Dreiklangs.
+      }
+    }
+    \vspace#1
+    \wordwrap
+    {
+      \fontsize #1.5 {
+        Dur-, Moll- und hartverminderter Dreiklang können in drei Stellungen auftreten.
+      }
+    }
+    \vspace#1
+    \justify
+    {
+      \fontsize #1.7 {
+        \char-space #1 { "Grundstellung: " }
+        {
+          "an der tiefsten Stelle steht der Grundton"
+        }
+      }
+    }
+    \vspace#1
+    \wordwrap
+    {
+      \fontsize #1.7 {
+        \char-space #1 { "1. Umkehrung " } " ‒ " \char-space #1 { " Sextakkord: " }
+
+        "an der tiefsten Stelle steht die Terz"
+
+      }
+    }
+    \vspace#1
+    \wordwrap
+    {
+      \fontsize #1.7 {
+        \char-space #1 { "2. Umkehrung " } " ‒ " \char-space #1 { " Quartsextakkord: " }
+        {
+          "an der tiefsten Stelle steht die Quinte"
+        }
+      }
+    }
+
+    \vspace#2.5
+
+
+    \fill-line {
+      \column {
+        \score {
+          \new Staff
+          \with {
+            \remove "Time_signature_engraver"
+            %\remove "Clef_engraver"
+            \remove "Bar_engraver"
+          }
+
+          \relative c' {
+            \override Staff.InstrumentName.font-size = #1
+            \override Staff.InstrumentName.self-alignment-X = #CENTER
+            \set Staff.instrumentName= \markup \left-column {
+              \bold
+              "C-Dur"
+              \bold "Dreiklang"
+            }
+            s1  < c e g c g' >1
+          }
+          \layout { indent = #'30 }
+        }
+        % put some space here
+        \vspace#1
+        \override #'(line-width . 30)
+        \wordwrap {
+          "                        Grundstellung"
+        }
+      }
+      \column {
+        \score {
+          \new Staff
+          \with {
+            \remove "Time_signature_engraver"
+            \remove "Clef_engraver"
+            \remove "Bar_engraver"
+          }
+
+          \relative c' {
+            \override Staff.InstrumentName.font-size = #1
+            \override Staff.InstrumentName.self-alignment-X = #CENTER
+            \set Staff.instrumentName= ""
+            s1  <  e g c g' >1
+          }
+          \layout { indent = #'0 }
+        }
+        % put some space here
+        \vspace#2
+        \override #'(line-width . 20)
+        \wordwrap {
+          "1. Umkehrung"
+        } \wordwrap {
+          "Sextakkord"
+        }
+      }
+      \column {
+        \score {
+          \new Staff
+          \with {
+            \remove "Time_signature_engraver"
+            \remove "Clef_engraver"
+            \remove "Bar_engraver"
+          }
+
+          \relative c' {
+            \override Staff.InstrumentName.font-size = #1
+            \override Staff.InstrumentName.self-alignment-X = #CENTER
+            \set Staff.instrumentName= ""
+            s1  < g' c e g  >1
+          }
+          \layout { indent = #'0 }
+        }
+        % put some space here
+        \vspace#1
+        \override #'(line-width . 20)
+        \wordwrap {
+          "2. Umkehrung"
+        } \wordwrap {
+          "Quartsextakkord"
+        }
+      }
+    }
+    \vspace#1
+    \wordwrap
+    {
+      \fontsize #1.5 {
+        Die Stellung eines Akkordes ist nicht von seiner Lage abhängig, umgekehrt die Lage
+        nicht von der Stellung.
+      }
+    }
+  }
+}
