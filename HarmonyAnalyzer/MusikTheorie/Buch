@@ -1,0 +1,521 @@
+\version "2.18.2"
+
+%% http://lsr.dsi.unimi.it/LSR/Item?id=300
+%% see also http://lilypond.org/doc/v2.18/Documentation/notation/text
+
+%LSR updated/modified by P.P.Schneider on Feb.2014
+FootLeft = #(string-append "" )
+FootCenter = #(string-append "")
+FootRight = #(string-append "gesetzt mit LILYPOND " (lilypond-version) " am " (strftime "%d.%m.%Y %H:%M:%S" (localtime (current-time))))
+
+%Akkorde mit Systematik
+
+\language "deutsch"
+\include "deutsch.ly"
+\include "Schemes.ily"
+
+\paper {
+  #(set-paper-size "a4")
+  left-margin = #30
+  top-margin = #20
+  %line-width = #50
+  indent = #'0
+  %ragged-right=##f
+  % annotate-spacing = ##t
+  oddFooterMarkup = \markup \fill-line {
+    \abs-fontsize #9 { \FootLeft }
+    % \abs-fontsize #7.0 { \italic { \FootCenter } }
+    \abs-fontsize #9 { \FootRight }
+  }
+  #(define page-breaking ly:minimal-breaking)
+}
+
+JazzChords = \chordmode { \set chordNameExceptions = #chExceptions c1  c:m c:5+ c:dim  }
+SeptChords = \chordmode {
+  \set chordNameExceptions = #chExceptions
+  c1:maj7 c:7 c:maj7.5- c:maj7.3- c:m7 c:dim7.7+ c:dim7
+}
+
+% \include "ADreiklang.ily" % welche Arten von Dreiklängen gibt es
+
+%\include "BDreiklang.ily" % Tabelle der Dreiklänge aller Kreuz- und B-Tonarten
+
+%\include "CDreiklang.ily" % Lage und Stellung der Dreiklänge
+
+
+
+%\include "DSeptakk.ily"
+
+%\include "ESeptakk.ily"
+
+\bookpart
+{
+  \markuplist
+  {
+    % put some space here
+    \vspace#2.5
+    \abs-fontsize #15
+    {
+      \bold \smallCaps
+      "Der verminderte Septakkord"
+    }
+    \vspace#1.5
+    \wordwrap {
+      \fontsize #1.5 {
+        Der verminderte Septakkord tritt als leitereigener Dreiklang
+        von Moll-Tonleitern auf. Da er aus drei kleinen Terzen besteht, kann
+        nicht auf den ersten Blick gesagt werden, zu welcher Tonart er gehört.
+        Außerdem ist jede Umkehrung gleichzeitig die Grundstellung eines enharmonisch
+        verwechselten verminderten Septakkords.
+      }
+    }
+    \vspace#0.5
+    \wordwrap {
+      \fontsize #1.5 {
+        Durch diese Besonderheit gibt es überhaupt nur drei verschiedene
+        verminderte Septakkorde, wobei die Umkehrungen jeweils durch enharmonische Verwechslung
+        ineinander übergeführt werden können.
+        Jeder verminderte Septakkord ist gleichzeitig Grundstellung und Umkehrung.
+      }
+    }
+  }
+}
+
+\bookpart
+{
+  \markuplist
+  {
+    %  \vspace#2
+    \abs-fontsize #15 \wordwrap
+    {
+      \bold \smallCaps
+      "Der verminderte Septakkord"
+    }
+    \vspace#0.5
+    \fontsize #1 "mit allen Umkehrungen und enharmonischen Verwechslungen"
+
+    \vspace#1
+    \abs-fontsize #12
+    {
+      \bold \smallCaps
+      "Der verminderte Septakkord auf C=His/Es=Dis/Fis=Ges/A"
+    }
+
+    \vspace#1
+    \justify {
+      \override #'(line-width . 40)
+      \score {
+        \new StaffGroup
+        \with
+        {
+          \remove "System_start_delimiter_engraver"
+        }
+        <<
+          \new Staff
+          \with {
+            \remove "Time_signature_engraver"
+            %\remove "Clef_engraver"
+            %\remove "Bar_engraver"
+          }
+          \relative c' {
+            \override Staff.InstrumentName.font-size = #1
+            \override Staff.InstrumentName.self-alignment-X = #RIGHT
+            \set Staff.instrumentName= "Grundton His"
+
+            < \tweak color #blue his dis fis a >  < dis fis a \tweak color #red his >
+            < fis a \tweak color #red his dis >  < a \tweak color #red his dis fis >
+            \stopStaff
+            \override TextScript #'padding = #-1
+            \override TextScript #'staff-padding = #'()
+            \override TextScript #'outside-staff-priority = ##f
+            s1^\markup {
+              \override #'(line-width . 10)
+              \fill-line {
+                \column {
+                  \line {
+                    \fontsize #'2 "Cis-Moll "
+                  }
+                }
+              }
+            } s1 s1 \key cis \minor
+          }
+          \new Staff
+          \with {
+            \remove "Time_signature_engraver"
+            %\remove "Clef_engraver"
+            %\remove "Bar_engraver"
+          }
+          \relative c' {
+            \override Staff.InstrumentName.font-size = #1
+            \override Staff.InstrumentName.self-alignment-X = #RIGHT
+            \set Staff.instrumentName= "Grundton C"
+
+            < \tweak color #blue c es ges heses >  < es ges heses \tweak color #red c >
+            < ges heses \tweak color #red c es >  < heses \tweak color #red c es ges >
+            \stopStaff
+            \override TextScript #'padding = #-1
+            \override TextScript #'staff-padding = #'()
+            \override TextScript #'outside-staff-priority = ##f
+            s1^\markup {
+              \override #'(line-width . 10)
+              \fill-line {
+                \column {
+                  \line {
+                    \fontsize #'2 "Des-Moll "
+                  }
+                }
+              }
+            } s1 s1 \key des \minor
+          }
+          \new Staff
+          \with {
+            \remove "Time_signature_engraver"
+            %\remove "Clef_engraver"
+            %\remove "Bar_engraver"
+          }
+          \relative c'  {
+            \override Staff.InstrumentName.font-size = #1
+            \override Staff.InstrumentName.self-alignment-X = #RIGHT
+            \set Staff.instrumentName= "Grundton Dis"
+            < c \tweak color #red dis fis a >  < \tweak color #blue dis fis a c >
+            < fis a c \tweak color #red dis >  < a c \tweak color #red dis fis >
+            \stopStaff
+            \override TextScript #'padding = #-1
+            \override TextScript #'staff-padding = #'()
+            \override TextScript #'outside-staff-priority = ##f
+            s1^\markup {
+              \override #'(line-width . 10)
+              \fill-line {
+                \column {
+                  \line {
+                    \fontsize #'2 "E-Moll "
+                  }
+                }
+              }
+            } s1 s1 \key e \minor s1
+          }
+          \new Staff
+          \with {
+            \remove "Time_signature_engraver"
+            %\remove "Clef_engraver"
+            %\remove "Bar_engraver"
+          }
+          \relative c'  {
+            \override Staff.InstrumentName.font-size = #1
+            \override Staff.InstrumentName.self-alignment-X = #RIGHT
+            \set Staff.instrumentName= "Grundton A"
+            < c es ges \tweak color #red a >  < es ges \tweak color #red a c >
+            < ges \tweak color #red a c es >  < \tweak color #blue a c es ges >
+            \stopStaff
+            \override TextScript #'padding = #-1
+            \override TextScript #'staff-padding = #'()
+            \override TextScript #'outside-staff-priority = ##f
+            s1^\markup {
+              \override #'(line-width . 10)
+              \fill-line {
+                \column {
+                  \line {
+                    \fontsize #'2 "B-Moll "
+                  }
+                }
+              }
+            } s1 s1 \key b \minor s1
+          }
+          \new Staff
+          \with {
+            \remove "Time_signature_engraver"
+            %\remove "Clef_engraver"
+            %\remove "Bar_engraver"
+          }
+          \relative c'  {
+            \override Staff.InstrumentName.font-size = #1
+            \override Staff.InstrumentName.self-alignment-X = #RIGHT
+            \set Staff.instrumentName= "Grundton Fis"
+            < c es \tweak color #red fis a >  < es \tweak color #red fis a c >
+            < \tweak color #blue fis a c es >  < a c es \tweak color #red fis >
+            \stopStaff
+            \override TextScript #'padding = #-1
+            \override TextScript #'staff-padding = #'()
+            \override TextScript #'outside-staff-priority = ##f
+            s1^\markup {
+              \override #'(line-width . 10)
+              \fill-line {
+                \column {
+                  \line {
+                    \fontsize #'2 "G-Moll "
+                  }
+                }
+              }
+            } s1 s1 \key g \minor s1
+          }
+        >>
+        \layout { indent = #'30 }
+      }
+    }
+
+    \vspace#2
+    \abs-fontsize #12
+    {
+      \bold \smallCaps
+      "Der verminderte Septakkord auf Cis=Des/E/G/Ais=B"
+    }
+
+    \vspace#1
+    \justify {
+      \override #'(line-width . 40)
+      \score {
+        \new StaffGroup
+        \with
+        {
+          \remove "System_start_delimiter_engraver"
+        }
+        <<
+          \new Staff
+          \with {
+            \remove "Time_signature_engraver"
+            %\remove "Clef_engraver"
+            %\remove "Bar_engraver"
+          }
+          \relative c' {
+            \override Staff.InstrumentName.font-size = #1
+            \override Staff.InstrumentName.self-alignment-X = #RIGHT
+            \set Staff.instrumentName= "Grundton Cis"
+
+            < \tweak color #blue cis e g b >  < e g b \tweak color #red cis >
+            < g b \tweak color #red cis e >  < b \tweak color #red cis e g >
+            \stopStaff
+            \override TextScript #'padding = #-1
+            \override TextScript #'staff-padding = #'()
+            \override TextScript #'outside-staff-priority = ##f
+            s1^\markup {
+              \override #'(line-width . 10)
+              \fill-line {
+                \column {
+                  \line {
+                    \fontsize #'2 "D-Moll"
+                  }
+                }
+              }
+            } s1 s1 \key d \minor s1
+          }
+
+          \new Staff
+          \with {
+            \remove "Time_signature_engraver"
+            %\remove "Clef_engraver"
+            %\remove "Bar_engraver"
+          }
+          \relative c'  {
+            \override Staff.InstrumentName.font-size = #1
+            \override Staff.InstrumentName.self-alignment-X = #RIGHT
+            \set Staff.instrumentName= "Grundton E"
+            < dis \tweak color #red e g b >  < \tweak color #blue e g b des >
+            < g b des \tweak color #red e >  < b des \tweak color #red e g >
+            \stopStaff
+            \override TextScript #'padding = #-1
+            \override TextScript #'staff-padding = #'()
+            \override TextScript #'outside-staff-priority = ##f
+            s1^\markup {
+              \override #'(line-width . 10)
+              \fill-line {
+                \column {
+                  \line {
+                    \fontsize #'1.5 "F-Moll"
+                  }
+                }
+              }
+            } s1 s1 \key f \minor
+          }
+          \new Staff
+          \with {
+            \remove "Time_signature_engraver"
+            %\remove "Clef_engraver"
+            %\remove "Bar_engraver"
+          }
+          \relative c'  {
+            \override Staff.InstrumentName.font-size = #1
+            \override Staff.InstrumentName.self-alignment-X = #RIGHT
+            \set Staff.instrumentName= "Grundton Ais"
+            < cis e g \tweak color #red ais >  < e g \tweak color #red ais cis >
+            < g \tweak color #red ais cis e >  < \tweak color #blue ais cis e g >
+            \stopStaff
+            \override TextScript #'padding = #-1
+            \override TextScript #'staff-padding = #'()
+            \override TextScript #'outside-staff-priority = ##f
+            s1^\markup {
+              \override #'(line-width . 10)
+              \fill-line {
+                \column {
+                  \line {
+                    \fontsize #'1.5 "H-Moll"
+                  }
+                }
+              }
+            } s1 s1 \key h \minor
+          }
+          \new Staff
+          \with {
+            \remove "Time_signature_engraver"
+            %\remove "Clef_engraver"
+            %\remove "Bar_engraver"
+          }
+          \relative c'  {
+            \override Staff.InstrumentName.font-size = #1
+            \override Staff.InstrumentName.self-alignment-X = #RIGHT
+            \set Staff.instrumentName= "Grundton G"
+            < des fes \tweak color #red g b >  < fes \tweak color #red g b des >
+            < \tweak color #blue g b des fes >  < b des fes \tweak color #red g >
+            \stopStaff
+            \override TextScript #'padding = #-1
+            \override TextScript #'staff-padding = #'()
+            \override TextScript #'outside-staff-priority = ##f
+            s1^\markup {
+              \override #'(line-width . 10)
+              \fill-line {
+                \column {
+                  \line {
+                    \fontsize #'2 "As-Moll "
+                  }
+                }
+              }
+            } s1 s1  \key as \minor
+          }
+        >>
+        \layout { indent = #'30 }
+      }
+    }
+
+    \vspace#2
+    \abs-fontsize #12
+    {
+      \bold \smallCaps
+      "Der verminderte Septakkord auf D/Eis=F/Gis=As/Ces=H"
+    }
+
+    \vspace#1
+    \justify {
+      \override #'(line-width . 40)
+      \score {
+        \new StaffGroup
+        \with
+        {
+          \remove "System_start_delimiter_engraver"
+        }
+        <<
+          \new Staff
+          \with {
+            \remove "Time_signature_engraver"
+            %\remove "Clef_engraver"
+            %\remove "Bar_engraver"
+          }
+          \relative c' {
+            \override Staff.InstrumentName.font-size = #1
+            \override Staff.InstrumentName.self-alignment-X = #RIGHT
+            \set Staff.instrumentName= "Grundton D"
+
+            < \tweak color #blue d f as ces >  < f as ces \tweak color #red d >
+            < as ces \tweak color #red d f >  < ces, \tweak color #red d f as >
+            \stopStaff
+            \override TextScript #'padding = #-1
+            \override TextScript #'staff-padding = #'()
+            \override TextScript #'outside-staff-priority = ##f
+            s1^\markup {
+              \override #'(line-width . 10)
+              \fill-line {
+                \column {
+                  \line {
+                    \fontsize #'2 "Es-Moll"
+                  }
+                }
+              }
+            } s1 s1 s1 \key es \minor
+          }
+
+          \new Staff
+          \with {
+            \remove "Time_signature_engraver"
+            %\remove "Clef_engraver"
+            %\remove "Bar_engraver"
+          }
+          \relative c'  {
+            \override Staff.InstrumentName.font-size = #1
+            \override Staff.InstrumentName.self-alignment-X = #RIGHT
+            \set Staff.instrumentName= "Grundton Eis"
+            < d \tweak color #red eis gis h >  < \tweak color #blue eis gis h d >
+            < gis h d \tweak color #red eis >  < h d \tweak color #red eis gis >
+            \stopStaff
+            \override TextScript #'padding = #-1
+            \override TextScript #'staff-padding = #'()
+            \override TextScript #'outside-staff-priority = ##f
+            s1^\markup {
+              \override #'(line-width . 10)
+              \fill-line {
+                \column {
+                  \line {
+                    \fontsize #'2 "Gis-Moll "
+                  }
+                }
+              }
+            } s1 s1  \key gis \minor
+          }
+          \new Staff
+          \with {
+            \remove "Time_signature_engraver"
+            %\remove "Clef_engraver"
+            %\remove "Bar_engraver"
+          }
+          \relative c'  {
+            \override Staff.InstrumentName.font-size = #1
+            \override Staff.InstrumentName.self-alignment-X = #RIGHT
+            \set Staff.instrumentName= "Grundton H"
+            < d f as \tweak color #red h >  < f as \tweak color #red h d >
+            < as \tweak color #red h d f >  < \tweak color #blue h d f as >
+            \stopStaff
+            \override TextScript #'padding = #-1
+            \override TextScript #'staff-padding = #'()
+            \override TextScript #'outside-staff-priority = ##f
+            s1^\markup {
+              \override #'(line-width . 10)
+              \fill-line {
+                \column {
+                  \line {
+                    \fontsize #'2 "C-Moll "
+                  }
+                }
+              }
+            } s1 s1  \key c \minor
+          }
+          \new Staff
+          \with {
+            \remove "Time_signature_engraver"
+            %\remove "Clef_engraver"
+            %\remove "Bar_engraver"
+          }
+          \relative c'  {
+            \override Staff.InstrumentName.font-size = #1
+            \override Staff.InstrumentName.self-alignment-X = #RIGHT
+            \set Staff.instrumentName= "Grundton Gis"
+            < d f \tweak color #red gis h >  < f \tweak color #red gis h d >
+            < \tweak color #blue gis h d f >  < h d f \tweak color #red gis >
+            \stopStaff
+            \override TextScript #'padding = #-1
+            \override TextScript #'staff-padding = #'()
+            \override TextScript #'outside-staff-priority = ##f
+            s1^\markup {
+              \override #'(line-width . 10)
+              \fill-line {
+                \column {
+                  \line {
+                    \fontsize #'2 "A-Moll"
+                  }
+                }
+              }
+            }
+          }
+        >>
+        \layout { indent = #'30 }
+      }
+    }
+  }
+}
+
