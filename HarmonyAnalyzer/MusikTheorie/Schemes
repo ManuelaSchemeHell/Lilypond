@@ -1,0 +1,78 @@
+\version "2.19.32"
+
+#(define (string->string-list strg)
+   (define (helper-1 strg ls)
+     "
+    Converts a string into a list of strings,
+    every string of the list has string-length 1
+    e.g "1234" -> '("1" "2" "3" "4")
+    "
+     (if (= (string-length strg) 0)
+         (begin
+          (set! ls '(""))
+          ls)
+         (begin
+          (set! ls (cons (substring strg 0 1) ls))
+          (if (>= (string-length (string-drop strg 1)) 1)
+              (helper-1 (string-drop strg 1) ls)
+              (reverse ls)))))
+
+   (if (string? strg)
+       (helper-1 strg '())
+       strg))
+
+#(define (proc l1 l2)
+   "
+    l1 is supposed to be a list of strings.
+    proc will return a new list l2, build of the
+    elements of l1.
+    Every string of l2 has string-length 1
+    e.g '("12" "34") -> '("1" "2" "3" "4")
+    "
+   (if (null? l1)
+       l2
+       (begin
+        (set! l2 (append l2 (string->string-list (car l1))))
+        (proc (cdr l1) l2))))
+
+#(define (stack-chars stencil stils kern)
+   (set! stencil (ly:stencil-combine-at-edge stencil X RIGHT (car stils) kern))
+   (if (null? (cdr stils))
+       stencil
+       (stack-chars stencil (cdr stils) kern)))
+
+#(define-markup-command (char-space layout props nmbr args)(number? markup-list?)
+   (let* ((new-args (list-join args " "))
+          (args+ (reverse (cons " " (reverse new-args))))
+          (argls (proc args+ '()))
+          (stils (map (lambda (x)(interpret-markup layout props x)) argls))
+          (new-stils (reverse (cdr (reverse stils)))))
+
+     (stack-chars empty-stencil new-stils nmbr)))
+
+chExceptionMusic = {
+  <c es ges>1-\markup { \super "dim" }
+  <c e gis>1-\markup { \super "maj" }
+  <c e geses>1-\markup { \super "ddim" }
+  <c eses ges >1-\markup { \super "dddim" }
+  <c e g h>1-\markup { \super "maj7" }
+  <c es g h>1-\markup { "m" \super "maj7" }
+  <c es ges h>1-\markup { "m" \super { "maj7" \flat "5" } }
+  <c e  ges h>1-\markup { \super { "maj7" \flat "5" } }
+  <c es ges heses>1-\markup { \super "dim7" }
+  <c e g h d'>1-\markup { \super "maj9" }
+  <c e g b d' f a' >1-\markup { \super "13" }
+  %<c e g  d' >1-\markup { \super "add9" }
+  <c e g b des' as' >1-\markup { \super {  \flat "9"  \flat 13 } }
+  <c e g b d' a' >1-\markup { \super "13" }
+  <c e g a d'>1-\markup { \super "6(add9)" }
+}
+
+% Convert music to list and prepend to existing exceptions.
+chExceptions = #( append
+                  ( sequential-music-to-chord-exceptions chExceptionMusic #t)
+                  ignatzekExceptions)
+
+chExceptions = #( append
+                  ( sequential-music-to-chord-exceptions chExceptionMusic #t)
+                  ignatzekExceptions)
