@@ -1,165 +1,572 @@
+
 \bookpart
 {
   \markuplist
   {
-    % put some space here
     \vspace#3.5
-    \abs-fontsize #20
+    \abs-fontsize #15
     {
       \bold \smallCaps
-      "Dreiklänge"
+      "Tabelle aller Dreiklänge der Kreuz-Tonarten"
     }
     \vspace#3.5
-    \wordwrap {
-      \fontsize #1.5 {
-        Zwei übereinandergestellte Terzen ergeben einen Dreiklang.
-        Da es große, kleine und verminderte
-        Terzen gibt, ergeben sich daraus verschiedene Kombinationsmöglichkeiten.
-      }
-    }
-    \vspace#2
-    \justify      {
-      \fontsize #1.7 {
-        \char-space #1 { "Durdreiklang: " }
-        {
-          "große + kleine Terz"
-        }
-      }
-    }
-    % put some space here
-    \vspace#0.5
     \justify {
-      \override #'(line-width . 20)
-      \score {
+      \score
+      {
         \new Staff
-        \with {
+        \with
+        {
           \remove "Time_signature_engraver"
           %\remove "Clef_engraver"
           \remove "Bar_engraver"
         }
-        \relative c' { s1  < c e g >1  }
-        \layout {}
+        \relative c' {
+          <<
+            \context Voice  {
+              \override Staff.InstrumentName.font-size = #2
+              \override Staff.InstrumentName.self-alignment-X = #CENTER
+              \set Staff.instrumentName= \markup \left-column { \bold "C-Dur" }
+              s1
+              \JazzChords < c e geses > < c es geses >
+            }
+            \new ChordNames
+            {
+              \germanChords s1
+              \JazzChords
+            }
+          >>
+        }
+        \layout
+        {
+          ragged-right=##f
+          line-width=#'120
+          indent = #'20
+        }
       }
     }
 
     \vspace#1.5
-    \justify      {
-      \fontsize #1.7 {
-        \char-space #1 { "Molldreiklang: " }
-        {
-          "kleine + große Terz"
-        }
-      }
-    }
-    % put some space here
-    \vspace#0.5
     \justify {
-      \override #'(line-width . 20)
-      \score {
+      \score
+      {
         \new Staff
-        \with {
+        \with
+        {
           \remove "Time_signature_engraver"
           %\remove "Clef_engraver"
           \remove "Bar_engraver"
         }
-        \relative c' { s1  < c es g >1  }
-        \layout {}
+        \relative c' {
+          <<
+            \context Voice  {
+              \override Staff.InstrumentName.font-size = #2
+              \override Staff.InstrumentName.self-alignment-X = #CENTER
+              \set Staff.instrumentName= \markup \left-column { \bold "G-Dur" }
+              s1
+              \key g \major
+              \transpose c g
+              { \JazzChords < c' e' geses' > < c' es' geses' > }
+            }
+            \new ChordNames
+            {
+              \germanChords s1
+              \key g \major
+              \transpose c g
+              \JazzChords
+            }
+          >>
+        }
+        \layout
+        {
+          ragged-right=##f
+          line-width=#'120
+          indent = #'20
+        }
       }
     }
 
     \vspace#1.5
-    \justify      {
-      \fontsize #1.7 {
-        "ü " \char-space #1 { "berm" } "ä ß " \char-space #1 { "iger Dreiklang: " }
-        {
-          "große + große Terz"
-        }
-      }
-    }
-    \vspace#0.5
     \justify {
-      \override #'(line-width . 20)
-      \score {
+      \score
+      {
         \new Staff
-        \with {
+        \with
+        {
           \remove "Time_signature_engraver"
           %\remove "Clef_engraver"
           \remove "Bar_engraver"
         }
-        \relative c' { s1  < c e gis >1  }
-        \layout {}
+        \relative c' {
+          <<
+            \context Voice  {
+              \override Staff.InstrumentName.font-size = #2
+              \override Staff.InstrumentName.self-alignment-X = #CENTER
+              \set Staff.instrumentName= \markup \left-column { \bold "D-Dur" }
+              s1
+              \key d \major
+              \transpose c d
+              { \JazzChords < c' e' geses' > < c' es' geses' > }
+            }
+            \new ChordNames
+            {
+              \germanChords s1
+              \key d \major
+              \transpose c d
+              \JazzChords
+            }
+          >>
+        }
+        \layout
+        {
+          ragged-right=##f
+          line-width=#'120
+          indent = #'20
+        }
       }
     }
 
     \vspace#1.5
-    \justify      {
-      \fontsize #1.7 {
-        \char-space #1 { "verminderter Dreiklang: " }
-        {
-          "kleine + kleine Terz"
-        }
-      }
-    }
-    \vspace#0.5
     \justify {
-      \override #'(line-width . 20)
-      \score {
+      \score
+      {
         \new Staff
-        \with {
+        \with
+        {
           \remove "Time_signature_engraver"
           %\remove "Clef_engraver"
           \remove "Bar_engraver"
         }
-        \relative c' { s1  < c es ges >1  }
-        \layout {}
+        \relative c' {
+          <<
+            \context Voice  {
+              \override Staff.InstrumentName.font-size = #2
+              \override Staff.InstrumentName.self-alignment-X = #CENTER
+              \set Staff.instrumentName= \markup \left-column { \bold "A-Dur" }
+              s1
+              \key a \major
+              \transpose c a
+              { \JazzChords < c' e' geses' > < c' es' geses' > }
+            }
+            \new ChordNames
+            {
+              \germanChords s1
+              \key a \major
+              \transpose c a
+              \JazzChords
+            }
+          >>
+        }
+        \layout
+        {
+          ragged-right=##f
+          line-width=#'120
+          indent = #'20
+        }
       }
     }
 
     \vspace#1.5
-    \justify      {
-      \fontsize #1.7 {
-        \char-space #1 { "hartverminderter Dreiklang: " }
-        {
-          "große + verminderte Terz"
-        }
-      }
-    }
-    \vspace#0.5
     \justify {
-      \override #'(line-width . 20)
-      \score {
+      \score
+      {
         \new Staff
-        \with {
+        \with
+        {
           \remove "Time_signature_engraver"
           %\remove "Clef_engraver"
           \remove "Bar_engraver"
         }
-        \relative c' { s1  < c e geses >1  }
-        \layout {}
+        \relative c' {
+          <<
+            \context Voice  {
+              \override Staff.InstrumentName.font-size = #2
+              \override Staff.InstrumentName.self-alignment-X = #CENTER
+              \set Staff.instrumentName= \markup \left-column { \bold "E-Dur" }
+              s1
+              \key e \major
+              \transpose c e
+              { \JazzChords < c' e' geses' > < c' es' geses' > }
+            }
+            \new ChordNames
+            {
+              \germanChords s1
+              \key e \major
+              \transpose c e
+              \JazzChords
+            }
+          >>
+        }
+        \layout
+        {
+          ragged-right=##f
+          line-width=#'120
+          indent = #'20
+        }
+      }
+    }
+
+
+    \vspace#1.5
+    \justify {
+      \score
+      {
+        \new Staff
+        \with
+        {
+          \remove "Time_signature_engraver"
+          %\remove "Clef_engraver"
+          \remove "Bar_engraver"
+        }
+        \relative c' {
+          <<
+            \context Voice  {
+              \override Staff.InstrumentName.font-size = #2
+              \override Staff.InstrumentName.self-alignment-X = #CENTER
+              \set Staff.instrumentName= \markup \left-column { \bold "H-Dur" }
+              s1
+              \key h \major
+              \transpose c h
+              { \JazzChords < c' e' geses' > < c' es' geses' > }
+            }
+            \new ChordNames
+            {
+              \germanChords s1
+              \key h \major
+              \transpose c h
+              \JazzChords
+            }
+          >>
+        }
+        \layout
+        {
+          ragged-right=##f
+          line-width=#'120
+          indent = #'20
+        }
       }
     }
 
     \vspace#1.5
-    \justify      {
-      \fontsize #1.7 {
-        \char-space #1 { "hartverminderter Dreiklang: " }
-        {
-          "verminderte + große Terz"
-        }
-      }
-    }
-    \vspace#0.5
     \justify {
-      \override #'(line-width . 20)
-      \score {
+      \score
+      {
         \new Staff
-        \with {
+        \with
+        {
           \remove "Time_signature_engraver"
           %\remove "Clef_engraver"
           \remove "Bar_engraver"
         }
-        \relative c' { s1  < cis es g >1  }
-        \layout { }
+        \relative c' {
+          <<
+            \context Voice  {
+              \override Staff.InstrumentName.font-size = #2
+              \override Staff.InstrumentName.self-alignment-X = #CENTER
+              \set Staff.instrumentName= \markup \left-column { \bold "Fis-Dur" }
+              s1
+              \key fis \major
+              \transpose c fis
+              { \JazzChords < c' e' geses' > < c' es' geses' > }
+            }
+            \new ChordNames
+            {
+              \germanChords s1
+              \key fis \major
+              \transpose c fis
+              \JazzChords
+            }
+          >>
+        }
+        \layout
+        {
+          ragged-right=##f
+          line-width=#'120
+          indent = #'20
+        }
+      }
+    }
+  }
+}
+\bookpart
+{
+
+  \markuplist
+  {
+    \vspace#3.5
+    \abs-fontsize #15
+    {
+      \bold \smallCaps
+      "Tabelle aller Dreiklänge der B-Tonarten"
+    }
+    \vspace#3.5
+    \justify {
+      \score
+      {
+        \new Staff
+        \with
+        {
+          \remove "Time_signature_engraver"
+          %\remove "Clef_engraver"
+          \remove "Bar_engraver"
+        }
+        \relative c' {
+          <<
+            \context Voice  {
+              \override Staff.InstrumentName.font-size = #2
+              \override Staff.InstrumentName.self-alignment-X = #CENTER
+              \set Staff.instrumentName= \markup \left-column { \bold "Ges-Dur" }
+              s1
+              \key ges \major
+              \transpose c ges
+              \JazzChords
+            }
+            \new ChordNames
+            {
+              \germanChords s1
+              \key ges \major
+              \transpose c ges
+              \JazzChords
+            }
+          >>
+        }
+        \layout
+        {
+          ragged-right=##f
+          line-width=#'120
+          indent = #'20
+        }
+      }
+    }
+
+    \vspace#1.5
+    \justify {
+      \score
+      {
+        \new Staff
+        \with
+        {
+          \remove "Time_signature_engraver"
+          %\remove "Clef_engraver"
+          \remove "Bar_engraver"
+        }
+        \relative c' {
+          <<
+            \context Voice  {
+              \override Staff.InstrumentName.font-size = #2
+              \override Staff.InstrumentName.self-alignment-X = #CENTER
+              \set Staff.instrumentName= \markup \left-column { \bold "Des-Dur" }
+              s1
+              \key des \major
+              \transpose c des
+              \JazzChords < c e geses > < c es geses >
+            }
+            \new ChordNames
+            {
+              \germanChords s1
+              \key des \major
+              \transpose c des
+              \JazzChords
+            }
+          >>
+        }
+        \layout
+        {
+          ragged-right=##f
+          line-width=#'120
+          indent = #'20
+        }
+      }
+    }
+
+    \vspace#1.5
+    \justify {
+      \score
+      {
+        \new Staff
+        \with
+        {
+          \remove "Time_signature_engraver"
+          %\remove "Clef_engraver"
+          \remove "Bar_engraver"
+        }
+        \relative c' {
+          <<
+            \context Voice  {
+              \override Staff.InstrumentName.font-size = #2
+              \override Staff.InstrumentName.self-alignment-X = #CENTER
+              \set Staff.instrumentName= \markup \left-column { \bold "As-Dur" }
+              s1
+              \key as \major
+              \transpose c as
+              { \JazzChords  }
+            }
+            \new ChordNames
+            {
+              \germanChords s1
+              \key as \major
+              \transpose c as
+              \JazzChords
+            }
+          >>
+        }
+        \layout
+        {
+          ragged-right=##f
+          line-width=#'120
+          indent = #'20
+        }
+      }
+    }
+    \vspace#1.5
+    \justify {
+      \score
+      {
+        \new Staff
+        \with
+        {
+          \remove "Time_signature_engraver"
+          %\remove "Clef_engraver"
+          \remove "Bar_engraver"
+        }
+        \relative c' {
+          <<
+            \context Voice  {
+              \override Staff.InstrumentName.font-size = #2
+              \override Staff.InstrumentName.self-alignment-X = #CENTER
+              \set Staff.instrumentName= \markup \left-column { \bold "Es-Dur" }
+              s1
+              \key es \major
+              \transpose c es
+              { \JazzChords  }
+            }
+            \new ChordNames
+            {
+              \germanChords s1
+              \key es \major
+              \transpose c es
+              \JazzChords
+            }
+          >>
+        }
+        \layout
+        {
+          ragged-right=##f
+          line-width=#'120
+          indent = #'20
+        }
+      }
+    }
+    \vspace#1.5
+    \justify {
+      \score
+      {
+        \new Staff
+        \with
+        {
+          \remove "Time_signature_engraver"
+          %\remove "Clef_engraver"
+          \remove "Bar_engraver"
+        }
+        \relative c' {
+          <<
+            \context Voice  {
+              \override Staff.InstrumentName.font-size = #2
+              \override Staff.InstrumentName.self-alignment-X = #CENTER
+              \set Staff.instrumentName= \markup \left-column { \bold "B-Dur" }
+              s1
+              \key b \major
+              \transpose c b
+              { \JazzChords < c' e' geses' > < c' es' geses' > }
+            }
+            \new ChordNames
+            {
+              \germanChords s1
+              \key b \major
+              \transpose c b
+              \JazzChords
+            }
+          >>
+        }
+        \layout
+        {
+          ragged-right=##f
+          line-width=#'120
+          indent = #'20
+        }
+      }
+    }
+    \vspace#1.5
+    \justify {
+      \score
+      {
+        \new Staff
+        \with
+        {
+          \remove "Time_signature_engraver"
+          %\remove "Clef_engraver"
+          \remove "Bar_engraver"
+        }
+        \relative c' {
+          <<
+            \context Voice  {
+              \override Staff.InstrumentName.font-size = #2
+              \override Staff.InstrumentName.self-alignment-X = #CENTER
+              \set Staff.instrumentName= \markup \left-column { \bold "F-Dur" }
+              s1
+              \key f \major
+              \transpose c f
+              { \JazzChords < c' e' geses' > < c' es' geses' > }
+            }
+            \new ChordNames
+            {
+              \germanChords s1
+              \key f \major
+              \transpose c f
+              \JazzChords
+            }
+          >>
+        }
+        \layout
+        {
+          ragged-right=##f
+          line-width=#'120
+          indent = #'20
+        }
+      }
+    }
+    \vspace#1.5
+    \justify {
+      \score
+      {
+        \new Staff
+        \with
+        {
+          \remove "Time_signature_engraver"
+          %\remove "Clef_engraver"
+          \remove "Bar_engraver"
+        }
+        \relative c' {
+          <<
+            \context Voice  {
+              \override Staff.InstrumentName.font-size = #2
+              \override Staff.InstrumentName.self-alignment-X = #CENTER
+              \set Staff.instrumentName= \markup \left-column { \bold "C-Dur" }
+              s1
+              \JazzChords < c e geses > < c es geses >
+            }
+            \new ChordNames
+            {
+              \germanChords s1
+              \JazzChords
+            }
+          >>
+        }
+        \layout
+        {
+          ragged-right=##f
+          line-width=#'120
+          indent = #'20
+        }
       }
     }
   }
