@@ -1,0 +1,694 @@
+
+\bookpart
+{
+  \markuplist
+  {
+    \vspace#3.5
+    \abs-fontsize #15
+    {
+      \bold \smallCaps
+      "Tabelle aller Septakkorde der Kreuz-Tonarten"
+    }
+    \vspace#3.5
+    \justify {
+      \score
+      {
+        \new Staff
+        \with
+        {
+          \remove "Time_signature_engraver"
+          %\remove "Clef_engraver"
+          \remove "Bar_engraver"
+        }
+        \relative c' {
+          <<
+            \context Voice  {
+              \override Staff.InstrumentName.font-size = #2
+              \override Staff.InstrumentName.self-alignment-X = #CENTER
+              \set Staff.instrumentName= \markup \left-column { \bold "C-Dur" }
+              s1
+              \SeptChords
+            }
+            \new ChordNames
+            {
+              \germanChords s1
+              \SeptChords
+            }
+          >>
+        }
+        \layout
+        {
+          ragged-right=##f
+          line-width=#'160
+          indent = #'10
+        }
+      }
+    }
+
+    \vspace#1.5
+    \justify {
+      \score
+      {
+        \new Staff
+        \with
+        {
+          \remove "Time_signature_engraver"
+          %\remove "Clef_engraver"
+          \remove "Bar_engraver"
+        }
+        \relative c' {
+          <<
+            \context Voice  {
+              \override Staff.InstrumentName.font-size = #2
+              \override Staff.InstrumentName.self-alignment-X = #CENTER
+              \set Staff.instrumentName= \markup \left-column { \bold "G-Dur" }
+              s1
+              \key g \major
+              \transpose c g
+              { \SeptChords  }
+            }
+            \new ChordNames
+            {
+              \germanChords s1
+              \key g \major
+              \transpose c g
+              \SeptChords
+            }
+          >>
+        }
+        \layout
+        {
+          ragged-right=##f
+          line-width=#'160
+          indent = #'10
+        }
+      }
+    }
+
+    \vspace#1.5
+    \justify {
+      \score
+      {
+        \new Staff
+        \with
+        {
+          \remove "Time_signature_engraver"
+          %\remove "Clef_engraver"
+          \remove "Bar_engraver"
+        }
+        \relative c' {
+          <<
+            \context Voice  {
+              \override Staff.InstrumentName.font-size = #2
+              \override Staff.InstrumentName.self-alignment-X = #CENTER
+              \set Staff.instrumentName= \markup \left-column { \bold "D-Dur" }
+              s1
+              \key d \major
+              \transpose c d
+              { \SeptChords  }
+            }
+            \new ChordNames
+            {
+              \germanChords s1
+              \key d \major
+              \transpose c d
+              \SeptChords
+            }
+          >>
+        }
+        \layout
+        {
+          ragged-right=##f
+          line-width=#'160
+          indent = #'10
+        }
+      }
+    }
+
+    \vspace#1.5
+    \justify {
+      \score
+      {
+        \new Staff
+        \with
+        {
+          \remove "Time_signature_engraver"
+          %\remove "Clef_engraver"
+          \remove "Bar_engraver"
+        }
+        \relative c' {
+          <<
+            \context Voice  {
+              \override Staff.InstrumentName.font-size = #2
+              \override Staff.InstrumentName.self-alignment-X = #CENTER
+              \set Staff.instrumentName= \markup \left-column { \bold "A-Dur" }
+              s1
+              \key a \major
+              \transpose c a
+              { \SeptChords  }
+            }
+            \new ChordNames
+            {
+              \germanChords s1
+              \key a \major
+              \transpose c a
+              \SeptChords
+            }
+          >>
+        }
+        \layout
+        {
+          ragged-right=##f
+          line-width=#'160
+          indent = #'10
+        }
+      }
+    }
+
+    \vspace#1.5
+    \justify {
+      \score
+      {
+        \new Staff
+        \with
+        {
+          \remove "Time_signature_engraver"
+          %\remove "Clef_engraver"
+          \remove "Bar_engraver"
+        }
+        \relative c' {
+          <<
+            \context Voice  {
+              \override Staff.InstrumentName.font-size = #2
+              \override Staff.InstrumentName.self-alignment-X = #CENTER
+              \set Staff.instrumentName= \markup \left-column { \bold "E-Dur" }
+              s1
+              \key e \major
+              \transpose c e
+              { \SeptChords  }
+            }
+            \new ChordNames
+            {
+              \germanChords s1
+              \key e \major
+              \transpose c e
+              \SeptChords
+            }
+          >>
+        }
+        \layout
+        {
+          ragged-right=##f
+          line-width=#'160
+          indent = #'10
+        }
+      }
+    }
+
+
+    \vspace#1.5
+    \justify {
+      \score
+      {
+        \new Staff
+        \with
+        {
+          \remove "Time_signature_engraver"
+          %\remove "Clef_engraver"
+          \remove "Bar_engraver"
+        }
+        \relative c' {
+          <<
+            \context Voice  {
+              \override Staff.InstrumentName.font-size = #2
+              \override Staff.InstrumentName.self-alignment-X = #CENTER
+              \set Staff.instrumentName= \markup \left-column { \bold "H-Dur" }
+              s1
+              \key h \major
+              \transpose c h
+              { \SeptChords  }
+            }
+            \new ChordNames
+            {
+              \germanChords s1
+              \key h \major
+              \transpose c h
+              \SeptChords
+            }
+          >>
+        }
+        \layout
+        {
+          ragged-right=##f
+          line-width=#'160
+          indent = #'10
+        }
+      }
+    }
+
+    \vspace#1.5
+    \justify {
+      \score
+      {
+        \new Staff
+        \with
+        {
+          \remove "Time_signature_engraver"
+          %\remove "Clef_engraver"
+          \remove "Bar_engraver"
+        }
+        \relative c' {
+          <<
+            \context Voice  {
+              \override Staff.InstrumentName.font-size = #2
+              \override Staff.InstrumentName.self-alignment-X = #CENTER
+              \set Staff.instrumentName= \markup \left-column { \bold "Fis-Dur" }
+              s1
+              \key fis \major
+              \transpose c fis
+              { \SeptChords  }
+            }
+            \new ChordNames
+            {
+              \germanChords s1
+              \key fis \major
+              \transpose c fis
+              \SeptChords
+            }
+          >>
+        }
+        \layout
+        {
+          ragged-right=##f
+          line-width=#'160
+          indent = #'10
+        }
+      }
+    }
+  }
+}
+\bookpart
+{
+
+  \markuplist
+  {
+    \vspace#3.5
+    \abs-fontsize #15
+    {
+      \bold \smallCaps
+      "Tabelle aller Septakkorde der B-Tonarten"
+    }
+    \vspace#3.5
+    \justify {
+      \score
+      {
+        \new Staff
+        \with
+        {
+          \remove "Time_signature_engraver"
+          %\remove "Clef_engraver"
+          \remove "Bar_engraver"
+        }
+        \relative c' {
+          <<
+            \context Voice  {
+              \override Staff.InstrumentName.font-size = #2
+              \override Staff.InstrumentName.self-alignment-X = #CENTER
+              \set Staff.instrumentName= \markup \left-column { \bold "Ges-Dur" }
+              s1
+              \key ges \major
+              \transpose c ges
+              \SeptChords
+            }
+            \new ChordNames
+            {
+              \germanChords s1
+              \key ges \major
+              \transpose c ges
+              \SeptChords
+            }
+          >>
+        }
+        \layout
+        {
+          ragged-right=##f
+          line-width=#'160
+          indent = #'10
+        }
+      }
+    }
+
+    \vspace#1.5
+    \justify {
+      \score
+      {
+        \new Staff
+        \with
+        {
+          \remove "Time_signature_engraver"
+          %\remove "Clef_engraver"
+          \remove "Bar_engraver"
+        }
+        \relative c' {
+          <<
+            \context Voice  {
+              \override Staff.InstrumentName.font-size = #2
+              \override Staff.InstrumentName.self-alignment-X = #CENTER
+              \set Staff.instrumentName= \markup \left-column { \bold "Des-Dur" }
+              s1
+              \key des \major
+              \transpose c des
+              \SeptChords < c e geses > < c es geses >
+            }
+            \new ChordNames
+            {
+              \germanChords s1
+              \key des \major
+              \transpose c des
+              \SeptChords
+            }
+          >>
+        }
+        \layout
+        {
+          ragged-right=##f
+          line-width=#'160
+          indent = #'10
+        }
+      }
+    }
+
+    \vspace#1.5
+    \justify {
+      \score
+      {
+        \new Staff
+        \with
+        {
+          \remove "Time_signature_engraver"
+          %\remove "Clef_engraver"
+          \remove "Bar_engraver"
+        }
+        \relative c' {
+          <<
+            \context Voice  {
+              \override Staff.InstrumentName.font-size = #2
+              \override Staff.InstrumentName.self-alignment-X = #CENTER
+              \set Staff.instrumentName= \markup \left-column { \bold "As-Dur" }
+              s1
+              \key as \major
+              \transpose c as
+              { \SeptChords  }
+            }
+            \new ChordNames
+            {
+              \germanChords s1
+              \key as \major
+              \transpose c as
+              \SeptChords
+            }
+          >>
+        }
+        \layout
+        {
+          ragged-right=##f
+          line-width=#'160
+          indent = #'10
+        }
+      }
+    }
+    \vspace#1.5
+    \justify {
+      \score
+      {
+        \new Staff
+        \with
+        {
+          \remove "Time_signature_engraver"
+          %\remove "Clef_engraver"
+          \remove "Bar_engraver"
+        }
+        \relative c' {
+          <<
+            \context Voice  {
+              \override Staff.InstrumentName.font-size = #2
+              \override Staff.InstrumentName.self-alignment-X = #CENTER
+              \set Staff.instrumentName= \markup \left-column { \bold "Es-Dur" }
+              s1
+              \key es \major
+              \transpose c es
+              { \SeptChords  }
+            }
+            \new ChordNames
+            {
+              \germanChords s1
+              \key es \major
+              \transpose c es
+              \SeptChords
+            }
+          >>
+        }
+        \layout
+        {
+          ragged-right=##f
+          line-width=#'160
+          indent = #'10
+        }
+      }
+    }
+    \vspace#1.5
+    \justify {
+      \score
+      {
+        \new Staff
+        \with
+        {
+          \remove "Time_signature_engraver"
+          %\remove "Clef_engraver"
+          \remove "Bar_engraver"
+        }
+        \relative c' {
+          <<
+            \context Voice  {
+              \override Staff.InstrumentName.font-size = #2
+              \override Staff.InstrumentName.self-alignment-X = #CENTER
+              \set Staff.instrumentName= \markup \left-column { \bold "B-Dur" }
+              s1
+              \key b \major
+              \transpose c b
+              { \SeptChords  }
+            }
+            \new ChordNames
+            {
+              \germanChords s1
+              \key b \major
+              \transpose c b
+              \SeptChords
+            }
+          >>
+        }
+        \layout
+        {
+          ragged-right=##f
+          line-width=#'160
+          indent = #'10
+        }
+      }
+    }
+    \vspace#1.5
+    \justify {
+      \score
+      {
+        \new Staff
+        \with
+        {
+          \remove "Time_signature_engraver"
+          %\remove "Clef_engraver"
+          \remove "Bar_engraver"
+        }
+        \relative c' {
+          <<
+            \context Voice  {
+              \override Staff.InstrumentName.font-size = #2
+              \override Staff.InstrumentName.self-alignment-X = #CENTER
+              \set Staff.instrumentName= \markup \left-column { \bold "F-Dur" }
+              s1
+              \key f \major
+              \transpose c f
+              { \SeptChords  }
+            }
+            \new ChordNames
+            {
+              \germanChords s1
+              \key f \major
+              \transpose c f
+              \SeptChords
+            }
+          >>
+        }
+        \layout
+        {
+          ragged-right=##f
+          line-width=#'160
+          indent = #'10
+        }
+      }
+    }
+    \vspace#1.5
+    \justify {
+      \score
+      {
+        \new Staff
+        \with
+        {
+          \remove "Time_signature_engraver"
+          %\remove "Clef_engraver"
+          \remove "Bar_engraver"
+        }
+        \relative c' {
+          <<
+            \context Voice  {
+              \override Staff.InstrumentName.font-size = #2
+              \override Staff.InstrumentName.self-alignment-X = #CENTER
+              \set Staff.instrumentName= \markup \left-column { \bold "C-Dur" }
+              s1
+              \SeptChords
+            }
+            \new ChordNames
+            {
+              \germanChords s1
+              \SeptChords
+            }
+          >>
+        }
+        \layout
+        {
+          ragged-right=##f
+          line-width=#'160
+          indent = #'10
+        }
+      }
+    }
+  }
+}
+
+\bookpart
+{
+  \markuplist
+  {
+    % put some space here
+    \vspace#2.5
+    \abs-fontsize #15
+    {
+      \bold \smallCaps
+      "Die Stellungen des Septakkordes"
+    }
+    \vspace#1.5
+    \wordwrap {
+      \fontsize #1.5 {
+        Ohne Beeinträchtigung der harmonischen Bedeutung kann die Quinte weggelassen
+        werden, da sich das Tongeschlecht aus der Terz ergibt. Wenn die Quinte vermindert
+        oder übermäßig sein soll, dann muss sie im Akkord enthalten sein.
+      }
+    }
+    \vspace#1.5
+    \wordwrap {
+      \fontsize #1.5 {
+        Wie beim Dreiklang wird die Stellung eines Septakkordes von "seinem "
+        \char-space #1 { "tiefsten" }
+        " Ton" bestimmt. Da der Septakkord vier Terzen enthält, ergeben sich vier
+        Umkehrungen.
+      }
+    }
+
+    \vspace#1
+    \justify
+    {
+      \fontsize #1.7 {
+        \char-space #1 { "Grundstellung: " }
+        {
+          "an der tiefsten Stelle steht der Grundton"
+        }
+      }
+    }
+    \vspace#1
+    \wordwrap
+    {
+      \fontsize #1.7 {
+        \char-space #1 { "1. Umkehrung " } " ‒ " \char-space #1 { " Quintsextakkord: " }
+
+        "an der tiefsten Stelle steht die Terz"
+      }
+    }
+    \vspace#1
+    \wordwrap
+    {
+      \fontsize #1.7 {
+        \char-space #1 { "2. Umkehrung " } " ‒ " \char-space #1 { " Terzquartakkord: " }
+        {
+          "an der tiefsten Stelle steht die Quinte"
+        }
+      }
+    }
+    \vspace#1
+    \wordwrap
+    {
+      \fontsize #1.7 {
+        \char-space #1 { "3. Umkehrung " } " ‒ " \char-space #1 { " Sekundakkord: " }
+        {
+          "an der tiefsten Stelle steht die Septime"
+        }
+      }
+    }
+    \vspace#1.5
+    \justify {
+      \override #'(line-width . 20)
+      \score {
+        \new Staff
+        \with {
+          \remove "Time_signature_engraver"
+          %\remove "Clef_engraver"
+          \remove "Bar_engraver"
+        }
+        \relative c' {
+          s1  < c e g h >1 < e h' \tweak color #red c >
+          < g h  \tweak color #red c e > < h, \tweak color #red c e g>
+        }
+        \layout {}
+      }
+    }
+
+    \vspace#1.5
+    \wordwrap {
+      \fontsize #1.5 {
+        Den Grundton eines Septakkordes in Umkehrstellung kann man mit einem Blick
+        erkennen: es ist immer der obere Ton der Sekund.
+      }
+    }
+    \vspace#2.5
+    \abs-fontsize #15
+    {
+      \bold \smallCaps
+      "Der verminderte Septakkord"
+    }
+    \vspace#1.5
+    \wordwrap {
+      \fontsize #1.5 {
+        Der verminderte Septakkord tritt als leitereigener Dreiklang
+        von Moll-Tonleitern auf. Da er aus drei kleinen Terzen besteht, kann
+        nicht auf den ersten Blick gesagt werden, zu welcher Tonart er gehört.
+        Außerdem ist jede Umkehrung gleichzeitig die Grundstellung eines enharmonisch
+        verwechselten verminderten Septakkords.
+      }
+    }
+    \vspace#0.5
+    \wordwrap {
+      \fontsize #1.5 {
+        Durch diese Besonderheit gibt es überhaupt nur drei verschiedene
+        verminderte Septakkorde, wobei die Umkehrungen jeweils durch enharmonische Verwechslung
+        ineinander übergeführt werden können.
+        Jeder verminderte Septakkord ist gleichzeitig Grundstellung und Umkehrung.
+      }
+    }
+  }
+}
