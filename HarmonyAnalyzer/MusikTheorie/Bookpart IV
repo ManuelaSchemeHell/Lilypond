@@ -1,0 +1,102 @@
+\bookpart
+{
+  \markuplist
+  {
+    % put some space here
+    \vspace#3.5
+    \abs-fontsize #20
+    {
+      \bold \smallCaps
+      "Septakkorde"
+    }
+    \vspace#2.5
+    \wordwrap {
+      \fontsize #1.5 {
+        Drei übereinandergestellte Terzen ergeben einen Vierklang, der Septakkord genannt wird.
+        Betrachten wir die großen und kleinen Terzen, so ergäben sich insgesamt acht
+        verschiedene Möglichkeiten, um einen Septakkord zu bilden. Da vier große Terzen
+        übereinander geschichtet einen übermäßigen Dreiklang ergeben, wird diese Möglichkeit
+        nicht berücksichtigt.
+      }
+    }
+    \vspace#2
+    \justify      {
+      \fontsize #2 {
+        \char-space #1 { "Septakkorde" }
+        {
+          " "
+        }
+      }
+    }
+    % put some space here
+    \vspace#0.5
+    \justify {
+      % \override #'(line-width . 280)
+      \score {
+        \new Staff
+        \with {
+          \remove "Time_signature_engraver"
+          %\remove "Clef_engraver"
+          \remove "Bar_engraver"
+        }
+        <<
+          \context Voice { \SeptChords }
+          \new ChordNames \SeptChords
+        >>
+        \layout {
+          indent = #'0
+          line-width = #160
+        }
+      }
+    }
+    \vspace#2.5
+    \abs-fontsize #15
+    {
+      \bold \smallCaps
+      "Vierklänge mit Dur-Terz"
+    }
+    \vspace#1.5
+    \wordwrap {
+      \fontsize #1.5 {
+        C \super "maj7" ": C-Dur Septakkord mit großer Septime, " \italic Major"-Septakkord"
+      }
+    }
+    \wordwrap {
+      \fontsize #1.5 {
+        C \super "7" ": C-Dur Dominant-Septakkord"
+      }
+    }
+    \wordwrap {
+      \fontsize #1.5 {
+        C \super { "maj7" \flat "5" } ": halbverminderte C-Dur" \italic "Major" "-Septakkord"
+      }
+    }
+    \vspace#2.5
+    \abs-fontsize #15
+    {
+      \bold \smallCaps
+      "Vierklänge mit Moll-Terz"
+    }
+    \vspace#1.5
+    \wordwrap {
+      \fontsize #1.5 {
+        Cm \super { "maj7" } ":     C-Moll" \italic "Major" "-Septakkord"
+      }
+    }
+    \wordwrap {
+      \fontsize #1.5 {
+        Cm \super "7" ":         C-Moll Dominant-Septakkord"
+      }
+    }
+    \wordwrap {
+      \fontsize #1.5 {
+        Cm \super { "maj7" \flat "5" } ": halbverminderter C-Moll" \italic "Major" "-Septakkord"
+      }
+    }
+    \wordwrap {
+      \fontsize #1.5 {
+        C \super { "dim7" } ":        verminderter C-Septakkord"
+      }
+    }
+  }
+}
