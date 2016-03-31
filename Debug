@@ -21,3 +21,55 @@ Once the module is properly loaded, any valid LilyPond Scheme expression can be 
 After the investigation is complete, the interactive guile interpreter can be exited:
 
     guile> (quit)
+
+Harms Lösung:
+
+\version "2.19.4"
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% writing info in a new file
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+#(define* ((my-write #:optional (port (current-output-port))
+                                (option "a") ;; or "w"
+                                (write-proc display))
+                     arg)
+;; my-write is meant as a general custom-definition of write/display etc
+;; to make other custom-definitions possible quite easily
+;;
+;; optional arguments are
+;;	port       - defaults to the terminal on most systems
+;;                   can be set to a file-name-string
+;;      option     - default "a" means the output is appended
+;;		     "w" means the file content will be overriden.
+;;                   Only used if port is not the default
+;;      write-proc - defaults to display
+;;		     other possible settings are write or
+;;		     pretty-print (with the need to use the relevant modules)
+;;
+;; (my-write) without any specification is pretty much the same as display with
+;; an added (newline)
+;; Also, see 'write-line'
+                 
+  (let* ((port (if (eq? (current-output-port) port)
+                   port
+                   (open-file port option))))
+    (write-proc arg port)
+    (newline port)
+    (if (not (eq? (current-output-port) port))
+        (close port))))
+       
+%% Example-definition:
+% Need to set the following to make pretty-print possible
+#(use-modules (ice-9 pretty-print))
+
+#(define (write-to-log arg)
+((my-write "log.txt" "a" pretty-print) arg))
+
+
+%% EXAMPLES
+
+#(write-to-log  "blabla")
+
+%#(write-to-log all-user-grob-properties)
