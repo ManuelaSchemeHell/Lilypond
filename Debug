@@ -1,0 +1,23 @@
+First, define a Scheme symbol for the active module in the ‘.ly’ file:
+
+    #(module-define! (resolve-module '(guile-user))
+                     'lilypond-module (current-module))
+
+Now place a Scheme function in the ‘.ly’ file that gives an interactive Guile prompt:
+
+    #(top-repl)
+
+When the ‘.ly’ file is compiled, this causes the compilation to be interrupted and an interactive guile prompt to appear.
+Once the guile prompt appears, the LilyPond active module must be set as the current guile module:
+
+    guile> (set-current-module lilypond-module)
+
+To set breakpoints and/or enable tracing in Scheme functions, put
+
+    \include "guile-debugger.ly"
+
+Once the module is properly loaded, any valid LilyPond Scheme expression can be entered at the interactive prompt.
+
+After the investigation is complete, the interactive guile interpreter can be exited:
+
+    guile> (quit)
