@@ -1,0 +1,56 @@
+\version "2.18.2"
+\header {
+}
+global = {
+  \key f \minor
+  \time 4/4
+}
+chordFlat = \markup { \hspace #0.2 \fontsize #-2 \raise #0.8 \flat }
+chordSharp = \markup { \hspace #0.2 \fontsize #-3 \raise #0.8 \sharp }
+chExceptionMusic = {
+  <c es g>1-\markup {"mi"  "7"(\chordFlat "5") }
+  <c e gis>1-\markup { \super "+7"}
+  <c e g bes d'>1-\markup { "7"("9")}
+  <c e g bes d' f'>1-\markup { "9"(\chordSharp "11")}
+}
+chExceptions = #( append
+  ( sequential-music-to-chord-exceptions chExceptionMusic #t)
+  ignatzekExceptions)
+chordNames = \chordmode {
+  \global
+  \set chordNameExceptions = #chExceptions
+  a1:m
+  d:aug
+  des:9
+  es:11
+}
+right =  { \global R1*4 }
+left = { \global R1*4 }
+chordsPart =
+  \new ChordNames \chordNames
+pianoPart =
+  \new PianoStaff
+    \with { instrumentName = "Klavier" }
+    <<
+    \new Staff = "right" \right
+    \new Staff = "left"
+     \new Voice
+      \with {
+        \consists Pitch_squash_engraver
+      }
+       %{ \omit Stem
+        \improvisationOn %}
+      { \clef bass \left }
+    >>
+\score {
+  <<
+    \chordsPart
+    \pianoPart
+  >>
+  \layout {
+    \context {
+      \Score
+      minorChordModifier = #(make-simple-markup "mi")
+    }
+  }
+}
