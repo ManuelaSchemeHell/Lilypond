@@ -1,0 +1,10 @@
+silence =
+#(define-music-function (arg) (ly:music?)
+   (map-some-music
+     (lambda (m)
+        (and (music-is-of-type? m 'note-event)
+             (make-music 'SkipEvent m)))
+     arg))
+
+\displayLilyMusic
+\silence { c4 \tempo 4=100 f8\p g8 }
