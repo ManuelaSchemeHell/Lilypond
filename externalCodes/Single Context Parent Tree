@@ -1,0 +1,56 @@
+\version "2.19.36"
+
+#(define (single-context-parent-tree ctx)
+   (if (and (ly:context? ctx) (ly:context? (ly:context-parent ctx)))
+       (single-context-parent-tree (ly:context-parent ctx))
+       (format #f "~a" ctx)))
+
+printBottomContextParents =
+\context Bottom
+\applyContext
+   #(lambda (a)
+     (let ((ls (drop-right
+                 (string-split
+                   (single-context-parent-tree a)
+                   (car (string->list "(")))
+                 1)))
+     (format #t "\n\nThe Context-parent-tree:")
+     (format #t
+       "\n(Only contexts of type Global, Score, Staff and Voice are
+printed)")
+     (for-each
+       (lambda (s)
+         (format #t "\n~a~a"
+           (cond ((string-contains s "Score")
+                  (make-string 1 #\tab))
+                 ((string-contains s "Staff")
+                  (make-string 2 #\tab))
+                 ((string-contains s "Voice")
+                  (make-string 3 #\tab))
+                 (else ""))
+           (string-trim-both s (lambda (c)
+                                 (or (eqv? c #\>)
+                                     (eqv? c #\sp)
+                                     (eqv? c #\)))))))
+       ls)))
+
+m = { c''4  }
+
+   \new Score = "my-score"
+     <<
+       \new Staff = "staff-1"
+         \new Voice = "voice-1"
+         <<
+           \new Voice = "voice-1a" { \voiceOne \m }
+           \new Voice = "voice-1b" { \voiceTwo \m }
+         >>
+       \new Staff = "staff-2"
+         \new Voice = "voice-2"
+         <<
+           \new Voice = "voice-2a" { \voiceOne \printBottomContextParents
+\m }
+           \new Voice = "voice-2b" { \voiceTwo \m }
+         >>
+     >>
+
+{ \printBottomContextParents \m }
