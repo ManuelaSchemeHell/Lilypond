@@ -8,3 +8,34 @@ silence =
 
 \displayLilyMusic
 \silence { c4 \tempo 4=100 f8\p g8 }
+
+a more common approach to the situation is using a separate music variable containing information common to all parts. E.g.
+
+
+%%%%%%%%%%%%%
+aux = {
+  \tempo 4 = 100
+  s1
+  \bar "|."
+}
+
+musicOne = { e'1 }
+musicTwo = { c'1 }
+
+\score {
+  <<
+    \new Staff <<
+      \new NullVoice \aux
+      \new Voice \musicOne
+    >>
+    \new Staff \new Voice \musicTwo
+  >>
+  \layout {}
+}
+
+\score {
+  \new Staff <<
+    \new NullVoice \aux
+    \new Voice \musicOne
+  >>
+  \midi {}
