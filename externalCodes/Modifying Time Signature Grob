@@ -1,0 +1,11 @@
+\new Staff
+{
+  \tweak stencil #(grob-transformer 'stencil
+                   (lambda (grob sten)
+                    (grob-interpret-markup grob
+                     #{ \markup \override #`(direction . ,UP)
+                        \dir-column \center-align { \stencil #sten Yoohoo! } 
+#})))
+  \time 12/8
+  c'1
+}
