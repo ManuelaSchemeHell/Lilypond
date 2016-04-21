@@ -1,7 +1,8 @@
 %% http://lsr.di.unimi.it/LSR/Item?id=777
 %% see also http://lsr.di.unimi.it/LSR/Item?id=639
 %% see also %% see also http://www.lilypond.org/doc/v2.18/Documentation/notation/expressive-marks-as-curves
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TRY: \override Slur #'attachment = #'(head . stem)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % http://lsr.dsi.unimi.it/LSR/Snippet?id=639 :
