@@ -1,0 +1,252 @@
+\version "2.19.37"
+
+\markup
+\column {
+  \override #'(font-name . "Century Schoolbook L Roman")
+  \line { \fontsize #5 "№" \fontsize #3 "Century Schoolbook L RomanabcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ" }
+  \override #'(font-name . "Constantia")
+  \line { \fontsize #5 "№" \fontsize #3 "ConstantiaabcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ" }
+  \override #'(font-name . "LettrGoth12")
+  \line { \fontsize #5 "№" \fontsize #3 "LettrGoth12abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ" }
+  \override #'(font-name . "Prestige12")
+  \line { \fontsize #5 "№" \fontsize #3 "Prestige12abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ" }
+  \override #'(font-name . "FreesiaUPC")
+  \line { \fontsize #5 "№" \fontsize #3 "FreesiaUPCabcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ" }
+  \override #'(font-name . "David")
+  \line {
+    \fontsize #5 "№" \fontsize #3 "David"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Monospac821 BT")
+  \line {
+    \fontsize #5 "№" \fontsize #3 "Monospac821 BT"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Arimo")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Arimo"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Nirmala UI")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Nirmala UI"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "DejaVu Serif")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "DejaVu Serif"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Batang")
+  \line { \fontsize #5 "№"  \fontsize #3 "BatangabcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ" }
+  \override #'(font-name . "Cordia New")
+  \line { \fontsize #5 "№"  \fontsize #3 "Cordia NewabcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ" }
+  \override #'(font-name . "Microsoft PhagsPa")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Microsoft PhagsPa"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Georgia")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Georgia"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Leelawadee")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Leelawadee"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Microsoft JhengHei UI")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Microsoft JhengHei UI"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Angsana New")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Angsana New"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Gentium Basic")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Gentium Basic"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "DexGothicD")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "DexGothicD"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Cambria Math")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Cambria Math"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Emmentaler-20")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Emmentaler-20"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Palatino Linotype")
+  \line {
+    \fontsize #8 "№"  \fontsize #3 "Palatino Linotype"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Ebrima")
+  \line {
+    \fontsize #8 "№"  \fontsize #3 "Ebrima"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Segoe Script")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Segoe Script"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Iskoola Pota")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Iskoola Pota"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Corbel")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Corbel"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Oranda BT")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Oranda BT"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "LilyUPC")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "LilyUPC"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "BrowalliaUPC")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "BrowalliaUPC"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Estrangelo Edessa")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Estrangelo Edessa"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Sakkal Majalla")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Sakkal Majalla"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Tunga")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Tunga"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "TeX Gyre Heros")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "TeX Gyre Heros"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Kokila")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Kokila"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Trebuchet MS")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Trebuchet MS"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Meiryo")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Meiryo"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Malgun Gothic")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Malgun Gothic"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Microsoft Tai Le")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Microsoft Tai Le"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Miriam Fixed")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Miriam Fixed"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Euphemia")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Euphemia"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Prestige12 BT")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Prestige12 BT"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Gentium Book Basic")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Gentium Book Basic"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Urdu Typesetting")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Urdu Typesetting"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+}
+\markup
+\column {
+  \override #'(font-name . "Browallia New")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Browallia New"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Constantia")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Constantia"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Constantia")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Constantia"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Constantia")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Constantia"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Constantia")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Constantia"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Constantia")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Constantia"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Constantia")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Constantia"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Constantia")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Constantia"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Constantia")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Constantia"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+  \override #'(font-name . "Constantia")
+  \line {
+    \fontsize #5 "№"  \fontsize #3 "Constantia"
+    "abcdefghijklmnopqrstuvwxyuäöüßABCDEFGHIJKLMNOPQRSTUVWXYUÄÖÜ"
+  }
+}
