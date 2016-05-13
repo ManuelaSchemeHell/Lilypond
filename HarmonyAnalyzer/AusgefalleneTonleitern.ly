@@ -294,7 +294,7 @@ Minor Pentatonic C, Eb, F, G, Bb, C
 
 Minor Blues Scales C, Eb, F, F#, G, Bb, C
 Major Blues Scales  C, D, Eb, E, G, A, C
-
+Ukrainian Dorian scale C D E♭ F♯ G A B♭ https://en.wikipedia.org/wiki/Ukrainian_Dorian_scale
     Status API Training Shop Blog About
 
     © 2016 GitHub, Inc. Terms Privacy Security Contact He
