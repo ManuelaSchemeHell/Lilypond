@@ -73,7 +73,7 @@ MeinHeader =
        \override TextScript.direction = #UP
        \override TextScript.font-size = #2
        \override TextScript.font-series = #'bold %normal
-       \override TextScript.padding = #-1
+       \override TextScript.padding = #-10
        \override TextScript.outside-staff-priority = ##f
        \consists #annotate-key-engraver
        \override annotate-key-engraver.outside-staff-priority = ##f
@@ -85,6 +85,7 @@ MeinHeader =
        \omit Staff.BarNumber
        \omit Staff.BarLine
        \override  Staff.StaffSymbol.line-count = #0
+       \stopStaff
        \textLengthOn
        \key $Pitch1 \major
        \annotateKeyRoot $mkup s1 %\markup "Leitereigene" s1
@@ -107,10 +108,11 @@ MeinLeiterHeader =
          \override TextScript.direction = #UP
          \override TextScript.font-size = #3
          \override TextScript.font-series = #'bold %normal
-         \override TextScript.padding = #-10
+         \override TextScript.padding = #-8
          \override TextScript.outside-staff-priority = ##f
          \consists #annotate-key-engraver
          \override annotate-key-engraver.outside-staff-priority = ##f
+         \override TextScript.extra-offset = #'(0 . -3)
        }
        {
          \omit Staff.KeySignature
@@ -124,6 +126,7 @@ MeinLeiterHeader =
          \textLengthOn
          \key $Pitch \major
          \annotateKey  \markup "Leitereigene Mehrklänge in" s1 s1-$mkup  s1 s1
+         \stopStaff
        }
      >>
      <<
@@ -141,28 +144,28 @@ MehrDur =
   \new Voice
   {
     <<
-      \new Voice \with {
-        \consists Clef_engraver
-      }
+      \new Voice
       {
         \key c \major
         \DurLeitereigeneDreiklaenge \bar "|." \break
       }
+      %%{
       \new Voice \with {
         \override TextScript.direction = #UP
         \override TextScript.font-size = #1.5
         \override TextScript.font-series = #'normal
         \override TextScript.self-alignment-X = #CENTER
-        \override TextScript.padding = #5
+        \override TextScript.padding = #6
         \override Score.RehearsalMark.padding = #0
         \override TextScript.outside-staff-priority = #1000
         \override Score.RehearsalMark.outside-staff-priority = ##f
       }
       {
-        \mark \markup \fontsize #1.2 "Dreiklänge"
+        \mark \markup \fontsize #1.2 "Dreiklänge "
         s1^\markup "Stufe I" s1^"II"  s1^"III"
         s1^"IV"  s1^"V"  s1^"VI"  s1^"VII"
-      }
+        \startStaff
+      } %}
       \new ChordNames
       {
         \DurLeitereigeneDreiklaenge \bar "|." \break
@@ -202,6 +205,7 @@ MehrMoll =
     <<
       \new Voice
       {
+        \tocItem \markup {  "Moll" }
         \key c \minor
         \MollLeitereigeneDreiklaenge \bar "|." \break
       }
@@ -210,7 +214,7 @@ MehrMoll =
         \override TextScript.font-size = #1.5
         \override TextScript.font-series = #'normal
         \override TextScript.self-alignment-X = #CENTER
-        \override TextScript.padding = #5
+        \override TextScript.padding = #6
         \override Score.RehearsalMark.padding = #0
         \override TextScript.outside-staff-priority = #1000
         \override Score.RehearsalMark.outside-staff-priority = ##f
@@ -253,9 +257,7 @@ MehrMoll =
 
 EineSeite =
 {
-  \transpose c c {
-    \MeinLeiterHeader c "-Dur"  \MehrDur
-  }
+  \MeinLeiterHeader c "-Dur"  \MehrDur
   \transpose c a, {
     \MeinLeiterHeader c "-Moll" \MehrMoll
   }
@@ -287,7 +289,7 @@ FootRight = #(string-append "gesetzt mit LILYPOND " (lilypond-version) " am " (s
     system-system-spacing.padding = #1
     score-system-spacing.basic-distance = #0
     last-bottom-spacing.basic-distance = #20
-    print-first-page-number = ##t
+    print-first-page-number = ##f
   }
   \header {
     title = ""
@@ -298,89 +300,49 @@ FootRight = #(string-append "gesetzt mit LILYPOND " (lilypond-version) " am " (s
       % \abs-fontsize #7.0 { \italic { \FootCenter } }
       \abs-fontsize #9 { \FootRight }
     }
+    copyright =\markup \abs-fontsize #7 "Copyright Manuela Gößnitzer"
+
     tagline = ""
   }
-  %{}
   \bookpart {
-    \score {
-      %\multipleTransposes \MeineTonarten \EineSeite
-      \EineSeite
+    %% a different page breaking function may be used on each part
+    \paper { page-breaking = #ly:minimal-breaking }
+    \header {
+      %subtitle = "Alle leitereigenen Drei-, Vier- und Fünfklänge"
+      title = \markup \fontsize #10 \center-column
+      {
+        " " " "
+        "(Fast Alle)"
+        " "
+        \fontsize #1.4 "Leitereigenen"
+        " "
+        \fontsize #1.4  "Drei-, Vier-"
+        \line { "und" \fontsize #1.8  " " }
+        \fontsize #1.4 "Fünfklänge"
+      }
+
+      copyright = \markup \fill-line {
+        \abs-fontsize #9 { \FootLeft }
+        % \abs-fontsize #7.0 { \italic { \FootCenter } }
+        \abs-fontsize #9 { \FootRight }
+      }
+      tagline = ""
     }
+    %\markup \fontsize #20 { The first book part }
+    %\markup { a page break }
+    \pageBreak
+    \markup { first part last page }
+    \markuplist \table-of-contents
+    %\markup \wordwrap { with ragged-last-bottom (see the space below this text) }
   }
-  \bookpart {
-    \score {
-      \transpose c g
-      \EineSeite
-    }
-  }
-  \bookpart {
-    \score {
-      \transpose c d
-      \EineSeite
-    }
-  }
-  \bookpart {
-    \score {
-      \transpose c a,
-      \EineSeite
-    }
-  }
-  \bookpart {
-    \score {
-      \transpose c e
-      \EineSeite
-    }
-  }
-  \bookpart {
-    \score {
-      \transpose c h,
-      \EineSeite
-    }
-  }
-  \bookpart {
-    \score {
-      \transpose c fis
-      \EineSeite
-    }
-  }
-  \bookpart {
-    \score {
-      \transpose c ges
-      \EineSeite
-    }
-  }
-  %}%
+
   \bookpart {
     \score {
       {
-        \multipleTransposes { c g  } \EineSeite
+        \multipleTransposes { c g d a, e h, fis ges des as, es b, f } \EineSeite
+        %\multipleTransposes { c g   des f } \EineSeite
       }
     }
   }
-  %{}
-  \bookpart {
-    \score {
-      \transpose c as
-      \EineSeite
-    }
-  }
-  \bookpart {
-    \score {
-      \transpose c es
-      \EineSeite
-    }
-  }
-  \bookpart {
-    \score {
-      \transpose c b
-      \EineSeite
-    }
-  }\bookpart {
-    \score {
-      \transpose c f
-      \EineSeite
-    }
-  }
-  %}%
   \myContext
 }
