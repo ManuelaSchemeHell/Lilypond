@@ -136,34 +136,10 @@ inst =
 
 #(define germanChords (chord-name->german-markup-text-alteration #t))
 
-myLayoutTwo =
-\layout {
-
-  \context {
-    \ChordNames
-    chordNameLowercaseMinor = ##f
-    chordRootNamer = #germanChords
-    chordNoteNamer = #note-name->german-markup
-  }
-  \context {
-    \Score
-    \remove "Bar_number_engraver" % Taktnummerierung
-    %\override BarNumber.break-visibility = #'#(#t #t #f)
-    % Alle Zeilen- und Seitenumbrüche ausschalten
-    %müssen manuell mit \break und \Pagebreak erzeugt werden
-    %dafür wird eine eigene unsichtbare Stimme verwendet
-    \override BarNumber.break-visibility = #end-of-line-invisible
-    \override BarNumber.self-alignment-X = #CENTER
-    \override NonMusicalPaperColumn.line-break-permission = ##f
-    \override NonMusicalPaperColumn.page-break-permission = ##f
-    %\override RehearsalMark.padding = #4
-    \override RehearsalMark.self-alignment-X = #LEFT
-    \override MetronomeMarkMark.padding = #-30
-    \override MetronomeMark.direction = #DOWN
-    %\override MetronomeMark.outside-staff-horizontal-padding = #-13
-    %\override MetronomeMark.horizontal-padding = #-13
-  }
-  
 chExceptions = #( append
                   ( sequential-music-to-chord-exceptions chExceptionMusic #t)
                   ignatzekExceptions)
+
+FootLeft = #(string-append "" )
+FootCenter = #(string-append "")
+FootRight = #(string-append "gesetzt mit LILYPOND " (lilypond-version) " am " (strftime "%d.%m.%Y %H:%M:%S" (localtime (current-time))))
