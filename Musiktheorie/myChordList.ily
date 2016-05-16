@@ -78,7 +78,7 @@ CChordsFDur =  \chordmode {
   c:13 c:13.11 c:sus4.9
 }
 
-CChordsCDur =  \chordmode {
+CChordsCDurOld =  \chordmode {
   c1:1 c:2 c:3
   c:sus2
   c:5 c:5.9
@@ -86,7 +86,15 @@ CChordsCDur =  \chordmode {
   c:sus4.9
   c:maj c:maj6 c:maj9
 }
-
+CChordsCDur =  \chordmode {
+  c1:1 c:2 c:3 c:5
+  c c:sus2 c:sus4
+  c:5.9
+  c:6 c:6.9 c:6.11 c:6.13
+  c:sus4.9
+  c:maj c:maj6
+  c:maj9
+}
 DurLeitereigeneDreiklaenge  = \chordmode { c1 d:m e:m f g a:m h:dim }
 DurLeitereigeneVierklaenge  = \chordmode { c1:maj7 d:m7 e:m7 f:maj7 g:7 a:m7 h:dim7.7 }
 DurLeitereigeneFuenfklaenge  = \chordmode { c1:maj9 d:m9 e:m9.9- f:maj9 g:9 a:m9 h:dim7.7.9- }
