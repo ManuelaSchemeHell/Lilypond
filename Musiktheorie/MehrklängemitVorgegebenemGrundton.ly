@@ -2,7 +2,7 @@
 
 \language "deutsch"
 \include "myExceptions.ily"
-\include "myPitch2String.ily"
+\include "myScheme.ily"
 \include "myChordList.ily"
 #(set-global-staff-size 18)
 
