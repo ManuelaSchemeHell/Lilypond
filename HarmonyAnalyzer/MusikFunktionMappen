@@ -1,0 +1,35 @@
+\version "2.19.38"
+#(define (music-name x)
+   (if (not (ly:music? x))
+       #f
+       (ly:music-property x 'name)))
+
+#(define (music-elts x)
+   (if (not (ly:music? x))
+       #()
+       (ly:music-property x 'elements)))
+
+#(define (make-a-list-all-chords-from-music music)
+   "Return a list of all Chords from @var{music}."
+   (reverse!
+    (let loop ((music music) (pitches '()))
+      (let ((p (music-name music)))
+        (if (eq? p 'EventChord)
+            (cons music pitches)
+            (let ((elt (ly:music-property music 'element)))
+              (fold loop
+                (if (ly:music? elt)
+                    (loop elt pitches)
+                    pitches)
+                (music-elts music))))))))
+                
+MyMappedMusicFunction=
+#(define-music-function (music)
+   (ly:music?)
+   (make-sequential-music
+    (map
+     (lambda (m)
+       #{
+         $m \bar ".." \break \relative c'' < c g e >-\markup "test"
+       #})
+     (make-a-list-all-chords-from-music music))))
