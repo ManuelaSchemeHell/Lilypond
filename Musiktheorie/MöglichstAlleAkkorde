@@ -4,8 +4,8 @@
 DurChords=
 {
   <c>1-\markup  "< c >"
-  <c e>1-\markup  "< c e >"
-  <c g>1-\markup  "< c g >"
+  <c e>1-\markup  "< c  e >"
+  <c g>1-\markup  "< c  g >"
   <c e g>1-\markup "< c e g >"
   %% Septakkorde
   <c e g h>1-\markup "<c e g h>"
@@ -334,6 +334,7 @@ DurChords=
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 MollChords=
 {
+  <c>1-\markup  "< c >"
   <c es g>1-\markup "<c es g>"
   %% Septakkorde
   <c es g h>1-\markup "<c es g h>"
@@ -662,6 +663,7 @@ MollChords=
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 DimChords=
 {
+  <c>1-\markup  "< c >"
   <c es ges>1-\markup "<c es ges>"
   %% Septakkorde
   <c es ges h>1-\markup "<c es ges h>"
@@ -1038,6 +1040,7 @@ AugChords=
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 SineTerz=
 {
+  <c>1-\markup  "< c >"
 %% Septakkorde
   <c g h>1-\markup "<c g h>"
   <c g b>1-\markup "<c g b>"
