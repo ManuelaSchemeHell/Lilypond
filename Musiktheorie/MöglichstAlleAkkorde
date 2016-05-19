@@ -1,404 +1,3 @@
-chExceptions = {
-
-  <c>1-\markup  "< c >"
-  <c e>1-\markup  "< c e >"
-  <c g>1-\markup  "< c g >"
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Dur Mehrklänge
-  <c e g>1-\markup "< c e g >"
-  %% Vierklänge
-  <c e g h>1-\markup "<c e g h>"
-  <c e g b>1-\markup "<c e g b>"
-  <c e g heses>1-\markup "<c e g heses>"
-  %% Fünfklänge
-  <c e g h d'>1-\markup "<c e g h d'>"
-  <c e g h des'>1-\markup "<c e g h des'>"
-  <c e g h dis'>1-\markup "<c e g h dis'>"
-  <c e g b d'>1-\markup "<c e g b d'>"
-  <c e g b des'>1-\markup "<c e g b des'>"
-  <c e g b dis'>1-\markup "<c e g b dis'>"
-  <c e g heses d'>1-\markup "<c e g heses d'>"
-  <c e g heses des'>1-\markup "<c e g heses des'>"
-  <c e g heses dis'>1-\markup "<c e g heses dis'>"
-  %% Sechsklänge
-  <c e g h d' f'>1-\markup "<c e g h d' f'>"
-  <c e g h d' fis'>1-\markup "<c e g h d' fis'>"
-  <c e g h des' f'>1-\markup "<c e g h des' f'>"
-  <c e g h des' fis'>1-\markup "<c e g h des' fis'>"
-  <c e g h dis' f'>1-\markup "<c e g h dis' f'>"
-  <c e g h dis' fis'>1-\markup "<c e g h dis' fis'>"
-  <c e g b d' f'>1-\markup "<c e g b d' f'>"
-  <c e g b d' fis'>1-\markup "<c e g b d' fis'>"
-  <c e g b des' f'>1-\markup "<c e g b des' f'>"
-  <c e g b des' fis'>1-\markup "<c e g b des' fis'>"
-  <c e g b dis' f'>1-\markup "<c e g b dis' f'>"
-  <c e g b dis' fis'>1-\markup "<c e g b dis' fis'>"
-  <c e g heses d' f'>1-\markup "<c e g heses d' f'>"
-  <c e g heses d' fis'>1-\markup "<c e g heses d' fis'>"
-  <c e g heses des' f'>1-\markup "<c e g heses des' f'>"
-  <c e g heses des' fis'>1-\markup "<c e g heses des' fis'>"
-  <c e g heses dis' f'>1-\markup "<c e g heses dis' f'>"
-  <c e g heses dis' fis'>1-\markup "<c e g heses dis' fis'>"
-  %% Siebenklänge
-  <c e g h d' f' a'>1-\markup "<c e g h d' f' a'>"
-  <c e g h d' f' as'>1-\markup "<c e g h d' f' as'>"
-  <c e g h d' fis' a'>1-\markup "<c e g h d' fis' a'>"
-  <c e g h d' fis' as'>1-\markup "<c e g h d' fis' as'>"
-  <c e g h des' f' a'>1-\markup "<c e g h des' f' a'>"
-  <c e g h des' f' as'>1-\markup "<c e g h des' f' as'>"
-  <c e g h des' fis' a'>1-\markup "<c e g h des' fis' a'>"
-  <c e g h des' fis' as'>1-\markup "<c e g h des' fis' as'>"
-  <c e g h dis' f' a'>1-\markup "<c e g h dis' f' a'>"
-  <c e g h dis' f' as'>1-\markup "<c e g h dis' f' as'>"
-  <c e g h dis' fis' a'>1-\markup "<c e g h dis' fis' a'>"
-  <c e g h dis' fis' as'>1-\markup "<c e g h dis' fis' as'>"
-  <c e g b d' f' a'>1-\markup "<c e g b d' f' a'>"
-  <c e g b d' f' as'>1-\markup "<c e g b d' f' as'>"
-  <c e g b d' fis' a'>1-\markup "<c e g b d' fis' a'>"
-  <c e g b d' fis' as'>1-\markup "<c e g b d' fis' as'>"
-  <c e g b des' f' a'>1-\markup "<c e g b des' f' a'>"
-  <c e g b des' f' as'>1-\markup "<c e g b des' f' as'>"
-  <c e g b des' fis' a'>1-\markup "<c e g b des' fis' a'>"
-  <c e g b des' fis' as'>1-\markup "<c e g b des' fis' as'>"
-  <c e g b dis' f' a'>1-\markup "<c e g b dis' f' a'>"
-  <c e g b dis' f' as'>1-\markup "<c e g b dis' f' as'>"
-  <c e g b dis' fis' a'>1-\markup "<c e g b dis' fis' a'>"
-  <c e g b dis' fis' as'>1-\markup "<c e g b dis' fis' as'>"
-  <c e g heses d' f' a'>1-\markup "<c e g heses d' f' a'>"
-  <c e g heses d' f' as'>1-\markup "<c e g heses d' f' as'>"
-  <c e g heses d' fis' a'>1-\markup "<c e g heses d' fis' a'>"
-  <c e g heses d' fis' as'>1-\markup "<c e g heses d' fis' as'>"
-  <c e g heses des' f' a'>1-\markup "<c e g heses des' f' a'>"
-  <c e g heses des' f' as'>1-\markup "<c e g heses des' f' as'>"
-  <c e g heses des' fis' a'>1-\markup "<c e g heses des' fis' a'>"
-  <c e g heses des' fis' as'>1-\markup "<c e g heses des' fis' as'>"
-  <c e g heses dis' f' a'>1-\markup "<c e g heses dis' f' a'>"
-  <c e g heses dis' f' as'>1-\markup "<c e g heses dis' f' as'>"
-  <c e g heses dis' fis' a'>1-\markup "<c e g heses dis' fis' a'>"
-  <c e g heses dis' fis' as'>1-\markup "<c e g heses dis' fis' as'>"
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Moll Mehrklänge
-  <c es g>1-\markup "< c es g >"
-  %% Vierklänge
-  <c es g h>1-\markup "<c es g h>"
-  <c es g b>1-\markup "<c es g b>"
-  <c es g heses>1-\markup "<c es g heses>"
-  %% Fünfklänge
-  <c es g h d'>1-\markup "<c es g h d'>"
-  <c es g h des'>1-\markup "<c es g h des'>"
-  <c es g h dis'>1-\markup "<c es g h dis'>"
-  <c es g b d'>1-\markup "<c es g b d'>"
-  <c es g b des'>1-\markup "<c es g b des'>"
-  <c es g b dis'>1-\markup "<c es g b dis'>"
-  <c es g heses d'>1-\markup "<c es g heses d'>"
-  <c es g heses des'>1-\markup "<c es g heses des'>"
-  <c es g heses dis'>1-\markup "<c es g heses dis'>"
-  %% Sechsklänge
-  <c es g h d' f'>1-\markup "<c es g h d' f'>"
-  <c es g h d' fis'>1-\markup "<c es g h d' fis'>"
-  <c es g h des' f'>1-\markup "<c es g h des' f'>"
-  <c es g h des' fis'>1-\markup "<c es g h des' fis'>"
-  <c es g h dis' f'>1-\markup "<c es g h dis' f'>"
-  <c es g h dis' fis'>1-\markup "<c es g h dis' fis'>"
-  <c es g b d' f'>1-\markup "<c es g b d' f'>"
-  <c es g b d' fis'>1-\markup "<c es g b d' fis'>"
-  <c es g b des' f'>1-\markup "<c es g b des' f'>"
-  <c es g b des' fis'>1-\markup "<c es g b des' fis'>"
-  <c es g b dis' f'>1-\markup "<c es g b dis' f'>"
-  <c es g b dis' fis'>1-\markup "<c es g b dis' fis'>"
-  <c es g heses d' f'>1-\markup "<c es g heses d' f'>"
-  <c es g heses d' fis'>1-\markup "<c es g heses d' fis'>"
-  <c es g heses des' f'>1-\markup "<c es g heses des' f'>"
-  <c es g heses des' fis'>1-\markup "<c es g heses des' fis'>"
-  <c es g heses dis' f'>1-\markup "<c es g heses dis' f'>"
-  <c es g heses dis' fis'>1-\markup "<c es g heses dis' fis'>"
-  %% Siebenklänge
-  <c es g h d' f' a'>1-\markup "<c es g h d' f' a'>"
-  <c es g h d' f' as'>1-\markup "<c es g h d' f' as'>"
-  <c es g h d' fis' a'>1-\markup "<c es g h d' fis' a'>"
-  <c es g h d' fis' as'>1-\markup "<c es g h d' fis' as'>"
-  <c es g h des' f' a'>1-\markup "<c es g h des' f' a'>"
-  <c es g h des' f' as'>1-\markup "<c es g h des' f' as'>"
-  <c es g h des' fis' a'>1-\markup "<c es g h des' fis' a'>"
-  <c es g h des' fis' as'>1-\markup "<c es g h des' fis' as'>"
-  <c es g h dis' f' a'>1-\markup "<c es g h dis' f' a'>"
-  <c es g h dis' f' as'>1-\markup "<c es g h dis' f' as'>"
-  <c es g h dis' fis' a'>1-\markup "<c es g h dis' fis' a'>"
-  <c es g h dis' fis' as'>1-\markup "<c es g h dis' fis' as'>"
-  <c es g b d' f' a'>1-\markup "<c es g b d' f' a'>"
-  <c es g b d' f' as'>1-\markup "<c es g b d' f' as'>"
-  <c es g b d' fis' a'>1-\markup "<c es g b d' fis' a'>"
-  <c es g b d' fis' as'>1-\markup "<c es g b d' fis' as'>"
-  <c es g b des' f' a'>1-\markup "<c es g b des' f' a'>"
-  <c es g b des' f' as'>1-\markup "<c es g b des' f' as'>"
-  <c es g b des' fis' a'>1-\markup "<c es g b des' fis' a'>"
-  <c es g b des' fis' as'>1-\markup "<c es g b des' fis' as'>"
-  <c es g b dis' f' a'>1-\markup "<c es g b dis' f' a'>"
-  <c es g b dis' f' as'>1-\markup "<c es g b dis' f' as'>"
-  <c es g b dis' fis' a'>1-\markup "<c es g b dis' fis' a'>"
-  <c es g b dis' fis' as'>1-\markup "<c es g b dis' fis' as'>"
-  <c es g heses d' f' a'>1-\markup "<c es g heses d' f' a'>"
-  <c es g heses d' f' as'>1-\markup "<c es g heses d' f' as'>"
-  <c es g heses d' fis' a'>1-\markup "<c es g heses d' fis' a'>"
-  <c es g heses d' fis' as'>1-\markup "<c es g heses d' fis' as'>"
-  <c es g heses des' f' a'>1-\markup "<c es g heses des' f' a'>"
-  <c es g heses des' f' as'>1-\markup "<c es g heses des' f' as'>"
-  <c es g heses des' fis' a'>1-\markup "<c es g heses des' fis' a'>"
-  <c es g heses des' fis' as'>1-\markup "<c es g heses des' fis' as'>"
-  <c es g heses dis' f' a'>1-\markup "<c es g heses dis' f' a'>"
-  <c es g heses dis' f' as'>1-\markup "<c es g heses dis' f' as'>"
-  <c es g heses dis' fis' a'>1-\markup "<c es g heses dis' fis' a'>"
-  <c es g heses dis' fis' as'>1-\markup "<c es g heses dis' fis' as'>"
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% verminderte Mehrklänge
-  <c es ges>1-\markup "< c es ges>"
-  %% Vierklänge
-  <c es ges h>1-\markup "<c es ges h>"
-  <c es ges b>1-\markup "<c es ges b>"
-  <c es ges heses>1-\markup "<c es ges heses>"
-  %% Fünfklänge
-  <c es ges h d'>1-\markup "<c es ges h d'>"
-  <c es ges h des'>1-\markup "<c es ges h des'>"
-  <c es ges h dis'>1-\markup "<c es ges h dis'>"
-  <c es ges b d'>1-\markup "<c es ges b d'>"
-  <c es ges b des'>1-\markup "<c es ges b des'>"
-  <c es ges b dis'>1-\markup "<c es ges b dis'>"
-  <c es ges heses d'>1-\markup "<c es ges heses d'>"
-  <c es ges heses des'>1-\markup "<c es ges heses des'>"
-  <c es ges heses dis'>1-\markup "<c es ges heses dis'>"
-  %% Sechsklänge
-  <c es ges h d' f'>1-\markup "<c es ges h d' f'>"
-  <c es ges h d' fis'>1-\markup "<c es ges h d' fis'>"
-  <c es ges h des' f'>1-\markup "<c es ges h des' f'>"
-  <c es ges h des' fis'>1-\markup "<c es ges h des' fis'>"
-  <c es ges h dis' f'>1-\markup "<c es ges h dis' f'>"
-  <c es ges h dis' fis'>1-\markup "<c es ges h dis' fis'>"
-  <c es ges b d' f'>1-\markup "<c es ges b d' f'>"
-  <c es ges b d' fis'>1-\markup "<c es ges b d' fis'>"
-  <c es ges b des' f'>1-\markup "<c es ges b des' f'>"
-  <c es ges b des' fis'>1-\markup "<c es ges b des' fis'>"
-  <c es ges b dis' f'>1-\markup "<c es ges b dis' f'>"
-  <c es ges b dis' fis'>1-\markup "<c es ges b dis' fis'>"
-  <c es ges heses d' f'>1-\markup "<c es ges heses d' f'>"
-  <c es ges heses d' fis'>1-\markup "<c es ges heses d' fis'>"
-  <c es ges heses des' f'>1-\markup "<c es ges heses des' f'>"
-  <c es ges heses des' fis'>1-\markup "<c es ges heses des' fis'>"
-  <c es ges heses dis' f'>1-\markup "<c es ges heses dis' f'>"
-  <c es ges heses dis' fis'>1-\markup "<c es ges heses dis' fis'>"
-  %% Siebenklänge
-  <c es ges h d' f' a'>1-\markup "<c es ges h d' f' a'>"
-  <c es ges h d' f' as'>1-\markup "<c es ges h d' f' as'>"
-  <c es ges h d' fis' a'>1-\markup "<c es ges h d' fis' a'>"
-  <c es ges h d' fis' as'>1-\markup "<c es ges h d' fis' as'>"
-  <c es ges h des' f' a'>1-\markup "<c es ges h des' f' a'>"
-  <c es ges h des' f' as'>1-\markup "<c es ges h des' f' as'>"
-  <c es ges h des' fis' a'>1-\markup "<c es ges h des' fis' a'>"
-  <c es ges h des' fis' as'>1-\markup "<c es ges h des' fis' as'>"
-  <c es ges h dis' f' a'>1-\markup "<c es ges h dis' f' a'>"
-  <c es ges h dis' f' as'>1-\markup "<c es ges h dis' f' as'>"
-  <c es ges h dis' fis' a'>1-\markup "<c es ges h dis' fis' a'>"
-  <c es ges h dis' fis' as'>1-\markup "<c es ges h dis' fis' as'>"
-  <c es ges b d' f' a'>1-\markup "<c es ges b d' f' a'>"
-  <c es ges b d' f' as'>1-\markup "<c es ges b d' f' as'>"
-  <c es ges b d' fis' a'>1-\markup "<c es ges b d' fis' a'>"
-  <c es ges b d' fis' as'>1-\markup "<c es ges b d' fis' as'>"
-  <c es ges b des' f' a'>1-\markup "<c es ges b des' f' a'>"
-  <c es ges b des' f' as'>1-\markup "<c es ges b des' f' as'>"
-  <c es ges b des' fis' a'>1-\markup "<c es ges b des' fis' a'>"
-  <c es ges b des' fis' as'>1-\markup "<c es ges b des' fis' as'>"
-  <c es ges b dis' f' a'>1-\markup "<c es ges b dis' f' a'>"
-  <c es ges b dis' f' as'>1-\markup "<c es ges b dis' f' as'>"
-  <c es ges b dis' fis' a'>1-\markup "<c es ges b dis' fis' a'>"
-  <c es ges b dis' fis' as'>1-\markup "<c es ges b dis' fis' as'>"
-  <c es ges heses d' f' a'>1-\markup "<c es ges heses d' f' a'>"
-  <c es ges heses d' f' as'>1-\markup "<c es ges heses d' f' as'>"
-  <c es ges heses d' fis' a'>1-\markup "<c es ges heses d' fis' a'>"
-  <c es ges heses d' fis' as'>1-\markup "<c es ges heses d' fis' as'>"
-  <c es ges heses des' f' a'>1-\markup "<c es ges heses des' f' a'>"
-  <c es ges heses des' f' as'>1-\markup "<c es ges heses des' f' as'>"
-  <c es ges heses des' fis' a'>1-\markup "<c es ges heses des' fis' a'>"
-  <c es ges heses des' fis' as'>1-\markup "<c es ges heses des' fis' as'>"
-  <c es ges heses dis' f' a'>1-\markup "<c es ges heses dis' f' a'>"
-  <c es ges heses dis' f' as'>1-\markup "<c es ges heses dis' f' as'>"
-  <c es ges heses dis' fis' a'>1-\markup "<c es ges heses dis' fis' a'>"
-  <c es ges heses dis' fis' as'>1-\markup "<c es ges heses dis' fis' as'>"
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% übermäßige Mehrklänge
-  <c e gis>1-\markup "< c e gis>"
-  %% Vierklänge
-  <c e gis h>1-\markup "<c e gis h>"
-  <c e gis b>1-\markup "<c e gis b>"
-  <c e gis heses>1-\markup "<c e gis heses>"
-  %% Fünfklänge
-  <c e gis h d'>1-\markup "<c e gis h d'>"
-  <c e gis h des'>1-\markup "<c e gis h des'>"
-  <c e gis h dis'>1-\markup "<c e gis h dis'>"
-  <c e gis b d'>1-\markup "<c e gis b d'>"
-  <c e gis b des'>1-\markup "<c e gis b des'>"
-  <c e gis b dis'>1-\markup "<c e gis b dis'>"
-  <c e gis heses d'>1-\markup "<c e gis heses d'>"
-  <c e gis heses des'>1-\markup "<c e gis heses des'>"
-  <c e gis heses dis'>1-\markup "<c e gis heses dis'>"
-  %% Sechsklänge
-  <c e gis h d' f'>1-\markup "<c e gis h d' f'>"
-  <c e gis h d' fis'>1-\markup "<c e gis h d' fis'>"
-  <c e gis h des' f'>1-\markup "<c e gis h des' f'>"
-  <c e gis h des' fis'>1-\markup "<c e gis h des' fis'>"
-  <c e gis h dis' f'>1-\markup "<c e gis h dis' f'>"
-  <c e gis h dis' fis'>1-\markup "<c e gis h dis' fis'>"
-  <c e gis b d' f'>1-\markup "<c e gis b d' f'>"
-  <c e gis b d' fis'>1-\markup "<c e gis b d' fis'>"
-  <c e gis b des' f'>1-\markup "<c e gis b des' f'>"
-  <c e gis b des' fis'>1-\markup "<c e gis b des' fis'>"
-  <c e gis b dis' f'>1-\markup "<c e gis b dis' f'>"
-  <c e gis b dis' fis'>1-\markup "<c e gis b dis' fis'>"
-  <c e gis heses d' f'>1-\markup "<c e gis heses d' f'>"
-  <c e gis heses d' fis'>1-\markup "<c e gis heses d' fis'>"
-  <c e gis heses des' f'>1-\markup "<c e gis heses des' f'>"
-  <c e gis heses des' fis'>1-\markup "<c e gis heses des' fis'>"
-  <c e gis heses dis' f'>1-\markup "<c e gis heses dis' f'>"
-  <c e gis heses dis' fis'>1-\markup "<c e gis heses dis' fis'>"
-  %% Siebenklänge
-  <c e gis h d' f' a'>1-\markup "<c e gis h d' f' a'>"
-  <c e gis h d' f' as'>1-\markup "<c e gis h d' f' as'>"
-  <c e gis h d' fis' a'>1-\markup "<c e gis h d' fis' a'>"
-  <c e gis h d' fis' as'>1-\markup "<c e gis h d' fis' as'>"
-  <c e gis h des' f' a'>1-\markup "<c e gis h des' f' a'>"
-  <c e gis h des' f' as'>1-\markup "<c e gis h des' f' as'>"
-  <c e gis h des' fis' a'>1-\markup "<c e gis h des' fis' a'>"
-  <c e gis h des' fis' as'>1-\markup "<c e gis h des' fis' as'>"
-  <c e gis h dis' f' a'>1-\markup "<c e gis h dis' f' a'>"
-  <c e gis h dis' f' as'>1-\markup "<c e gis h dis' f' as'>"
-  <c e gis h dis' fis' a'>1-\markup "<c e gis h dis' fis' a'>"
-  <c e gis h dis' fis' as'>1-\markup "<c e gis h dis' fis' as'>"
-  <c e gis b d' f' a'>1-\markup "<c e gis b d' f' a'>"
-  <c e gis b d' f' as'>1-\markup "<c e gis b d' f' as'>"
-  <c e gis b d' fis' a'>1-\markup "<c e gis b d' fis' a'>"
-  <c e gis b d' fis' as'>1-\markup "<c e gis b d' fis' as'>"
-  <c e gis b des' f' a'>1-\markup "<c e gis b des' f' a'>"
-  <c e gis b des' f' as'>1-\markup "<c e gis b des' f' as'>"
-  <c e gis b des' fis' a'>1-\markup "<c e gis b des' fis' a'>"
-  <c e gis b des' fis' as'>1-\markup "<c e gis b des' fis' as'>"
-  <c e gis b dis' f' a'>1-\markup "<c e gis b dis' f' a'>"
-  <c e gis b dis' f' as'>1-\markup "<c e gis b dis' f' as'>"
-  <c e gis b dis' fis' a'>1-\markup "<c e gis b dis' fis' a'>"
-  <c e gis b dis' fis' as'>1-\markup "<c e gis b dis' fis' as'>"
-  <c e gis heses d' f' a'>1-\markup "<c e gis heses d' f' a'>"
-  <c e gis heses d' f' as'>1-\markup "<c e gis heses d' f' as'>"
-  <c e gis heses d' fis' a'>1-\markup "<c e gis heses d' fis' a'>"
-  <c e gis heses d' fis' as'>1-\markup "<c e gis heses d' fis' as'>"
-  <c e gis heses des' f' a'>1-\markup "<c e gis heses des' f' a'>"
-  <c e gis heses des' f' as'>1-\markup "<c e gis heses des' f' as'>"
-  <c e gis heses des' fis' a'>1-\markup "<c e gis heses des' fis' a'>"
-  <c e gis heses des' fis' as'>1-\markup "<c e gis heses des' fis' as'>"
-  <c e gis heses dis' f' a'>1-\markup "<c e gis heses dis' f' a'>"
-  <c e gis heses dis' f' as'>1-\markup "<c e gis heses dis' f' as'>"
-  <c e gis heses dis' fis' a'>1-\markup "<c e gis heses dis' fis' a'>"
-  <c e gis heses dis' fis' as'>1-\markup "<c e gis heses dis' fis' as'>"
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Tonleitern
-  <c d e f g a h>1-\markup { \sub "Dur" }
-  <c d es f g as b>1-\markup { \sub "Moll natural" }
-  <c d es f g as h>1-\markup { \sub "Moll harm." }
-  <c d es f g a h>1-\markup { \sub "Moll mel." }
-  <c des e f g as b >1-\markup { \sub "Spanish Gypsy" }
-  <c d es f ges g as h>1-\markup { \sub "Algerian" }
-  <c d e f fis gis b>1-\markup { \sub "Arabic " }
-  <c cis e f g gis h>1-\markup { \sub "Byzantine" }
-  <c cis dis e f fis gis ais>1-\markup { \sub "Eight Tone Spanish" }
-  <c des e fis gis ais h>1-\markup { \sub "Enigmatic asc." }
-  <c des e f gis ais h>1-\markup { \sub "Enigmatic desc." }
-  <c d es f g as b>1-\markup { \sub "Geez" }
-  <c d e f g as b>1-\markup { \sub "Aeolian Dominant" }
-  <c des f ges b>1-\markup { \sub "Hirajoshi" }
-  <c d es fis g as h>1-\markup { \sub "Hungarian" }
-  <c d e fis g a b>1-\markup { \sub "Acoustic Scale" }
-  <c cis f g ais>1-\markup { \sub "Japanese" }
-  <c d es fis g a ais>1-\markup { \sub "Romanian Minor" }
-  <c d e f g as h>1-\markup { \sub "Maqams" }
-  <c es f g b>1-\markup { \sub "Minor Pentatonic" }
-  <c es f fis g b>1-\markup { \sub "Minor Blues" }
-  <c d es e g a>1-\markup { \sub "Major Blues" }
-  <c des d es f g a b>1-\markup { \sub "Adonai Malakh" }
-  <c d e fis g a b>1-\markup { \sub "Bartok" }
-  <c des es f ges g as h>1-\markup { \sub "Bebop Half-Diminished" }
-  <c d e f g a b h>1-\markup { \sub "Bebop Dominant" }
-  <c d es e f g a b>1-\markup { \sub "Bebop Minor" }
-  <c d e f g gis a h>1-\markup { \sub "Bebop Major I" }
-  <c d f g b>1-\markup { \sub "Egyptian" }
-  <c d es f g a b>1-\markup { \sub "Dorisch" }
-  <c des es f g as b >1-\markup { \sub "Phrygisch" }
-  <c d e fis g a h>1-\markup { \sub "Lydisch" }
-  <c d e f g a b>1-\markup { \sub "Mixolydisch" }
-  <c d es f g as b>1-\markup { \sub "Äolisch" }
-  <c des es g ges as b>1-\markup { \sub "Lokrisch" }
-  <c d e fis gis b>1-\markup { \sub "Ganzton" }
-  <c d e fis gis ais>1-\markup { \sub "Ganzton" }
-  <cis dis fis gis ais>1-\markup { \sub "Halbton" }
-  <c d es f g as b>1-\markup { "Moll natural" }
-  <c d es f g as h>1-\markup { "Moll harm." }
-  <c d es f g a h>1-\markup { "Moll mel." }
-}
-#(define ((chord-name->german-markup-text-alteration B-instead-of-Bb) pitch lowercase?)
-
-   (define (pitch-alteration-semitones pitch)
-     (inexact->exact (round (* (ly:pitch-alteration pitch) 2))))
-
-   (define (conditional-string-downcase str condition)
-     (if condition
-         (string-downcase str)
-         str))
-
-   (let* ((name (ly:pitch-notename pitch))
-          (alt-semitones  (pitch-alteration-semitones pitch))
-          (n-a (if (member (cons name alt-semitones) `((6 . -1) (6 . -1)))
-                   (cons 7 (+ (if B-instead-of-Bb 1 1) alt-semitones))
-                   (cons name alt-semitones))))
-     (make-line-markup
-      (list
-       (make-simple-markup
-        (conditional-string-downcase
-         (vector-ref #("C" "D" "E" "F" "G" "A" "H" "B") (car n-a))
-         lowercase?))
-       (let ((alteration (/ (cdr n-a) 2)))
-         (cond
-          ((and (equal? lowercase? #f) (= alteration FLAT) (= (car n-a) 7)) (make-simple-markup ""))
-          ((and (= alteration FLAT) (or (= (car n-a) 5) (= (car n-a) 2) )) (make-simple-markup "s"))
-          ((= alteration FLAT) (make-simple-markup "es"))
-          ((and (= alteration DOUBLE-FLAT) (or (= (car n-a) 5)(= (car n-a) 2) )) (make-simple-markup "ses"))
-          ((= alteration DOUBLE-FLAT) (make-simple-markup "eses"))
-          ((= alteration SHARP) (make-simple-markup "is"))
-          ((= alteration DOUBLE-SHARP) (make-simple-markup "isis"))
-          (else empty-markup)))))))
-
-
-#(define germanChords (chord-name->german-markup-text-alteration #t))
-
-chExceptions = #( append
-                  ( sequential-music-to-chord-exceptions chExceptions #t)
-                  ignatzekExceptions)
-
-FootLeft = #(string-append "Lilypond Datei: " (ly:parser-output-name) )
-FootCenter = #(string-append "")
-FootRight = #(string-append "gesetzt mit LILYPOND " (lilypond-version) " am " (strftime "%d.%m.%Y %H:%M:%S" (localtime (current-time))))
-
-\layout {
-  \context {
-    \ChordNames
-    chordNameLowercaseMinor = ##f
-    chordRootNamer = #germanChords
-    chordNoteNamer = #note-name->german-markup
-    \override ChordName.font-name = #"Monospac821 BT"
-    chordNameExceptions = #chExceptions
-    \override ChordName.font-size = #1
-    \override ChordName.font-series = #'bold
-  }
-}
-
 ChordsAsNotes=
 {
   <c>1-\markup  "< c >"
@@ -555,226 +154,114 @@ ChordsAsNotes=
   <c e g heses dis' f' as'>1-\markup "<c e g heses dis' f' as'>"
   <c e g heses dis' fis' a'>1-\markup "<c e g heses dis' fis' a'>"
   <c e g heses dis' fis' as'>1-\markup "<c e g heses dis' fis' as'>"
+  %% Tredezimakkorde ohne Quint
+  <c e h d' f' a'>1-\markup "<c e h d' f' a'>"
+  <c e h d' f' as'>1-\markup "<c e h d' f' as'>"
+  <c e h d' fis' a'>1-\markup "<c e h d' fis' a'>"
+  <c e h d' fis' as'>1-\markup "<c e h d' fis' as'>"
+  <c e h des' f' a'>1-\markup "<c e h des' f' a'>"
+  <c e h des' f' as'>1-\markup "<c e h des' f' as'>"
+  <c e h des' fis' a'>1-\markup "<c e h des' fis' a'>"
+  <c e h des' fis' as'>1-\markup "<c e h des' fis' as'>"
+  <c e h dis' f' a'>1-\markup "<c e h dis' f' a'>"
+  <c e h dis' f' as'>1-\markup "<c e h dis' f' as'>"
+  <c e h dis' fis' a'>1-\markup "<c e h dis' fis' a'>"
+  <c e h dis' fis' as'>1-\markup "<c e h dis' fis' as'>"
+  <c e b d' f' a'>1-\markup "<c e b d' f' a'>"
+  <c e b d' f' as'>1-\markup "<c e b d' f' as'>"
+  <c e b d' fis' a'>1-\markup "<c e b d' fis' a'>"
+  <c e b d' fis' as'>1-\markup "<c e b d' fis' as'>"
+  <c e b des' f' a'>1-\markup "<c e b des' f' a'>"
+  <c e b des' f' as'>1-\markup "<c e b des' f' as'>"
+  <c e b des' fis' a'>1-\markup "<c e b des' fis' a'>"
+  <c e b des' fis' as'>1-\markup "<c e b des' fis' as'>"
+  <c e b dis' f' a'>1-\markup "<c e b dis' f' a'>"
+  <c e b dis' f' as'>1-\markup "<c e b dis' f' as'>"
+  <c e b dis' fis' a'>1-\markup "<c e b dis' fis' a'>"
+  <c e b dis' fis' as'>1-\markup "<c e b dis' fis' as'>"
+  <c e heses d' f' a'>1-\markup "<c e heses d' f' a'>"
+  <c e heses d' f' as'>1-\markup "<c e heses d' f' as'>"
+  <c e heses d' fis' a'>1-\markup "<c e heses d' fis' a'>"
+  <c e heses d' fis' as'>1-\markup "<c e heses d' fis' as'>"
+  <c e heses des' f' a'>1-\markup "<c e heses des' f' a'>"
+  <c e heses des' f' as'>1-\markup "<c e heses des' f' as'>"
+  <c e heses des' fis' a'>1-\markup "<c e heses des' fis' a'>"
+  <c e heses des' fis' as'>1-\markup "<c e heses des' fis' as'>"
+  <c e heses dis' f' a'>1-\markup "<c e heses dis' f' a'>"
+  <c e heses dis' f' as'>1-\markup "<c e heses dis' f' as'>"
+  <c e heses dis' fis' a'>1-\markup "<c e heses dis' fis' a'>"
+  <c e heses dis' fis' as'>1-\markup "<c e heses dis' fis' as'>"
+  %% Tredezimakkorde ohne Septim
+  <c e g d' f' a'>1-\markup "<c e g d' f' a'>"
+  <c e g d' f' as'>1-\markup "<c e g d' f' as'>"
+  <c e g d' fis' a'>1-\markup "<c e g d' fis' a'>"
+  <c e g d' fis' as'>1-\markup "<c e g d' fis' as'>"
+  <c e g des' f' a'>1-\markup "<c e g des' f' a'>"
+  <c e g des' f' as'>1-\markup "<c e g des' f' as'>"
+  <c e g des' fis' a'>1-\markup "<c e g des' fis' a'>"
+  <c e g des' fis' as'>1-\markup "<c e g des' fis' as'>"
+  <c e g dis' f' a'>1-\markup "<c e g dis' f' a'>"
+  <c e g dis' f' as'>1-\markup "<c e g dis' f' as'>"
+  <c e g dis' fis' a'>1-\markup "<c e g dis' fis' a'>"
+  <c e g dis' fis' as'>1-\markup "<c e g dis' fis' as'>"
+  %% Tredezimakkorde ohne Quint ohne Septim
+  <c e d' f' a'>1-\markup "<c e d' f' a'>"
+  <c e d' f' as'>1-\markup "<c e d' f' as'>"
+  <c e d' fis' a'>1-\markup "<c e d' fis' a'>"
+  <c e d' fis' as'>1-\markup "<c e d' fis' as'>"
+  <c e des' f' a'>1-\markup "<c e des' f' a'>"
+  <c e des' f' as'>1-\markup "<c e des' f' as'>"
+  <c e des' fis' a'>1-\markup "<c e des' fis' a'>"
+  <c e des' fis' as'>1-\markup "<c e des' fis' as'>"
+  <c e dis' f' a'>1-\markup "<c e dis' f' a'>"
+  <c e dis' f' as'>1-\markup "<c e dis' f' as'>"
+  <c e dis' fis' a'>1-\markup "<c e dis' fis' a'>"
+  <c e dis' fis' as'>1-\markup "<c e dis' fis' as'>"
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Moll Mehrklänge
-  <c es g>1-\markup "< c es g >"
-  %% Vierklänge
-  <c es g h>1-\markup "<c es g h>"
-  <c es g b>1-\markup "<c es g b>"
-  <c es g heses>1-\markup "<c es g heses>"
-  %% Fünfklänge
-  <c es g h d'>1-\markup "<c es g h d'>"
-  <c es g h des'>1-\markup "<c es g h des'>"
-  <c es g h dis'>1-\markup "<c es g h dis'>"
-  <c es g b d'>1-\markup "<c es g b d'>"
-  <c es g b des'>1-\markup "<c es g b des'>"
-  <c es g b dis'>1-\markup "<c es g b dis'>"
-  <c es g heses d'>1-\markup "<c es g heses d'>"
-  <c es g heses des'>1-\markup "<c es g heses des'>"
-  <c es g heses dis'>1-\markup "<c es g heses dis'>"
-  %% Sechsklänge
-  <c es g h d' f'>1-\markup "<c es g h d' f'>"
-  <c es g h d' fis'>1-\markup "<c es g h d' fis'>"
-  <c es g h des' f'>1-\markup "<c es g h des' f'>"
-  <c es g h des' fis'>1-\markup "<c es g h des' fis'>"
-  <c es g h dis' f'>1-\markup "<c es g h dis' f'>"
-  <c es g h dis' fis'>1-\markup "<c es g h dis' fis'>"
-  <c es g b d' f'>1-\markup "<c es g b d' f'>"
-  <c es g b d' fis'>1-\markup "<c es g b d' fis'>"
-  <c es g b des' f'>1-\markup "<c es g b des' f'>"
-  <c es g b des' fis'>1-\markup "<c es g b des' fis'>"
-  <c es g b dis' f'>1-\markup "<c es g b dis' f'>"
-  <c es g b dis' fis'>1-\markup "<c es g b dis' fis'>"
-  <c es g heses d' f'>1-\markup "<c es g heses d' f'>"
-  <c es g heses d' fis'>1-\markup "<c es g heses d' fis'>"
-  <c es g heses des' f'>1-\markup "<c es g heses des' f'>"
-  <c es g heses des' fis'>1-\markup "<c es g heses des' fis'>"
-  <c es g heses dis' f'>1-\markup "<c es g heses dis' f'>"
-  <c es g heses dis' fis'>1-\markup "<c es g heses dis' fis'>"
-  %% Siebenklänge
-  <c es g h d' f' a'>1-\markup "<c es g h d' f' a'>"
-  <c es g h d' f' as'>1-\markup "<c es g h d' f' as'>"
-  <c es g h d' fis' a'>1-\markup "<c es g h d' fis' a'>"
-  <c es g h d' fis' as'>1-\markup "<c es g h d' fis' as'>"
-  <c es g h des' f' a'>1-\markup "<c es g h des' f' a'>"
-  <c es g h des' f' as'>1-\markup "<c es g h des' f' as'>"
-  <c es g h des' fis' a'>1-\markup "<c es g h des' fis' a'>"
-  <c es g h des' fis' as'>1-\markup "<c es g h des' fis' as'>"
-  <c es g h dis' f' a'>1-\markup "<c es g h dis' f' a'>"
-  <c es g h dis' f' as'>1-\markup "<c es g h dis' f' as'>"
-  <c es g h dis' fis' a'>1-\markup "<c es g h dis' fis' a'>"
-  <c es g h dis' fis' as'>1-\markup "<c es g h dis' fis' as'>"
-  <c es g b d' f' a'>1-\markup "<c es g b d' f' a'>"
-  <c es g b d' f' as'>1-\markup "<c es g b d' f' as'>"
-  <c es g b d' fis' a'>1-\markup "<c es g b d' fis' a'>"
-  <c es g b d' fis' as'>1-\markup "<c es g b d' fis' as'>"
-  <c es g b des' f' a'>1-\markup "<c es g b des' f' a'>"
-  <c es g b des' f' as'>1-\markup "<c es g b des' f' as'>"
-  <c es g b des' fis' a'>1-\markup "<c es g b des' fis' a'>"
-  <c es g b des' fis' as'>1-\markup "<c es g b des' fis' as'>"
-  <c es g b dis' f' a'>1-\markup "<c es g b dis' f' a'>"
-  <c es g b dis' f' as'>1-\markup "<c es g b dis' f' as'>"
-  <c es g b dis' fis' a'>1-\markup "<c es g b dis' fis' a'>"
-  <c es g b dis' fis' as'>1-\markup "<c es g b dis' fis' as'>"
-  <c es g heses d' f' a'>1-\markup "<c es g heses d' f' a'>"
-  <c es g heses d' f' as'>1-\markup "<c es g heses d' f' as'>"
-  <c es g heses d' fis' a'>1-\markup "<c es g heses d' fis' a'>"
-  <c es g heses d' fis' as'>1-\markup "<c es g heses d' fis' as'>"
-  <c es g heses des' f' a'>1-\markup "<c es g heses des' f' a'>"
-  <c es g heses des' f' as'>1-\markup "<c es g heses des' f' as'>"
-  <c es g heses des' fis' a'>1-\markup "<c es g heses des' fis' a'>"
-  <c es g heses des' fis' as'>1-\markup "<c es g heses des' fis' as'>"
-  <c es g heses dis' f' a'>1-\markup "<c es g heses dis' f' a'>"
-  <c es g heses dis' f' as'>1-\markup "<c es g heses dis' f' as'>"
-  <c es g heses dis' fis' a'>1-\markup "<c es g heses dis' fis' a'>"
-  <c es g heses dis' fis' as'>1-\markup "<c es g heses dis' fis' as'>"
+  %% Tredezimakkorde ohne None
+  <c e g h f' a'>1-\markup "<c e g h f' a'>"
+  <c e g h f' as'>1-\markup "<c e g h f' as'>"
+  <c e g h fis' a'>1-\markup "<c e g h fis' a'>"
+  <c e g h fis' as'>1-\markup "<c e g h fis' as'>"
+  <c e g b f' a'>1-\markup "<c e g b f' a'>"
+  <c e g b f' as'>1-\markup "<c e g b f' as'>"
+  <c e g b fis' a'>1-\markup "<c e g b fis' a'>"
+  <c e g b fis' as'>1-\markup "<c e g b fis' as'>"
+  <c e g heses f' a'>1-\markup "<c e g heses f' a'>"
+  <c e g heses f' as'>1-\markup "<c e g heses f' as'>"
+  <c e g heses fis' a'>1-\markup "<c e g heses fis' a'>"
+  <c e g heses fis' as'>1-\markup "<c e g heses fis' as'>"
+  %% Tredezimakkorde ohne Quint ohne None
+  <c e h f' a'>1-\markup "<c e h f' a'>"
+  <c e h f' as'>1-\markup "<c e h f' as'>"
+  <c e h fis' a'>1-\markup "<c e h fis' a'>"
+  <c e h fis' as'>1-\markup "<c e h fis' as'>"
+  <c e b f' a'>1-\markup "<c e b f' a'>"
+  <c e b f' as'>1-\markup "<c e b f' as'>"
+  <c e b fis' a'>1-\markup "<c e b fis' a'>"
+  <c e b fis' as'>1-\markup "<c e b fis' as'>"
+  <c e heses f' a'>1-\markup "<c e heses f' a'>"
+  <c e heses f' as'>1-\markup "<c e heses f' as'>"
+  <c e heses fis' a'>1-\markup "<c e heses fis' a'>"
+  <c e heses fis' as'>1-\markup "<c e heses fis' as'>"
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% verminderte Mehrklänge
-  <c es ges>1-\markup "< c es ges>"
-  %% Vierklänge
-  <c es ges h>1-\markup "<c es ges h>"
-  <c es ges b>1-\markup "<c es ges b>"
-  <c es ges heses>1-\markup "<c es ges heses>"
-  %% Fünfklänge
-  <c es ges h d'>1-\markup "<c es ges h d'>"
-  <c es ges h des'>1-\markup "<c es ges h des'>"
-  <c es ges h dis'>1-\markup "<c es ges h dis'>"
-  <c es ges b d'>1-\markup "<c es ges b d'>"
-  <c es ges b des'>1-\markup "<c es ges b des'>"
-  <c es ges b dis'>1-\markup "<c es ges b dis'>"
-  <c es ges heses d'>1-\markup "<c es ges heses d'>"
-  <c es ges heses des'>1-\markup "<c es ges heses des'>"
-  <c es ges heses dis'>1-\markup "<c es ges heses dis'>"
-  %% Sechsklänge
-  <c es ges h d' f'>1-\markup "<c es ges h d' f'>"
-  <c es ges h d' fis'>1-\markup "<c es ges h d' fis'>"
-  <c es ges h des' f'>1-\markup "<c es ges h des' f'>"
-  <c es ges h des' fis'>1-\markup "<c es ges h des' fis'>"
-  <c es ges h dis' f'>1-\markup "<c es ges h dis' f'>"
-  <c es ges h dis' fis'>1-\markup "<c es ges h dis' fis'>"
-  <c es ges b d' f'>1-\markup "<c es ges b d' f'>"
-  <c es ges b d' fis'>1-\markup "<c es ges b d' fis'>"
-  <c es ges b des' f'>1-\markup "<c es ges b des' f'>"
-  <c es ges b des' fis'>1-\markup "<c es ges b des' fis'>"
-  <c es ges b dis' f'>1-\markup "<c es ges b dis' f'>"
-  <c es ges b dis' fis'>1-\markup "<c es ges b dis' fis'>"
-  <c es ges heses d' f'>1-\markup "<c es ges heses d' f'>"
-  <c es ges heses d' fis'>1-\markup "<c es ges heses d' fis'>"
-  <c es ges heses des' f'>1-\markup "<c es ges heses des' f'>"
-  <c es ges heses des' fis'>1-\markup "<c es ges heses des' fis'>"
-  <c es ges heses dis' f'>1-\markup "<c es ges heses dis' f'>"
-  <c es ges heses dis' fis'>1-\markup "<c es ges heses dis' fis'>"
-  %% Siebenklänge
-  <c es ges h d' f' a'>1-\markup "<c es ges h d' f' a'>"
-  <c es ges h d' f' as'>1-\markup "<c es ges h d' f' as'>"
-  <c es ges h d' fis' a'>1-\markup "<c es ges h d' fis' a'>"
-  <c es ges h d' fis' as'>1-\markup "<c es ges h d' fis' as'>"
-  <c es ges h des' f' a'>1-\markup "<c es ges h des' f' a'>"
-  <c es ges h des' f' as'>1-\markup "<c es ges h des' f' as'>"
-  <c es ges h des' fis' a'>1-\markup "<c es ges h des' fis' a'>"
-  <c es ges h des' fis' as'>1-\markup "<c es ges h des' fis' as'>"
-  <c es ges h dis' f' a'>1-\markup "<c es ges h dis' f' a'>"
-  <c es ges h dis' f' as'>1-\markup "<c es ges h dis' f' as'>"
-  <c es ges h dis' fis' a'>1-\markup "<c es ges h dis' fis' a'>"
-  <c es ges h dis' fis' as'>1-\markup "<c es ges h dis' fis' as'>"
-  <c es ges b d' f' a'>1-\markup "<c es ges b d' f' a'>"
-  <c es ges b d' f' as'>1-\markup "<c es ges b d' f' as'>"
-  <c es ges b d' fis' a'>1-\markup "<c es ges b d' fis' a'>"
-  <c es ges b d' fis' as'>1-\markup "<c es ges b d' fis' as'>"
-  <c es ges b des' f' a'>1-\markup "<c es ges b des' f' a'>"
-  <c es ges b des' f' as'>1-\markup "<c es ges b des' f' as'>"
-  <c es ges b des' fis' a'>1-\markup "<c es ges b des' fis' a'>"
-  <c es ges b des' fis' as'>1-\markup "<c es ges b des' fis' as'>"
-  <c es ges b dis' f' a'>1-\markup "<c es ges b dis' f' a'>"
-  <c es ges b dis' f' as'>1-\markup "<c es ges b dis' f' as'>"
-  <c es ges b dis' fis' a'>1-\markup "<c es ges b dis' fis' a'>"
-  <c es ges b dis' fis' as'>1-\markup "<c es ges b dis' fis' as'>"
-  <c es ges heses d' f' a'>1-\markup "<c es ges heses d' f' a'>"
-  <c es ges heses d' f' as'>1-\markup "<c es ges heses d' f' as'>"
-  <c es ges heses d' fis' a'>1-\markup "<c es ges heses d' fis' a'>"
-  <c es ges heses d' fis' as'>1-\markup "<c es ges heses d' fis' as'>"
-  <c es ges heses des' f' a'>1-\markup "<c es ges heses des' f' a'>"
-  <c es ges heses des' f' as'>1-\markup "<c es ges heses des' f' as'>"
-  <c es ges heses des' fis' a'>1-\markup "<c es ges heses des' fis' a'>"
-  <c es ges heses des' fis' as'>1-\markup "<c es ges heses des' fis' as'>"
-  <c es ges heses dis' f' a'>1-\markup "<c es ges heses dis' f' a'>"
-  <c es ges heses dis' f' as'>1-\markup "<c es ges heses dis' f' as'>"
-  <c es ges heses dis' fis' a'>1-\markup "<c es ges heses dis' fis' a'>"
-  <c es ges heses dis' fis' as'>1-\markup "<c es ges heses dis' fis' as'>"
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% übermäßige Mehrklänge
-  <c e gis>1-\markup "< c e gis>"
-  %% Vierklänge
-  <c e gis h>1-\markup "<c e gis h>"
-  <c e gis b>1-\markup "<c e gis b>"
-  <c e gis heses>1-\markup "<c e gis heses>"
-  %% Fünfklänge
-  <c e gis h d'>1-\markup "<c e gis h d'>"
-  <c e gis h des'>1-\markup "<c e gis h des'>"
-  <c e gis h dis'>1-\markup "<c e gis h dis'>"
-  <c e gis b d'>1-\markup "<c e gis b d'>"
-  <c e gis b des'>1-\markup "<c e gis b des'>"
-  <c e gis b dis'>1-\markup "<c e gis b dis'>"
-  <c e gis heses d'>1-\markup "<c e gis heses d'>"
-  <c e gis heses des'>1-\markup "<c e gis heses des'>"
-  <c e gis heses dis'>1-\markup "<c e gis heses dis'>"
-  %% Sechsklänge
-  <c e gis h d' f'>1-\markup "<c e gis h d' f'>"
-  <c e gis h d' fis'>1-\markup "<c e gis h d' fis'>"
-  <c e gis h des' f'>1-\markup "<c e gis h des' f'>"
-  <c e gis h des' fis'>1-\markup "<c e gis h des' fis'>"
-  <c e gis h dis' f'>1-\markup "<c e gis h dis' f'>"
-  <c e gis h dis' fis'>1-\markup "<c e gis h dis' fis'>"
-  <c e gis b d' f'>1-\markup "<c e gis b d' f'>"
-  <c e gis b d' fis'>1-\markup "<c e gis b d' fis'>"
-  <c e gis b des' f'>1-\markup "<c e gis b des' f'>"
-  <c e gis b des' fis'>1-\markup "<c e gis b des' fis'>"
-  <c e gis b dis' f'>1-\markup "<c e gis b dis' f'>"
-  <c e gis b dis' fis'>1-\markup "<c e gis b dis' fis'>"
-  <c e gis heses d' f'>1-\markup "<c e gis heses d' f'>"
-  <c e gis heses d' fis'>1-\markup "<c e gis heses d' fis'>"
-  <c e gis heses des' f'>1-\markup "<c e gis heses des' f'>"
-  <c e gis heses des' fis'>1-\markup "<c e gis heses des' fis'>"
-  <c e gis heses dis' f'>1-\markup "<c e gis heses dis' f'>"
-  <c e gis heses dis' fis'>1-\markup "<c e gis heses dis' fis'>"
-  %% Siebenklänge
-  <c e gis h d' f' a'>1-\markup "<c e gis h d' f' a'>"
-  <c e gis h d' f' as'>1-\markup "<c e gis h d' f' as'>"
-  <c e gis h d' fis' a'>1-\markup "<c e gis h d' fis' a'>"
-  <c e gis h d' fis' as'>1-\markup "<c e gis h d' fis' as'>"
-  <c e gis h des' f' a'>1-\markup "<c e gis h des' f' a'>"
-  <c e gis h des' f' as'>1-\markup "<c e gis h des' f' as'>"
-  <c e gis h des' fis' a'>1-\markup "<c e gis h des' fis' a'>"
-  <c e gis h des' fis' as'>1-\markup "<c e gis h des' fis' as'>"
-  <c e gis h dis' f' a'>1-\markup "<c e gis h dis' f' a'>"
-  <c e gis h dis' f' as'>1-\markup "<c e gis h dis' f' as'>"
-  <c e gis h dis' fis' a'>1-\markup "<c e gis h dis' fis' a'>"
-  <c e gis h dis' fis' as'>1-\markup "<c e gis h dis' fis' as'>"
-  <c e gis b d' f' a'>1-\markup "<c e gis b d' f' a'>"
-  <c e gis b d' f' as'>1-\markup "<c e gis b d' f' as'>"
-  <c e gis b d' fis' a'>1-\markup "<c e gis b d' fis' a'>"
-  <c e gis b d' fis' as'>1-\markup "<c e gis b d' fis' as'>"
-  <c e gis b des' f' a'>1-\markup "<c e gis b des' f' a'>"
-  <c e gis b des' f' as'>1-\markup "<c e gis b des' f' as'>"
-  <c e gis b des' fis' a'>1-\markup "<c e gis b des' fis' a'>"
-  <c e gis b des' fis' as'>1-\markup "<c e gis b des' fis' as'>"
-  <c e gis b dis' f' a'>1-\markup "<c e gis b dis' f' a'>"
-  <c e gis b dis' f' as'>1-\markup "<c e gis b dis' f' as'>"
-  <c e gis b dis' fis' a'>1-\markup "<c e gis b dis' fis' a'>"
-  <c e gis b dis' fis' as'>1-\markup "<c e gis b dis' fis' as'>"
-  <c e gis heses d' f' a'>1-\markup "<c e gis heses d' f' a'>"
-  <c e gis heses d' f' as'>1-\markup "<c e gis heses d' f' as'>"
-  <c e gis heses d' fis' a'>1-\markup "<c e gis heses d' fis' a'>"
-  <c e gis heses d' fis' as'>1-\markup "<c e gis heses d' fis' as'>"
-  <c e gis heses des' f' a'>1-\markup "<c e gis heses des' f' a'>"
-  <c e gis heses des' f' as'>1-\markup "<c e gis heses des' f' as'>"
-  <c e gis heses des' fis' a'>1-\markup "<c e gis heses des' fis' a'>"
-  <c e gis heses des' fis' as'>1-\markup "<c e gis heses des' fis' as'>"
-  <c e gis heses dis' f' a'>1-\markup "<c e gis heses dis' f' a'>"
-  <c e gis heses dis' f' as'>1-\markup "<c e gis heses dis' f' as'>"
-  <c e gis heses dis' fis' a'>1-\markup "<c e gis heses dis' fis' a'>"
-  <c e gis heses dis' fis' as'>1-\markup "<c e gis heses dis' fis' as'>"
-}
+  %% Tredezimakkorde ohne Undezim
+  <c e g h d' a'>1-\markup "<c e g h d' a'>"
+  <c e g h d' as'>1-\markup "<c e g h d' as'>"
+  <c e g h des' a'>1-\markup "<c e g h des' a'>"
+  <c e g h des' as'>1-\markup "<c e g h des' as'>"
+  <c e g h dis' a'>1-\markup "<c e g h dis' a'>"
+  <c e g h dis' as'>1-\markup "<c e g h dis' as'>"
+  <c e g b d' a'>1-\markup "<c e g b d' a'>"
+  <c e g b d' as'>1-\markup "<c e g b d' as'>"
+  <c e g b des' a'>1-\markup "<c e g b des' a'>"
+  <c e g b des' as'>1-\markup "<c e g b des' as'>"
+  <c e g b dis' a'>1-\markup "<c e g b dis' a'>"
+  <c e g b dis' as'>1-\markup "<c e g b dis' as'>"
+  <c e g heses d' a'>1-\markup "<c e g heses d' a'>"
+  <c e g heses d' as'>1-\markup "<c e g heses d' as'>"
+  <c e g heses d' fis' as'>1-\markup "<c e g heses d' fis' as'>"
+  <c e g heses des' a'>1-\markup "<c e g heses des' a'>"
+  <c e g heses des' as'>1-\markup "<c e g heses des' as'>"
+  <c e g heses dis' a'>1-\markup "<c e g heses dis' a'>"
+  <c e g heses dis' as'>1-\markup "<c e g heses dis' as'>"
