@@ -1,5 +1,3 @@
-% grosub=\sub \fontsize #+1.5
-
 chExceptions = {
 
   <c>1-\markup  "< c >"
@@ -417,6 +415,7 @@ ChordsAsNotes=
   <c e h>1-\markup "<c e h>"
   <c e b>1-\markup "<c e b>"
   <c e heses>1-\markup "<c e heses>"
+
   %% Nonakkorde
   <c e g h d'>1-\markup "<c e g h d'>"
   <c e g h des'>1-\markup "<c e g h des'>"
@@ -484,6 +483,40 @@ ChordsAsNotes=
   <c e heses des' fis'>1-\markup "<c e heses des' fis'>"
   <c e heses dis' f'>1-\markup "<c e heses dis' f'>"
   <c e heses dis' fis'>1-\markup "<c e heses dis' fis'>"
+  %% Undezimakkorde ohne Septime
+  <c e g d' f'>1-\markup "<c e g d' f'>"
+  <c e g d' fis'>1-\markup "<c e g d' fis'>"
+  <c e g des' f'>1-\markup "<c e g des' f'>"
+  <c e g des' fis'>1-\markup "<c e g des' fis'>"
+  <c e g dis' f'>1-\markup "<c e g dis' f'>"
+  <c e g dis' fis'>1-\markup "<c e g dis' fis'>"
+  %% Undezimakkorde ohne Quint und ohne Septime
+  <c e d' f'>1-\markup "<c e d' f'>"
+  <c e d' fis'>1-\markup "<c e d' fis'>"
+  <c e des' f'>1-\markup "<c e des' f'>"
+  <c e des' fis'>1-\markup "<c e des' fis'>"
+  <c e dis' f'>1-\markup "<c e dis' f'>"
+  <c e dis' fis'>1-\markup "<c e dis' fis'>"
+  %% Undezimakkorde ohne None
+  <c e g h f'>1-\markup "<c e g h f'>"
+  <c e g h fis'>1-\markup "<c e g h fis'>"
+  <c e g b f'>1-\markup "<c e g b f'>"
+  <c e g b fis'>1-\markup "<c e g b fis'>"
+  <c e g heses f'>1-\markup "<c e g heses f'>"
+  <c e g heses fis'>1-\markup "<c e g heses fis'>"
+  %% Undezimakkorde ohne Quint ohne None
+  <c e h f'>1-\markup "<c e h f'>"
+  <c e h fis'>1-\markup "<c e h fis'>"
+  <c e b f'>1-\markup "<c e b f'>"
+  <c e b fis'>1-\markup "<c e b fis'>"
+  <c e heses f'>1-\markup "<c e heses f'>"
+  <c e heses fis'>1-\markup "<c e heses fis'>"
+  %% Undezimakkorde ohne Septime ohne None
+  <c e g f'>1-\markup "<c e g f'>"
+  <c e g fis'>1-\markup "<c e g fis'>"
+  %% Undezimakkorde ohne Quint ohne  Septime ohne None
+  <c e f'>1-\markup "<c e f'>"
+  <c e fis'>1-\markup "<c e fis'>"
 
   %% Tredezimakkorde
   <c e g h d' f' a'>1-\markup "<c e g h d' f' a'>"
