@@ -3,7 +3,12 @@
 
 %% http://lsr.di.unimi.it/LSR/Item?id=791
 %% see also http://lilypond.org/doc/v2.18/Documentation/snippets/keyboards
-
+#(define (stufe p)
+   (if (not (ly:pitch? p))
+       #()
+       (ly:pitch-notename p ))
+   (write (format "\nNote: ~a" (ly:pitch-notename p ) )
+     ))
 
 #(define KEY-POS-LIST '(
                          (c    .    1) (cis  .  1.35) (des . 1.35) (d    .    2) (dis  .  2.7) (es  .  2.7) (e   .  3)
@@ -11,6 +16,7 @@
                          (ais  .  6.5) (b  .  6.5) (b   .   7) (c'   .    8) (cis' .  8.5) (des' .  8.5) (d'  .  9)
                          (dis' .  9.5) (es' .  9.5) (e'  .  10) (f'   .   11) (fis' . 11.5) (ges' . 11.5) (g'  . 12)
                          (gis' . 13) (as' . 13) (a'  .  13) (ais' . 13.5) (b' . 13.5) (b'   .   14) (c'' . 15)))
+#(display (stufe #{ c #} ))
 
 #(define (black-key? num )
    (member num '(cis  des  dis  es  fis  ges  gis  as  ais  b
@@ -101,50 +107,67 @@
         (make-dot-list (cdr l1)))))
 
 #(define-markup-command (keys layout props zahl arg1) (number? list?)
-   (ly:stencil-add
+   (ly:stencil-scale
+    (ly:stencil-add
 
-    ; obere Linie
-    (make-line-stencil 0.1 0 0 (* 2.35 17) 0)
-    ;; untere Linie
-    (make-line-stencil 0.1 0 15 (* 2.35 17) 15)
-    ; Ziwschenlinie
-    (make-line-stencil 0.1 0 0 0 15)
-    (make-line-stencil 0.1 2.35 0 2.35 15)
-    (make-line-stencil 0.1 (* 2 2.35) 0  (* 2 2.35) 15)
-    (make-line-stencil 0.1 (* 3 2.35) 0  (* 3 2.35) 15)
-    (make-line-stencil 0.1 (* 4 2.35) 0  (* 4 2.35) 15)
-    (make-line-stencil 0.1 (* 5 2.35) 0  (* 5 2.35) 15)
-    (make-line-stencil 0.1 (* 6 2.35) 0  (* 6 2.35) 15)
-    (make-line-stencil 0.1 (* 7 2.35) 0  (* 7 2.35) 15)
-    (make-line-stencil 0.1 (* 8 2.35) 0  (* 8 2.35) 15)
-    (make-filled-box-stencil '(1.2 . 2.8) '(5.5 . 15)) ;; cis
-    (make-filled-box-stencil '(4.25 . 5.85) '(5.5 . 15)) ;; dis
-    (make-filled-box-stencil '(8.25 . 9.85) '(5.5 . 15)) ;; fis
-    (make-filled-box-stencil '(10.95 . 12.55) '(5.5 . 15)) ;; gis
-    (make-filled-box-stencil '(13.65 . 15.25) '(5.5 . 15)) ;; ais
-    ;; untere Begrenzungslinie
-    ;; erstes Argument: Liniendicke
-    ;; 2. Argument: x-offset des Beginns
-    ;; 3. Argument: Anzahl der Tasten
-    ;, muss gleich dem halben Wert von make-keys sein?
-    ; (make-line-stencil 0.1 1 0 (+ (* 7 zahl) 1) 0)
-    ;; obere Begrenzuungslinie
-    ;(make-line-stencil 0.1 1 (* 6 zahl) (* 12 zahl) (* 6 zahl) )
-    ;(make-line-stencil 0.1 1 (* 3 zahl) (+ (* 7 zahl) 1) (* 3 zahl))
-    ;; weiße Tasten zeichnen
-    ;; die Liste ergibt die Breite der einzelnen Tasten
-    ;;
-    ;(make-keys '(2  4  6 8 10 12 14 16 18 20 22 24 26 28 30 ) 2
-    ; 0 (* 4 zahl) #f)
-    ;; schwarze Tasten zeichnen
-    ;; vorletzte Zahl: wie hoch die schwarze Taste beginnt
-    ;, letzte Zahl: Höhe der Taste
-    ;; sollte in Summe die Gesamthöhe derweißten Tasten ergeben
-    ;; =die letzte Zahl in make-keys
-    ;; erste Zahl ist die Breite der Taste
-    ;(make-keys-black '(2.7 5.4  8.7 11 13.3 16.7 19.4 22.7 25 27.3 )
-    ;1.5 (* zahl 2) (* zahl 1.5) #t)
-    ;(make-dot-list arg1 )
+     ; obere Linie
+     (make-line-stencil 0.1 0 0 (* 2.35 17) 0)
+     ;; untere Linie
+     (make-line-stencil 0.1 0 15 (* 2.35 17) 15)
+     ; Ziwschenlinie
+     (make-line-stencil 0.1 0 0 0 15) ;; linker Rand
+     (make-line-stencil 0.1 2.35 0 2.35 15)
+     (make-line-stencil 0.1 (* 2 2.35) 0  (* 2 2.35) 15)
+     (make-line-stencil 0.1 (* 3 2.35) 0  (* 3 2.35) 15)
+     (make-line-stencil 0.1 (* 4 2.35) 0  (* 4 2.35) 15)
+     (make-line-stencil 0.1 (* 5 2.35) 0  (* 5 2.35) 15)
+     (make-line-stencil 0.1 (* 6 2.35) 0  (* 6 2.35) 15)
+     (make-line-stencil 0.1 (* 7 2.35) 0  (* 7 2.35) 15)
+     (make-line-stencil 0.1 (* 8 2.35) 0  (* 8 2.35) 15)
+     (make-line-stencil 0.1 (* 9 2.35) 0  (* 9 2.35) 15)
+     (make-line-stencil 0.1 (* 10 2.35) 0  (* 10 2.35) 15)
+     (make-line-stencil 0.1 (* 11 2.35) 0  (* 11 2.35) 15)
+     (make-line-stencil 0.1 (* 12 2.35) 0  (* 12 2.35) 15)
+     (make-line-stencil 0.1 (* 13 2.35) 0  (* 13 2.35) 15)
+     (make-line-stencil 0.1 (* 14 2.35) 0  (* 14 2.35) 15)
+     (make-line-stencil 0.1 (* 15 2.35) 0  (* 15 2.35) 15)
+     (make-filled-box-stencil '(1.25 . 2.85) '(5.5 . 15)) ;; cis
+     (make-filled-box-stencil '(4.15 . 5.75) '(5.5 . 15)) ;; dis
+     (make-filled-box-stencil '(8.25 . 9.85) '(5.5 . 15)) ;; fis
+     (make-filled-box-stencil '(10.95 . 12.55) '(5.5 . 15)) ;; gis
+     (make-filled-box-stencil '(13.65 . 15.25) '(5.5 . 15)) ;; ais
+     (make-filled-box-stencil '(20.6 . 22.2) '(5.5 . 15)) ;; cis
+     (make-filled-box-stencil '(24.7 . 26.3) '(5.5 . 15)) ;; dis
+     (make-filled-box-stencil '(17.65 . 19.25) '(5.5 . 15)) ;; fis
+     (make-filled-box-stencil '(27.4 . 29) '(5.5 . 15)) ;; gis
+     (make-filled-box-stencil '(30.1 . 31.7) '(5.5 . 15)) ;; ais
+     (ly:stencil-in-color
+      (ly:stencil-translate
+       (make-circle-stencil ( * 1 0.7) 0 #t)
+       '(1.175 . 2.7)       )
+      0.5 0.5 0.5
+      )     (ly:stencil-in-color
+            (ly:stencil-translate
+             (make-circle-stencil ( * 1 0.6) 0 #t)
+             '(2 . 8)       )
+            0.8 0.5 0.5      )
+     (ly:stencil-in-color
+      (ly:stencil-translate
+       (make-circle-stencil ( * 1 0.6) 0 #t)
+       '(5 . 8)       )
+      0.5 0.8 0.5      )
+     (ly:stencil-in-color
+      (ly:stencil-translate
+       (make-circle-stencil ( * 1 0.7) 0 #t)
+       '(3.525 . 2.7)       )
+      0.5 0.5 0.5      )
+     (ly:stencil-in-color
+      (ly:stencil-translate
+       (make-circle-stencil ( * 1 0.7) 0 #t)
+       '(5.875 . 2.7)       )
+      0.5 0.5 0.5
+      ))
+    1 1
     ))
 
 #(define-markup-command (keyboard layout props zahl arg1) (number? list?)
