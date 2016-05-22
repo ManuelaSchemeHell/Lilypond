@@ -1,0 +1,181 @@
+\version "2.19.32"
+\language "deutsch"
+
+%% http://lsr.di.unimi.it/LSR/Item?id=791
+%% see also http://lilypond.org/doc/v2.18/Documentation/snippets/keyboards
+
+
+#(define KEY-POS-LIST '(
+                         (c    .    1) (cis  .  1.35) (des . 1.35) (d    .    2) (dis  .  2.7) (es  .  2.7) (e   .  3)
+                         (f    .    4) (fis  .  4.4) (ges . 4.4) (g    .    5) (gis  .  5.5) (as  .  5.5) (a   .  6)
+                         (ais  .  6.5) (b  .  6.5) (b   .   7) (c'   .    8) (cis' .  8.5) (des' .  8.5) (d'  .  9)
+                         (dis' .  9.5) (es' .  9.5) (e'  .  10) (f'   .   11) (fis' . 11.5) (ges' . 11.5) (g'  . 12)
+                         (gis' . 13) (as' . 13) (a'  .  13) (ais' . 13.5) (b' . 13.5) (b'   .   14) (c'' . 15)))
+
+#(define (black-key? num )
+   (member num '(cis  des  dis  es  fis  ges  gis  as  ais  b
+                  cis' des' dis' es' fis' ges' gis' as' ais' b')) )
+
+#(define (key-to-pos mykey ypos)
+   ;; liefert ein pair zurück
+   (let ((keypos (assq mykey KEY-POS-LIST)))
+     #!#
+     (write (string-append
+             "\nkey-to-pos mykey ypos: " (format " ~a " mykey)
+             (format "~a" ypos)
+             ))
+     #!#
+     ;(format #t "\nmykey ~a.\n")
+     (if (not keypos)
+         (ly:error (_ "keyboard diagram error - unkown note '~a' ") mykey)
+         (cons (- (* (cdr (assq mykey KEY-POS-LIST)) 2) 0) ypos))))
+
+
+#(define (make-keys l1 width off height fill)
+   ;; erzeugen der Tasten
+   #!#
+    (write (string-append
+                "\nmake-keys width off height: " (format "~a " width)
+                (format "~a" off)  (format " ~a" height)
+                ))
+ #!#
+   (if (null? l1)
+       empty-stencil
+       (ly:stencil-add
+        (ly:stencil-translate
+         (make-line-stencil 0.1 0 0 0 height)
+         (if fill
+             (cons (- (car l1) (/ width 2)) off) ;
+             (cons (- (car l1) 1)  off)))
+        (make-keys (cdr l1) width off height fill))))
+
+#(define (make-keys-black l1 width off height fill)
+   (if (null? l1)
+       empty-stencil
+       (ly:stencil-add
+        (ly:stencil-translate
+         (ly:round-filled-box `(0 . ,width) `(0 . ,height) 0)
+         (if fill
+             (cons (- (car l1) (/ width 2)) off) ;
+             (cons (- (car l1) 1)  off)))
+        (make-keys-black (cdr l1) width off height fill))))
+
+#(define (make-dot mykey zahl)
+   #!#
+   (write (string-append
+           "\nmake-dot: "
+           (   format "(key-to-pos mykey 2.5) ~a " (key-to-pos mykey 2.5))
+           "\nmykey "
+           ( format " ~a " mykey )
+           ))
+ #!#
+   (write ( format "\n(car (key-to-pos mykey (* 3 0.8 )~a " (car (key-to-pos mykey (* 3 0.8 ))))
+     )
+   (write ( format "\n(cdr (key-to-pos mykey (* 3 0.8 )~a " (cdr (key-to-pos mykey (* 3 0.8 ))))
+     )
+   (write (format "\nmake-dot mykey ~a " mykey))
+   (if (black-key? mykey)
+       ;; weißer Punkt für schwarze Tasten
+       (ly:stencil-in-color
+        (ly:stencil-translate
+         (make-circle-stencil ( * zahl 0.18) 0 #t)
+         (key-to-pos mykey (* zahl 1.8))
+         )
+        1 1 1
+        )
+       ;; schwarzer Punkt für weiße Tasten
+       ;; 0.22 ist der Durchmesser des Kreises
+       (ly:stencil-translate
+        (make-circle-stencil ( * zahl 0.22) 0 #t)
+        ;; schiebt den Punkt hinauf
+        (key-to-pos mykey (* zahl 0.8 ))
+        )
+       ))
+
+#(define (make-dot-list l1)
+   ; (write ( format "\n(make-dot-list car l1 ~a" (car l1) ))
+   (if (null? l1)
+       empty-stencil
+       (ly:stencil-add
+        (make-dot (car l1) 3)
+        (make-dot-list (cdr l1)))))
+
+#(define-markup-command (keys layout props zahl arg1) (number? list?)
+   (ly:stencil-add
+
+    ; obere Linie
+    (make-line-stencil 0.1 0 0 (* 2.35 17) 0)
+    ;; untere Linie
+    (make-line-stencil 0.1 0 15 (* 2.35 17) 15)
+    ; Ziwschenlinie
+    (make-line-stencil 0.1 0 0 0 15)
+    (make-line-stencil 0.1 2.35 0 2.35 15)
+    (make-line-stencil 0.1 (* 2 2.35) 0  (* 2 2.35) 15)
+    (make-line-stencil 0.1 (* 3 2.35) 0  (* 3 2.35) 15)
+    (make-line-stencil 0.1 (* 4 2.35) 0  (* 4 2.35) 15)
+    (make-line-stencil 0.1 (* 5 2.35) 0  (* 5 2.35) 15)
+    (make-line-stencil 0.1 (* 6 2.35) 0  (* 6 2.35) 15)
+    (make-line-stencil 0.1 (* 7 2.35) 0  (* 7 2.35) 15)
+    (make-line-stencil 0.1 (* 8 2.35) 0  (* 8 2.35) 15)
+    (make-filled-box-stencil '(1.2 . 2.8) '(5.5 . 15)) ;; cis
+    (make-filled-box-stencil '(4.25 . 5.85) '(5.5 . 15)) ;; dis
+    (make-filled-box-stencil '(8.25 . 9.85) '(5.5 . 15)) ;; fis
+    (make-filled-box-stencil '(10.95 . 12.55) '(5.5 . 15)) ;; gis
+    (make-filled-box-stencil '(13.65 . 15.25) '(5.5 . 15)) ;; ais
+    ;; untere Begrenzungslinie
+    ;; erstes Argument: Liniendicke
+    ;; 2. Argument: x-offset des Beginns
+    ;; 3. Argument: Anzahl der Tasten
+    ;, muss gleich dem halben Wert von make-keys sein?
+    ; (make-line-stencil 0.1 1 0 (+ (* 7 zahl) 1) 0)
+    ;; obere Begrenzuungslinie
+    ;(make-line-stencil 0.1 1 (* 6 zahl) (* 12 zahl) (* 6 zahl) )
+    ;(make-line-stencil 0.1 1 (* 3 zahl) (+ (* 7 zahl) 1) (* 3 zahl))
+    ;; weiße Tasten zeichnen
+    ;; die Liste ergibt die Breite der einzelnen Tasten
+    ;;
+    ;(make-keys '(2  4  6 8 10 12 14 16 18 20 22 24 26 28 30 ) 2
+    ; 0 (* 4 zahl) #f)
+    ;; schwarze Tasten zeichnen
+    ;; vorletzte Zahl: wie hoch die schwarze Taste beginnt
+    ;, letzte Zahl: Höhe der Taste
+    ;; sollte in Summe die Gesamthöhe derweißten Tasten ergeben
+    ;; =die letzte Zahl in make-keys
+    ;; erste Zahl ist die Breite der Taste
+    ;(make-keys-black '(2.7 5.4  8.7 11 13.3 16.7 19.4 22.7 25 27.3 )
+    ;1.5 (* zahl 2) (* zahl 1.5) #t)
+    ;(make-dot-list arg1 )
+    ))
+
+#(define-markup-command (keyboard layout props zahl arg1) (number? list?)
+   (ly:stencil-add
+    ;; untere Begrenzungslinie
+    ;; erstes Argument: Liniendicke
+    ;; 2. Argument: x-offset des Beginns
+    ;; 3. Argument: Anzahl der Tasten
+    ;, muss gleich dem halben Wert von make-keys sein?
+    (make-line-stencil 0.1 1 0 (+ (* 7 zahl) 1) 0)
+    ;; obere Begrenzuungslinie
+    ;(make-line-stencil 0.1 1 (* 6 zahl) (* 12 zahl) (* 6 zahl) )
+    (make-line-stencil 0.1 1 (* 3 zahl) (+ (* 7 zahl) 1) (* 3 zahl))
+    ;; weiße Tasten zeichnen
+    ;; die Liste ergibt die Breite der einzelnen Tasten
+    ;;
+    (make-keys '(2  4  6 8 10 12 14 16 18 20 22 24 26 28 30 ) 2
+      0 (* 4 zahl) #f)
+    ;; schwarze Tasten zeichnen
+    ;; vorletzte Zahl: wie hoch die schwarze Taste beginnt
+    ;, letzte Zahl: Höhe der Taste
+    ;; sollte in Summe die Gesamthöhe derweißten Tasten ergeben
+    ;; =die letzte Zahl in make-keys
+    ;; erste Zahl ist die Breite der Taste
+    ;(make-keys-black '(2.7 5.4  8.7 11 13.3 16.7 19.4 22.7 25 27.3 )
+    ;  1.5 (* zahl 2) (* zahl 1.5) #t)
+
+    ))
+
+cnine=\markup \keys #3 #'(c des es f gis a )
+
+\relative c' {
+  <c d es>4^\cnine r r2 r1
+}
