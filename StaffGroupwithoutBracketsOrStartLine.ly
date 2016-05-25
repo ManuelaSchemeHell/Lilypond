@@ -12,10 +12,7 @@
   }
   \context {
     \Score
-    \override SystemStartBrace.style = #'bar-line
     \omit SystemStartBar
-    \override SystemStartBrace.padding = #-0.1
-    \override SystemStartBrace.thickness = #1.6
     \remove "Mark_engraver"
     \override StaffGrouper.staffgroup-staff-spacing.basic-distance = #15
   }
