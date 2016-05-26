@@ -1,0 +1,132 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LSR workaround:
+#(set! paper-alist (cons '("snippet" . (cons (* 240 mm) (* 80 mm))) paper-alist))
+\paper {
+  #(set-paper-size "snippet")
+  indent = 0
+  tagline = ##f
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% http://lsr.di.unimi.it/LSR/Item?id=856
+%% see also lists.gnu.org/archive/html/lilypond-user/2013-12/msg00828.html
+% by Paul Morris
+
+% tonic-num: number of the tonic note 0-6, C=0, B=6
+% acc-type: the accidental sign type, 1/2=sharp, -1/2=flat
+% acc-count: the number and type of accidentals in the key signature
+%                  values are: -7 -6 -5 -4 -3 -2 -1 0 1 2 3 4 5 6 7
+%                  (negative = flats, positive = sharps)
+% tonic-acc: #f if the tonic note is not sharp or flat, otherwise a pair
+% maj-num: number of the tonic note 0-6, if the key sig were major
+% mode-num: number of the mode 0-6
+% txt-size: size of key name text
+% padd: padding between key signature and key name
+% mult: for correct resizing when the staff is resized
+
+#(define Custom_key_engraver
+   (make-engraver
+    (acknowledgers
+     ((key-signature-interface engraver grob source-engraver)
+      ;; if key cancellation then do nothing,
+      ;; else modify the key signature stencil
+      (if (not (eq? 'KeyCancellation
+                    (assq-ref (ly:grob-property grob 'meta) 'name)))
+          (let* ((context (ly:translator-context engraver))
+                 (tonic-pitch (ly:context-property context 'tonic))
+                 (tonic-num (ly:pitch-notename tonic-pitch))
+                 (acc-list (ly:grob-property grob 'alteration-alist))
+
+                 (acc-type (if (null? acc-list)
+                               0 (cdr (list-ref acc-list 0))))
+
+                 (acc-count (* (length acc-list)
+                              (if (< acc-type 0) -1 1)))
+
+                 (maj-num (case acc-count
+                            ((0) 0)
+                            ((1) 4) ((2) 1) ((3) 5) ((4) 2) ((5) 6) ((6) 3) ((7) 0)
+                            ((-1) 3) ((-2) 6) ((-3) 2) ((-4) 5) ((-5) 1) ((-6) 4) ((-7) 0)))
+
+                 (mode-num (modulo (- tonic-num maj-num) 7))
+                 (key-letter (case tonic-num
+                               ((0) "C" ) ((1) "D" ) ((2) "E" ) ((3) "F" )
+                               ((4) "G" ) ((5) "A" ) ((6) "B" )))
+
+                 (mult (magstep (ly:grob-property grob 'font-size 0.0)))
+
+                 (txt-sharp #{ \markup {
+                   \translate #(cons (* mult -0.3) (* mult 0.8))
+                   \magnify #(* mult 0.9) \sharp
+                   } #})
+
+                 (txt-flat #{ \markup {
+                   \translate #(cons (* mult -0.2) (* mult 0.4))
+                   \magnify #(* mult 0.9) \flat
+                   } #})
+
+                 (tonic-acc (if (pair? (assq tonic-num acc-list))
+                                (if (= acc-type 0.5) txt-sharp txt-flat)
+                                ""))
+
+                 (key-mode (case mode-num
+                             ((0) "Major") ((1) "Dorian") ((2) "Phrygian") ((3) "Lydian")
+                             ((4) "Mixolydian") ((5) "Minor") ((6) "Locrian")))
+
+                 ;; F Major and D Minor each get extra padding
+                 ;; so the name appears above the staff
+                 (padd (if (= acc-count -1)
+                           (+ 0.5 (* mult 1.2))
+                           0.5))
+
+                 (txt-size 0.7)
+                 (key-name #{ \markup { #key-letter #tonic-acc #key-mode } #})
+                 (key-name-scaled (ly:stencil-scale
+                                   (grob-interpret-markup grob key-name)
+                                   txt-size txt-size))
+
+                 (key-sig-stencil (ly:key-signature-interface::print grob))
+                 (grob-y-ext (ly:grob-property grob 'Y-extent)))
+
+            ;; Names for C Major, A Minor, etc. have to be moved up above the staff
+            ;; padd has no effect if there are no sharps or flats in the key signature
+            (if (equal? grob-y-ext (cons +inf.0 -inf.0))
+                (set! key-name-scaled
+                      (ly:stencil-translate-axis key-name-scaled 3 Y)))
+
+            (ly:grob-set-property! grob 'stencil
+              (ly:stencil-combine-at-edge key-sig-stencil 1 1
+                key-name-scaled padd))))))))
+
+\layout {
+  \context {
+    \Staff
+    \consists \Custom_key_engraver
+  }
+}
+
+\new Staff \relative f'' {
+  \key c \major
+  c1
+  \key a \minor
+  a1
+  \key a \major
+  a1
+  \key fis \minor
+  fis1
+  \key ees \major
+  ees1
+  \key c \minor
+  c'1
+  \key c \dorian
+  c1
+  \key c \phrygian
+  c1
+  \key c \lydian
+  c1
+  \key c \mixolydian
+  c1
+  \key c \locrian
+  c1
+}
