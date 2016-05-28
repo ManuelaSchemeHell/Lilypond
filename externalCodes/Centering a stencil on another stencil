@@ -1,0 +1,39 @@
+#(define* (center-stencil-on-stencil stil-a stil-b #:optional axis)
+   "Return a copy of stencil @var{stil-b} that has been moved 
+   so it is centered on stencil @var{stil-a} on @var{axis}. When
+   @var{axis} is omitted, the centering is done on both X and Y
+   axes. @var{axis} can be X or Y, which are equivalent to 0 and 1."
+   (if axis
+       ;; center on one axis only
+       (ly:stencil-translate-axis
+        (ly:stencil-aligned-to stil-b axis CENTER)
+        (interval-center (ly:stencil-extent stil-a axis))
+        axis)
+       ;; center on both X and Y axes
+       (ly:stencil-translate
+        (centered-stencil stil-b)
+        (cons
+         (interval-center (ly:stencil-extent stil-a X))
+         (interval-center (ly:stencil-extent stil-a Y))))))
+
+square =
+#(make-connected-path-stencil
+  '((0 0) (4 0) (4 4) (0 4) (0 0))
+  0.4 1 1 #f #f)
+
+blue-square =
+#(stencil-with-color
+  (make-filled-box-stencil '(0.4 . 2) '(0.4 . 2))
+  blue)
+
+\markup
+\override #'(word-space . 3)
+\line {
+  \stencil #(ly:stencil-add square blue-square)
+  \stencil #(ly:stencil-add square
+              (center-stencil-on-stencil square blue-square X))
+  \stencil #(ly:stencil-add square
+              (center-stencil-on-stencil square blue-square Y))
+  \stencil #(ly:stencil-add square
+              (center-stencil-on-stencil square blue-square))
+}
