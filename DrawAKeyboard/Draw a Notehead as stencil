@@ -1,0 +1,115 @@
+\version "2.19.42"
+
+#(define-markup-command
+  (make-notenkopf layout props scale-factor p farbe offset)
+  (number? ly:music? symbol? pair?)
+  (ly:stencil-scale
+   (ly:stencil-translate
+    (ly:stencil-in-color
+     (make-connected-path-stencil
+      '((0.000  -0.200)
+        (0.000  -0.420   0.180  -0.542   0.420  -0.542)
+        (0.800  -0.542   1.318  -0.210   1.318   0.200 )
+        (1.318   0.420   1.140   0.542   0.890   0.542 )
+        ( 0.510   0.542   0.000   0.210   0.000  -0.200 )
+        )
+      0  ;; line thickness
+      1  ;; X-axis scaling factor
+      1  ;; Y-axis scaling factor
+      #t  ;; automatically connect path to origin point? (0 0)
+      #t)
+     (first (x11-color farbe))
+     (second (x11-color farbe))
+     (third (x11-color farbe))
+     )
+    offset
+    )
+   scale-factor scale-factor
+   )
+  )
+
+triangle =
+\markup \stencil
+#(make-connected-path-stencil
+  '((1 2)  ;; path coordinates
+     (2 0)
+     (0 0))
+  0.15  ;; line thickness
+  1  ;; X-axis scaling factor
+  1  ;; Y-axis scaling factor
+  #f  ;; auto-connect path to origin point? (0 0)
+  #t)  % filled path?
+
+moon =
+\markup \stencil
+#(ly:stencil-translate
+  (make-connected-path-stencil
+   '((-6 -2 -6 7 0 5)
+     (-3 5 -3 0 0 0))
+   0.15
+   0.5
+   0.5
+   #f
+   #f)
+  (cons 1.8 0)) % ly:stencil-translate coordinates
+
+{ c'4 \mark \triangle c'4 c'4  c'4^\moon }
+
+
+
+
+meinPitch = c
+myScale= { c }
+
+%meinTest= \markup \make-notenkopf #4 #myScale #'navy
+
+\relative c' 
+{ <c,>-\markup \make-notenkopf #4 #myScale #'LemonChiffon4 #'( 10 . 10) }
+
+%{
+  snow GhostWhite WhiteSmoke gainsboro FloralWhite
+  OldLace linen AntiqueWhite PapayaWhip BlanchedAlmond
+  bisque PeachPuff NavajoWhite moccasin cornsilk
+  ivory LemonChiffon seashell honeydew MintCream
+  azure AliceBlue lavender LavenderBlush MistyRose
+  white black DarkSlateGrey DimGrey SlateGrey
+  LightSlateGrey grey LightGrey MidnightBlue navy
+  NavyBlue CornflowerBlue DarkSlateBlue SlateBlue MediumSlateBlue
+  LightSlateBlue MediumBlue RoyalBlue blue DodgerBlue
+  DeepSkyBlue SkyBlue LightSkyBlue SteelBlue LightSteelBlue
+  LightBlue PowderBlue PaleTurquoise DarkTurquoise MediumTurquoise
+  turquoise cyan LightCyan CadetBlue MediumAquamarine
+  aquamarine DarkGreen DarkOliveGreen DarkSeaGreen SeaGreen
+  MediumSeaGreen LightSeaGreen PaleGreen SpringGreen LawnGreen
+  green chartreuse MediumSpringGreen GreenYellow LimeGreen
+  YellowGreen ForestGreen OliveDrab DarkKhaki khaki
+  PaleGoldenrod LightGoldenrodYellow LightYellow yellow gold
+  LightGoldenrod goldenrod DarkGoldenrod RosyBrown IndianRed
+  SaddleBrown sienna peru burlywood beige
+  wheat SandyBrown tan chocolate firebrick
+  brown DarkSalmon salmon LightSalmon orange
+  DarkOrange coral LightCoral tomato OrangeRed
+  red HotPink DeepPink pink LightPink
+  PaleVioletRed maroon MediumVioletRed VioletRed magenta
+  violet plum orchid MediumOrchid DarkOrchid
+  DarkViolet BlueViolet purple MediumPurple thistle
+  DarkGrey DarkBlue DarkCyan DarkMagenta DarkRed
+  LightGreen
+  Für die folgenden Bezeichnungen kann das Suffix N durch eine Zahl von 1–4 ersetzt werden.
+  snowN seashellN AntiqueWhiteN bisqueN PeachPuffN
+  NavajoWhiteN LemonChiffonN cornsilkN ivoryN honeydewN
+  LavenderBlushN MistyRoseN azureN SlateBlueN RoyalBlueN
+  blueN DodgerBlueN SteelBlueN DeepSkyBlueN SkyBlueN
+  LightSkyBlueN LightSteelBlueN LightBlueN LightCyanN PaleTurquoiseN
+  CadetBlueN turquoiseN cyanN aquamarineN DarkSeaGreenN
+  SeaGreenN PaleGreenN SpringGreenN greenN chartreuseN
+  OliveDrabN DarkOliveGreenN khakiN LightGoldenrodN LightYellowN
+  yellowN goldN goldenrodN DarkGoldenrodN RosyBrownN
+  IndianRedN siennaN burlywoodN wheatN tanN
+  chocolateN firebrickN brownN salmonN LightSalmonN
+  orangeN DarkOrangeN coralN tomatoN OrangeRedN
+  redN DeepPinkN HotPinkN pinkN LightPinkN
+  PaleVioletRedN maroonN VioletRedN magentaN orchidN
+  plumN MediumOrchidN DarkOrchidN purpleN MediumPurpleN
+  thistleN
+%}
