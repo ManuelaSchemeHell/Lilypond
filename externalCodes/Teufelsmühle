@@ -1,0 +1,163 @@
+\include "deutsch.ly"
+\version "2.16.2"
+\header {
+    copyright =  \markup { "Copyright "\char ##x00A9" xxxx Die Inhaber des Copyright" }
+
+    title = "Teufelsmühle"
+
+}
+
+#(set-global-staff-size 20)
+
+upperOne =
+\relative c' {
+  \time 4/4
+  \key b \major
+  \voiceOne
+  r4 b' c b
+  a1
+  a
+  a2 gis
+  fis fis
+  e1\break
+}
+
+
+upperTwo =
+\relative c' {
+  \voiceTwo
+  r4 f f f
+  f4 es8~ dis e4 f
+  %obiger Bindebogen "unbegrenzt", u.g. Legatobogen wird nach unten ausgerichtet
+  % f4 es8( dis) e4 f
+
+  fis1
+  fis2 e
+  e dis
+  h1
+}
+
+
+lowerOne =
+\relative c' {
+  \time 4/4
+  \key b \major
+  \voiceOne
+  r4 d es d
+  c1
+  c4 his cis d
+  dis2 e
+  cis h4 a
+  gis1
+}
+
+lowerTwo =
+\relative c {
+  \voiceTwo
+    r4 b' a b
+    f2 e4 es
+    d2 cis4 c
+    h2 cis4 h
+    a2 h e,1
+}
+
+firstverse = \lyricmode {
+    T  
+    \markup {
+    D
+     \small \smaller \translate #'(-0.5 . 1.9) \line {7}
+     \small \smaller \translate #'(-3.5 . -1.5) \line {3}
+  }
+    T
+    \markup { \concat {D \super "7" } }
+               }
+
+secondverse = \lyricmode {
+    ""
+    ""
+    ""
+    \markup { \italic { \concat { F \super "7" } }}
+    \markup { \italic { \concat { D \super "7" } }}
+    \markup { \italic { \concat { H \super "7" } }}
+            }
+
+
+thirdverse = \lyricmode {
+    ""
+    ""
+    ""
+    ""
+    ""
+    ""
+    ""
+    \markup \override #'(box-padding . 0.6) \box E:
+    \markup { \concat { D \super "7" } }
+    Tp
+    \markup { S
+     \small \smaller \translate #'(-0.2 . 1.9) \line {6}
+     \small \smaller \translate #'(-1.7 . 0.4) \line {5}
+            }
+    \markup { D
+     \small \smaller \translate #'(-0.8 . 1.9) \line {8 - 7}
+            }
+    ""
+    T
+            }
+
+fourthverse = \lyricmode { }
+
+
+\score {
+  \context PianoStaff <<
+    \context Staff = "upper" <<
+      \clef treble
+      \context Voice = "one" \upperOne
+      \context Voice = "two" \upperTwo
+    >>
+
+    \context Staff = "lower" <<
+      \clef bass
+      \context Voice = "three" \lowerOne
+      \context Voice = "four" \lowerTwo
+    >>
+% Ausrichtung der Noten an "one" bzw. "three"
+    \lyricsto "one" \new Lyrics {
+      \set stanza = \markup \override #'(box-padding . 1.0) \box B:
+      \firstverse
+    }
+    \lyricsto "one" \new Lyrics {
+      \set stanza = ""
+      \secondverse
+    }
+    \lyricsto "three" \new Lyrics {
+      \set stanza = ""
+      \thirdverse
+    }
+
+  >>
+  \layout {
+    \context {
+      \Lyrics
+%     \override VerticalAxisGroup.nonstaff-relatedstaff-spacing = #'((padding . 1.2))
+    }
+    \context {
+      \PianoStaff
+      \remove "Span_bar_engraver"
+    }
+    \context {
+      \Staff
+%     \override VerticalAxisGroup.staff-staff-spacing = #'((padding . 0))
+      autoBeaming = ##t
+      \unset melismaBusyProperties
+    }
+    \context {
+      \Score
+      \remove "Bar_number_engraver"
+    }
+  }
+  \midi { }
+}
+\paper {
+  line-width = 6\in
+  indent = 0
+}
