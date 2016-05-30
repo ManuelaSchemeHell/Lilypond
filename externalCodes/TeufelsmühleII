@@ -1,0 +1,180 @@
+\version "2.18.2"
+#(set-global-staff-size 60)
+\layout {
+  \context {
+    \Lyrics
+    \override StanzaNumber.font-size = #1
+    \override StanzaNumber.font-series = #'medium
+    \override StanzaNumber.stencil = #(make-stencil-boxer .15 0.4 ly:text-interface::print)
+  }
+}
+%ursprüngliches Makro für das diagonale Durchstreichen
+#(define-markup-command (diagonal-stroke layout props arg)
+  (markup?)
+  #:category font
+  #:properties ((font-size 0) (thickness 1.5) (extension 0.07))
+  (let*
+   ((thick (* (magstep font-size)
+      (ly:output-def-lookup layout 'line-thickness)))
+    (underline-thick (* thickness thick))
+    (markup (interpret-markup layout props arg))
+    (x1 (car (ly:stencil-extent markup X)))
+    (x2 (cdr (ly:stencil-extent markup X)))
+    (y1 (car (ly:stencil-extent markup Y)))
+    (y2 (cdr (ly:stencil-extent markup Y)))
+    (dx (* extension (- x2 x1)))
+    (dy (* extension (- y2 y1)))
+    (line (make-line-stencil underline-thick
+      (- x1 dx) (- y1 dy)
+      (+ x2 dx) (+ y2 dy))))
+   (ly:stencil-add markup line)))
+
+% dickerer Durchstrich
+#(define-markup-command (diagonal-stroke_d layout props arg)
+  (markup?)
+  #:category font
+  #:properties ((font-size 0) (thickness 3.0) (extension 0.07))
+  (let*
+   ((thick (* (magstep font-size)
+      (ly:output-def-lookup layout 'line-thickness)))
+    (underline-thick (* thickness thick))
+    (markup (interpret-markup layout props arg))
+    (x1 (car (ly:stencil-extent markup X)))
+    (x2 (cdr (ly:stencil-extent markup X)))
+    (y1 (car (ly:stencil-extent markup Y)))
+    (y2 (cdr (ly:stencil-extent markup Y)))
+    (dx (* extension (- x2 x1)))
+    (dy (* extension (- y2 y1)))
+    (line (make-line-stencil underline-thick
+      (- x1 dx) (- y1 dy)
+      (+ x2 dx) (+ y2 dy))))
+   (ly:stencil-add markup line)))
+
+% Durchstrich in Querrichtung
+#(define-markup-command (qdiagonal-stroke_d layout props arg)
+  (markup?)
+  #:category font
+  #:properties ((font-size 0) (thickness 3.0) (extension 0.07))
+  (let*
+   ((thick (* (magstep font-size)
+      (ly:output-def-lookup layout 'line-thickness)))
+    (underline-thick (* thickness thick))
+    (markup (interpret-markup layout props arg))
+    (x1 (cdr (ly:stencil-extent markup X)))
+    (x2 (car (ly:stencil-extent markup X)))
+    (y1 (car (ly:stencil-extent markup Y)))
+    (y2 (cdr (ly:stencil-extent markup Y)))
+    (dx (* extension (- x2 x1)))
+    (dy (* extension (- y2 y1)))
+    (line (make-line-stencil underline-thick
+      (- x1 dx) (- y1 dy)
+      (+ x2 dx) (+ y2 dy))))
+   (ly:stencil-add markup line)))
+
+
+\lyrics {
+
+  \markup \concat {
+    \combine \translate #'(1.7 . 1.5) \tiny "7"
+    \combine \translate #'(0.4 . -1.4) \tiny "3"
+D
+                  }
+_                  
+                 
+    \markup \concat {
+     \combine \translate #'(2.7 . 0.8) \tiny "T - D"
+     \combine \translate #'(2.0 . 0.4) \tiny "______"
+D
+                    }            
+_
+_
+ 
+    \markup \concat {
+     \combine \translate #'(-0.6 . 0.5) D
+     \combine \translate #'(1.6 . 1.5) \tiny "7" D
+                    }
+
+_
+     \markup {
+      \combine \translate #'(0.4 . 1.4) \rotate #135 "___"
+      \combine \translate #'(1.0 . 0.5) "D"
+      \combine \translate #'(1.5 . -0.0) "D"
+               \translate #'(3.2 . 1.5) \tiny "7"               
+            }
+_
+   \markup \concat {
+    \combine \translate #'(-0.6 . 0.5) D
+    \combine \translate #'(1.6 . 1.5) \tiny "7" { \qdiagonal-stroke_d D }
+                  }
+                                  
+_
+
+ 
+    \markup \concat {
+     \combine \translate #'(-0.6 . 0.5) D
+     \combine \translate #'(1.6 . 1.2) \smaller "v" D
+                    }
+_
+
+     \markup {
+      \combine \translate #'(0.4 . 1.4) \rotate #135 "___"
+      \combine \translate #'(1.0 . 0.5) "D"
+      \combine \translate #'(1.5 . -0.0) "D"
+               \translate #'(3.1 . 1.2) \smaller "v"               
+             }
+_
+           
+    \markup \concat {
+  %  \fontsize #4
+     \combine \translate #'(2.0 . 3.2) \tiny "9"
+     \combine \translate #'(2.0 . 1.7) \tiny "7-8" 
+     \combine \translate #'(2.0 . 0.3) \tiny "<4-5" 
+     \combine \translate #'(0.5 . -1.4) \tiny "3" D
+                    }  
+_
+    \markup \concat {
+    \combine \translate #'(2.0 . 3.2) \tiny "9"
+    \combine \translate #'(2.0 . 1.7) \tiny "7-8" 
+    \combine \translate #'(2.0 . 0.3) \tiny "<4-5" 
+    \combine \translate #'(0.5 . -1.4) \tiny "3" { \qdiagonal-stroke_d D }
+                    }  
+_
+
+                 
+    \markup { \concat { \diagonal-stroke D \super "7" } }
+   
+    \markup { \concat { \diagonal-stroke_d D \super "7" } } 
+   
+    \markup { \concat { \qdiagonal-stroke_d D \super "7" } }
+   
+
+    \markup \combine D \translate #'(-0.5 . 1.2) { \rotate #135 "__" }
+
+    \markup \combine \translate #'(-0.5 . 0.6) "D" "D" 
+  
+    \markup {
+      \combine \translate #'(0.4 . 1.4) \rotate #135 "___"
+      \combine \translate #'(1.0 . 0.5) "D"
+               \translate #'(1.5 . -0.0) "D"
+            }
+_
+
+    \markup \concat {
+     \combine \translate #'(1.8 . 1.7) \tiny "6"
+     \combine \translate #'(1.8 . 0.3) \tiny "5"
+     \combine \translate #'(0.3 . -1.4) \tiny "3" S
+                  }
+_
+    \markup \concat {
+     \combine \translate #'(1.3 . 1.7) \tiny "6"
+     \combine \translate #'(1.3 . 0.3) \tiny "5"
+     \combine \translate #'(0.2 . -1.4) \tiny "3" s
+                  } 
+
+_
+    \markup \combine \translate #'(-0.5 . 0.6) "S" "S"
+_
+
+    \markup { \concat { s \small \super "N" } }
+       
+    \markup { \concat { s \small \super "n" } }
