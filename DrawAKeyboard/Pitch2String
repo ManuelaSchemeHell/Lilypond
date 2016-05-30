@@ -1,0 +1,54 @@
+#(define (alteration->text-accidental-markup alteration)
+   (make-smaller-markup
+    (make-raise-markup
+     (if (= alteration FLAT)
+         0.3
+         0.6)
+     (make-musicglyph-markup
+      (assoc-get alteration standard-alteration-glyph-name-alist "")))))
+
+#(define (accidental->markup alteration)
+   "Return accidental markup for ALTERATION."
+   (if (= alteration 0)
+       (make-line-markup (list empty-markup))
+       (make-line-markup
+        (list
+         (alteration->text-accidental-markup alteration)
+         (make-hspace-markup 0.1)))))
+
+#(define-public (note-name->string pitch)
+   "Return pitch markup for @var{pitch}."
+   (make-concat-markup
+    (list
+     (make-simple-markup
+      (vector-ref #("C" "D" "E" "F" "G" "A" "B") (ly:pitch-notename pitch)))
+     (accidental->markup (ly:pitch-alteration pitch)))))
+
+#(define (note-name->german-string pitch)
+   "Return string for @var{pitch}, using German note names."
+   (define (pitch-alteration-semitones pitch)
+     (inexact->exact (round (* (ly:pitch-alteration pitch) 2))))
+
+   (let* ((name (ly:pitch-notename pitch))
+          (alt-semitones  (pitch-alteration-semitones pitch))
+          (n-a (if (equal? (cons name alt-semitones) '(6 . -1))
+                   (cons 7 alt-semitones)
+                   (cons name alt-semitones))))
+     (string-append
+      (vector-ref #("C" "D" "E" "F" "G" "A" "H" "B") (car n-a))
+      (let ((alteration (/ (cdr n-a) 2)))
+        (cond
+         ((and (= alteration FLAT) (= (car n-a) 7))
+          "")
+         ((and (= alteration FLAT) (or (= (car n-a) 5) (= (car n-a) 2) ))
+          "s")
+         ((= alteration FLAT) "es")
+         ((and (= alteration DOUBLE-FLAT) (or (= (car n-a) 5)(= (car n-a) 2)))
+          "ses")
+         ((= alteration DOUBLE-FLAT)
+          "eses")
+         ((= alteration SHARP)
+          "is")
+         ((= alteration DOUBLE-SHARP)
+          "isis")
+         (else ""))))))
