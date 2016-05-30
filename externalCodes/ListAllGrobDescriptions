@@ -1,0 +1,21 @@
+#(define (override-color-for-all-grobs color)
+  (lambda (context)
+   (let loop ((x all-grob-descriptions))
+    (if (not (null? x))
+     (let ((grob-name (caar x)))
+      (ly:context-pushpop-property context grob-name 'color color)
+      (loop (cdr x)))))))
+
+% Example of usage:
+\relative c' {
+  \applyContext #(override-color-for-all-grobs (x11-color 'blue))
+  c4\pp\< d e f
+  \grace { g16[( a g fis]) } g1\ff\!
+}
+
+Note that this will change the color of every graphical object only if you run it in the proper context (Score, I think, will generally suffice), so you may need to do the following if you're in the middle of, say, a Voice context:
+
+\stopStaff
+\context Score
+\applyContext #(override-color-for-all-grobs (x11-color 'blue))
+\startStaff
