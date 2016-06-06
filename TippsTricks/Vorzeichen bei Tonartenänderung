@@ -1,0 +1,12 @@
+\new Staff {
+    \key b \major
+    \repeat unfold 12 b2 \break
+	\key c \major
+     \set Staff.explicitKeySignatureVisibility = ##(#f #f #t)
+	\override Staff.KeyCancellation #'break-visibility = ##(#f #f #f)
+ \repeat unfold 12 d'2
+ \break
+ \key b \major
+\repeat unfold 12 b2
+     
+  }
