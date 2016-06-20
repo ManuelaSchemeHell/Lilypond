@@ -1,0 +1,36 @@
+#(define thick-straight-flag
+   (lambda (grob)
+     ((straight-flag 1.2 2 -45 1.2 45 1.4) grob)))
+
+treble = {
+  \clef treble
+  \time 1/4
+  \autoBeamOff
+  c''8 c''16 \stemUp c''16
+}
+
+bass =  {
+  \clef bass
+  \time 1/4
+  r32 c32
+  \stemDown
+  c8
+}
+
+\score {
+
+  \new PianoStaff
+  <<
+    \new Staff = "treble" { \treble }
+    \new Staff = "bass" { \bass }
+  >>
+
+  \layout {
+    \context {
+      \Score
+      \override Stem.length = #14
+      \override Flag.stencil = #thick-straight-flag
+    }
+  }
+}
+
