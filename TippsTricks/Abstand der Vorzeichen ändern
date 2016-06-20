@@ -1,0 +1,15 @@
+\score {
+  \new Staff {
+    \key cis \major
+    cis dis eis fis
+    \key des \major
+    c des es f
+  }
+  \layout {
+    \context {
+      \Staff
+      \override KeySignature.padding = 1
+      \override KeyCancellation.padding = 1
+    }
+  }
+}
