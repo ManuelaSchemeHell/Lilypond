@@ -1,0 +1,37 @@
+(define-session-public all-grob-descriptions
+  `(
+
+    ;;; omitting lots of other grobs' definitions
+
+    (Slur
+     . (
+        (avoid-slur . inside)
+        (control-points . ,ly:slur::calc-control-points)
+        (cross-staff . ,ly:slur::calc-cross-staff)
+        (details . ,default-slur-details)
+        (direction . ,ly:slur::calc-direction)
+
+        ;;;; Originally: (height-limit . 2.0)
+        (height-limit . 5.6)
+
+        (line-thickness . 0.8)
+
+        ;;;; Original:  (minimum-length . 1.5)
+        (minimum-length . 2.3)
+
+        ;;;; Originally: (ratio . 0.25)
+        (ratio . 0.36)
+
+        (spanner-id . "")
+        (springs-and-rods . ,ly:spanner::set-spacing-rods)
+        (stencil . ,ly:slur::print)
+        (thickness . 1.2)
+        (vertical-skylines . ,(ly:make-unpure-pure-container ly:slur::vertical-skylines ly:grob::pure-simple-vertical-skylines-from-extents))
+        (Y-extent . ,slur::height)
+        (meta . ((class . Spanner)
+                 (interfaces . (outside-staff-interface
+                                slur-interface))))))
+
+    ;;; omitting lots of other grobs' definitions
+
+    ))
