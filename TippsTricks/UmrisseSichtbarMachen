@@ -1,0 +1,11 @@
+#(ly:set-option 'debug-skylines #t)
+ \new PianoStaff <<
+   \new Staff {
+     a1 \break
+     \once \override NoteHead.minimum-Y-extent = #'(-20 . 0)
+     % or: \tweak #'minimum-Y-extent #'(-20 . 0)
+     a b \break
+     c
+   }
+   \new Staff { \clef "bass" a b' c'  c }
+ >>
