@@ -10,10 +10,16 @@
 }
 
 \new Staff \relative c'' {
-    \compoundMeter #'(3 2 2 8)
+ \set Timing.beamExceptions = #'()
+  \set Timing.baseMoment = #(ly:make-moment 1/8)
+\set Staff.beatStructure = #'(3 2 2)
+    \compoundMeter #'((3 2 2 8))
 	\key g \major
    % \override TupletNumber.text = #tuplet-number::calc-fraction-text
     %\tupletSpan 4*3
- R1 R1
- fis8-4 ( g e fis2 e8 dis )
+ 
+ fis8-4 ( g e fis4 e8 dis )
+ dis8-3 ( e c dis4 c8 h )
+ h8-1 ( c a h c-1 dis-2 e-3
+ fis-4 g e fis2 )
   }
