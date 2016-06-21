@@ -1,0 +1,19 @@
+\markup {
+  \column {
+    \line { Single number: \compound-meter #3 }
+    \line { Conventional: \compound-meter #'(4 . 4)
+                       or \compound-meter #'(4 4) }
+    \line { Compound: \compound-meter #'(3 2 2 8) }
+    \line { Single-number compound: \compound-meter #'((2) (3)) }
+    \line { Complex compound: \compound-meter #'((2 3 8) (3 4)) }
+  }
+}
+
+\new Staff \relative c'' {
+    \compoundMeter #'(3 2 2 8)
+	\key g \major
+   % \override TupletNumber.text = #tuplet-number::calc-fraction-text
+    %\tupletSpan 4*3
+ R1 R1
+ fis8-4 ( g e fis2 e8 dis )
+  }
