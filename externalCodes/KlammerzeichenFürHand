@@ -1,0 +1,325 @@
+\version "2.18.0"
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% +thumb bracket
+
+#(define (make-thumb-bracket-props location spec-str settings-alist)
+  (define (inchar? index) (> (string-length spec-str) index))
+  (define (inchar  index) (string-ref spec-str index))
+  (define (char->dir ch)
+   (case (char-upcase ch) ((#\R) 1) ((#\L) -1) (else 0)))
+  (define (char->digit ch)
+   (if (char-numeric? ch) (- (char->integer ch) (char->integer #\0)) 0))
+  (define (inhit->1 key-str) (if (string-contains spec-str key-str) 1 0))
+  (define (get key) (assq-ref settings-alist key))
+  (define (warn p1 p2) (ly:warning
+   (_ " ~a bad thumb-bracket ~a ~a~a~a") location p1 "" p2 ""))
+  (let* ( ;% decode spec
+    (vdir            (if (inchar? 0) (char->dir   (inchar 0)) 0))
+    (vbigger  (* 0.5 (if (inchar? 1) (char->digit (inchar 1)) 0)))
+    (vfurther (* 0.5 (if (inchar? 2) (char->digit (inchar 2)) 0)))
+    (hcloser  (* 0.5 (if (inchar? 3) (char->digit (inchar 3)) 0)))
+    (hrear    (* 0.5 (if (inchar? 4) (char->digit (inchar 4)) 0)))
+    (vbigger+ (* 5 (string-count spec-str #\|)))
+    (posdir   ((if (string-contains spec-str "*") - +) vdir))
+    (hcloser? (eq? (string-contains spec-str "!") #f))
+    (vtip=?   (string-contains spec-str "="))
+    (hdir-req (- (inhit->1 "]") (inhit->1 "[")))
+    (closed? (char-lower-case? (inchar 0))))
+   (if (zero? vdir) (begin (warn "first char in" spec-str) '())
+   (let* ( ;% collect settings
+    (hdir-init (get 'hdir-init))   (htip (get 'htip))
+    (vtip (get (if vtip=? 'vtip= 'vtip))) 
+    (vstem (get 'vstem))   (vmin (get 'vmin))   (hvernier (get 'hvernier))
+    (vO 0) (hO 0) (hpad-base 0.5) ;% givens
+    (hdir (if (zero? hdir-req) hdir-init hdir-req))
+    (hflip? (positive? hdir))
+    (h-interval
+     (if (positive? hdir) (cons hO (+ htip hrear)) (cons (- hrear) htip)))
+    (vsize (+ vtip (if closed? vtip vstem) vbigger vbigger+))
+    (vsize+ (if (and closed? (< vsize vmin)) (- vmin vsize) 0))
+    (vshift (+ vfurther vtip (* 0.5 vsize+)))
+    (bracket (lambda (grob) (let* ( ;% collect chord range from grob
+      (vnote-lo-hi (ly:grob-property grob 'positions))
+      (vnote ((if (eq? posdir 1) cdr car) vnote-lo-hi)))
+     (grob-interpret-markup grob (markup #:translate (cons
+        ((if (positive? hdir) - +) hvernier) (- vnote (* vdir vshift)))
+       #:combine #:draw-line (cons htip vO) #:combine
+        #:translate (cons hO (if closed? (* vdir (+ vsize vsize+)) vO))
+         #:draw-line (cons htip vO)
+        #:translate (cons (if (positive? hdir) htip hO) vO)
+         #:draw-line (cons hO (* vdir (+ vsize vsize+)))))))))
+    ;% alist of props for misusing Arpeggio as a thumb bracket
+    `((stencil . ,bracket)
+      (X-extent . ,h-interval)
+      (padding . ,((if hcloser? - +) hpad-base hcloser))
+      (direction . ,hdir)
+      (thickness . ,(get 'weight)))))))
+
+thumbBracketEx = #(define-music-function
+  (parser location spec settings) (string? list?)
+ (let* (
+   (props (make-thumb-bracket-props location spec settings)))
+   (define (get key) (assq-ref props key))
+  (if (null? props) (make-music 'SequentialMusic 'void #t)
+   #{
+     \once \override Arpeggio.stencil   = #(get 'stencil)
+     \once \override Arpeggio.X-extent  = #(get 'X-extent)
+     \once \override Arpeggio.padding   = #(get 'padding)
+     \once \override Arpeggio.direction = #(get 'direction)
+     \once \override Arpeggio.thickness = #(get 'thickness)
+     $(make-music 'EventChord 'elements (list (make-music 'ArpeggioEvent)))
+   #})))
+
+thumbBracket = #(define-music-function (parser location spec) (string?)
+ (let ((settings thumbBracketSettings)) ;% as Defaults, or user defined
+   ((ly:music-function-extract thumbBracketEx)
+      parser location spec settings)))
+
+thumbBracketDefaults = #(quasiquote(
+  (hdir-init . ,LEFT) ;% usual placement wrt note: on RIGHT or LEFT
+  (weight    . 1.5  ) ;% line thickness
+  (htip      . 0.8  ) ;% horizontal length of bracket tip
+  (vtip      . 0.75 ) ;% usual vertical overlap beyond notehead centre
+  (vtip=     . 0.30 ) ;% alternative vertical overlap
+  (vstem     . 1.25 ) ;% length of an unextended open bracket (excl. tip)
+  (vmin      . 0.6  ) ;% minimum length of a closed bracket
+  (hvernier  . 0.2  ) ;% horizontal quasi-extra-offset
+  ))
+
+thumbBracketSettings =  \thumbBracketDefaults
+             
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -thumb bracket
+
+ #(define thBr thumbBracket) thbR = \thBr "R" thbL = \thBr "L"
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Ein bißchen Erklärung, es gibt aber noch mehr zu erforschen ;)
+
+\transpose a c'
+{
+	\thBr "R" a'4
+	\thBr "L" a'4
+	\thBr "r" a'4
+	\thBr "l" a'4
+	
+	\thBr "R6" a'4   % erste Ziffer vertikale Länge
+	\thBr "L6" a'4   % erste Ziffer vertikale Länge
+	
+	\thBr "R08" a'4  % zweite Ziffer vertikale Versetzung
+	\thBr "L08" a'4  % zweite Ziffer vertikale Versetzung
+	
+	\thBr "R008" a'4 % dritte Ziffer horizontale Versetzung
+	\thBr "L008" a'4 % dritte Ziffer horizontale Versetzung
+	
+	\thBr "R0008" a'4 % vierte Ziffer horizontales padding vor der Klammer
+	\thBr "L0008" a'4 % vierte Ziffer horizontales padding vor der Klammer
+	
+	\thBr "R=" a'4 % "=" bedeutet einen alternativen vertikalen Ansatzpunkt
+	\thBr "L=" a'4 % "=" bedeutet einen alternativen vertikalen Ansatzpunkt
+
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Literaturbeispiele
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+global = {
+  \key f \major
+  \time 4/4
+  \override Staff.TimeSignature.stencil = ##f
+}
+rhhi = { c'''16--[ b''16-- d'''16--  f''16--] }
+rhlo = { d''32[ \thBr "L9" f''32 ees''32 d''32 ~ d''16 c''32 b'32] }
+lhhi = { g'32[ aes'32 g'32 f'32 g'32 f'32 ees'32 d'32] }
+lhlo = { s4 }
+\markup "Reger 14"
+\score {
+\new PianoStaff <<
+  \new Staff = "rh" { \clef treble \global << \rhhi \\ \rhlo >>}
+  \new Staff = "lh" { \clef treble \global << \lhhi \\ \lhlo >>}
+>>
+\layout { indent = 0.0\cm }
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+global = {
+  \key bes \major
+  \time 4/4
+  \override Staff.TimeSignature.stencil = ##f
+}
+rhhi = { <bes' bes''>4 <c''! a''>16[ <bes' g''>16 c''16 <ees''! g''>16] }
+rhlo = { d''8[ ees''!8] \thBr "L" fis'16[ g'16 \thBr "R" a'16 <g' bes'>16] }
+lhhi = { d'8[ ees'!8] c'16[ bes16 c'16 bes16] }
+lhlo = { bes4 fis16[ g16 a16 bes16] }
+
+\markup "Reger 17"
+\score {
+\new PianoStaff <<
+  \new Staff = "rh" { \clef treble \global << \rhhi \\ \rhlo >>}
+  \new Staff = "lh" { \clef treble \global << \lhhi \\ \lhlo >>}
+>>
+\layout { indent = 0.0\cm }
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+global = {
+  \key bes \major
+  \time 4/4
+  \mergeDifferentlyHeadedOn
+  \mergeDifferentlyDottedOn
+  \override Staff.TimeSignature.stencil = ##f
+}
+rhhi = { <ees' g' bes' ees''>2-> <c' f' a' c''>-> <f' f''>2.*2/3-> }
+rhlo = { s1  <a' c''>8--[ <f' a'>8--] <f' ~ bes'>8--[ <f' c''>8--]  }
+lhhi = { c8[ g16 a16] bes16[ g16 c'8] 
+         \thBr "R" c'16[ d'16 ees'16 d'16] c'16[ d'16 ees'16 c'16]
+         \thBr "L4*" <a c'>8--[ <f a>8--] <f bes>8--[ c'8--] }
+lhlo = { <c, c>4.-- c8-. <f, f>4.-- a,8-. d4-- d8--[ c8--] }
+
+\markup "Reger 60"
+\score {
+\new PianoStaff <<
+  \new Staff = "rh" { \clef treble \global << \rhhi \\ \rhlo >>}
+  \new Staff = "lh" { \clef bass   \global << \lhhi \\ \lhlo >>}
+>>
+\layout { indent = 0.0\cm }
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+global = {
+  \key aes \major
+  \time 9/8
+  \mergeDifferentlyHeadedOn
+  \mergeDifferentlyDottedOn
+  \override Staff.TimeSignature.stencil = ##f
+}
+rhhi = { ees''4.-> ees''4.-> ~ ees''8[ d''8 ees''8] }
+rhlo = { \thBr "L" <aes aes'>8.[ <aes aes'>16 <aes aes'>8] r8
+         \thBr "R*" <ees' g'>8-.[ <ees' g'>8-.] <ees' aes'>4. }
+lhhi = { \oneVoice s4. r8 s4 s4. }
+lhlo = { \thBr "R" <c ees ees'>8.[ <c ees ees'>16 <c ees ees'>8] s8
+          <bes, ees des'>8^.[ <beses, ees des'>8^.] <aes, ees c'>4.^> }
+
+\markup "Scriabin IMSLP #02002 II bar48"
+\score {
+\new PianoStaff <<
+  \new Staff = "rh" { \clef treble \global << \rhhi \\ \rhlo >>}
+  \new Staff = "lh" { \clef bass   \global << \lhhi \\ \lhlo >>}
+>>
+\layout { indent = 0.0\cm }
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+global = {
+  \key fis \major
+  \time 12/8
+  \mergeDifferentlyHeadedOn
+  \mergeDifferentlyDottedOn
+  \override Staff.TimeSignature.stencil = ##f
+}
+rhhi = { eis'2. ~ eis'4. eis'4. }
+rhlo = { cis'2. ~ cis'4. cis'4. }
+lhhi = { \thBr "r4*=" <eis gis>2. ~ gis4 cis8 gis!4 g8 }
+lhlo = { <cis, cis>2. <gisis,, gisis,>2. }
+
+\markup "Scriabin IMSLP 10999 p5"
+\score {
+\new PianoStaff <<
+  \new Staff = "rh" { \clef treble \global << \rhhi \\ \rhlo >>}
+  \new Staff = "lh" { \clef bass   \global << \lhhi \\ \lhlo >>}
+>>
+\layout { indent = 0.0\cm }
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+global = {
+  \key bes \major
+  \time 9/8
+  \mergeDifferentlyHeadedOn
+  \mergeDifferentlyDottedOn
+  \override Staff.TimeSignature.stencil = ##f
+}
+rhhi = { \partial 4 <cis' cis''>8[\( <d' d''>8] <ees' ees''>4
+         <e' e''>8 <fis' fis''>4 <g' g''>8 <g' g''>4 <fis' fis''>8\) }
+rhlo = { \partial 4 r8 r8 r8 bes'8[ bes'8] r8 e''8[ e''8]
+         <a' ees''>8[ <a' ees''>8 <c'' ees''>8] }
+lhhi = { \partial 4 \oneVoice r8 r8 r8 s4
+         \once \override Rest.X-extent = #'(0 . 2.5)
+         r8 s4 s4.}
+lhlo = { \partial 4 s4 s8 <cis, cis>8[
+         \thBr "R" <g bes g'>8] s8
+         \thBr "R100=" %"R102="
+         <bes e' bes'>8[ <cis, cis>8]
+         \stemUp <cis, cis>8[<c, c>8 <a, a>] }
+
+\markup "Scriabin IMSLP 08382 p47"
+\score {
+\new PianoStaff <<
+  \new Staff = "rh" { \clef treble \global << \rhhi \\ \rhlo >>}
+  \new Staff = "lh" { \clef bass   \global << \lhhi \\ \lhlo >>}
+>>
+\layout { indent = 0.0\cm }
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+global = {
+  \key bes \major
+  \time 4/4
+  \mergeDifferentlyHeadedOn
+  \mergeDifferentlyDottedOn
+  \override Staff.TimeSignature.stencil = ##f
+}
+arpLengthenTo = #(define-music-function (parser location bound) (integer?)
+#{ \once \override Arpeggio.positions = #(lambda (grob)
+   (interval-union (cons bound bound) (ly:arpeggio::calc-positions grob)))
+#})
+
+%%% saw what looked like tie pushing arpeggio vertically when doubled up alto
+rhhiA = {
+  \once \override Arpeggio.arpeggio-direction = #down
+  \once \override NoteColumn.force-hshift = #-0.2
+  <\tweak transparent ##t  d' ees'' g'' c'''>1\arpeggio ~ <ees'' g'' c'''>1 }
+rhhiB = {
+  \once \override Arpeggio.arpeggio-direction = #down
+  \arpLengthenTo #-4
+  <ees'' g'' c'''>1\arpeggio  ~ <ees'' g'' c'''>1 }
+rhhi = { \rhhiA \rhhiB }
+rhlo = \repeat unfold 2 { \thBr "l22]" <f' bes'>1 ~ <f' bes'>1 }
+lhhi = \repeat unfold 2 { \oneVoice r1 r1}
+lhlo = \repeat unfold 2 { s1 s1 }
+
+\markup "F9sus"
+\score {
+\new PianoStaff <<
+  \new Staff = "rh" { \clef treble \global << \rhhi \\ \rhlo >>}
+  \new Staff = "lh" { \clef bass   \global << \lhhi \\ \lhlo >>}
+>>
+\layout { indent = 0.0\cm }
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+global = {
+  \key f \major
+  \time 3/4
+  \mergeDifferentlyHeadedOn
+  \mergeDifferentlyDottedOn
+}
+rhhi = { a'2. }
+rhlo = { r4
+  \thumbBracketEx "L442" #(acons 'htip 2.5 thumbBracketSettings)
+  <a c'>8[ <bes d'>8] <c' e'>8[ <a c'>8] }
+lhhi = { f,2.}
+lhlo = { \hideNotes f,16 } % spacing hack
+
+\markup "Possibility"
+\score {
+\new PianoStaff <<
+  \new Staff = "rh" { \clef treble \global << \rhhi \\ \rhlo >>}
+  \new Staff = "lh" { \clef bass   \global << \lhhi \\ \lhlo >>}
+>>
+\layout { indent = 0.0\cm }
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\new Staff = "down" {
+  \clef bass
+  \set tieWaitForNote = ##t
+  \times 2/3 { cis,8~ d~ \thBr "R4001" a~ } <cis, d a>4
+  \times 2/3 { d,8~ fis~ \thBr "R" d'~ } <d, fis d'>4
+  \bar "||"
+}
+
