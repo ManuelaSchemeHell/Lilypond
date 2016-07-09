@@ -252,6 +252,91 @@ LHd=  {
   \transpose c es { \relative d \Auf }
   \transpose c es { \relative d \Bab }
 }
+
+RHe=  {
+  \set Staff.explicitKeySignatureVisibility = #end-of-line-invisible
+  \set Timing.beamExceptions = #'()
+  \set subdivideBeams = ##t
+  \set baseMoment = #(ly:make-moment 1/4)
+  \set beatStructure = #'(2 2 2 2 )
+  \set fingeringOrientations = #'(left)     %% für Akkorde!
+  % \override Fingering.direction = #UP      %% für Einzelnoten!
+  \override Fingering.padding = #0.8
+  \override Fingering.staff-padding = #'()
+  \override Fingering.avoid-slur = #'inside
+  \override Slur.direction = #UP
+  \mark \markup { \abs-fontsize #12 "E-Dur" }
+  \transpose c e { \relative c' \Auf }
+  \mark \markup  { \abs-fontsize #12 "E-Moll" }
+  \transpose c e { \relative c'' \Bab }
+  \mark \markup  { \abs-fontsize #12 "F-Dur" }
+  \transpose c f { \relative c' \Auf }
+  \mark \markup  { \abs-fontsize #12 "F-Moll" }
+  \transpose c f { \relative c'' \Bab }
+}
+
+LHe=  {
+  \clef bass
+  \set Staff.explicitKeySignatureVisibility = #end-of-line-invisible
+  \set Timing.beamExceptions = #'()
+  \set subdivideBeams = ##t
+  \set baseMoment = #(ly:make-moment 1/4)
+  \set beatStructure = #'(2 2 2 2 )
+  \set fingeringOrientations = #'(left)     %% für Akkorde!
+  % \override Fingering.direction = #UP      %% für Einzelnoten!
+  \override Fingering.padding = #0.8
+  \override Fingering.staff-padding = #'()
+  \override Fingering.avoid-slur = #'inside
+  \override Slur.direction = #UP
+  \transpose c e { \relative d \Auf }
+  \transpose c e { \relative d \Bab }
+  \transpose c f { \relative d \Auf }
+  \transpose c f { \relative d \Bab }
+}
+
+
+RHfis=  {
+  \set Staff.explicitKeySignatureVisibility = #end-of-line-invisible
+  \set Timing.beamExceptions = #'()
+  \set subdivideBeams = ##t
+  \set baseMoment = #(ly:make-moment 1/4)
+  \set beatStructure = #'(2 2 2 2 )
+  \set fingeringOrientations = #'(left)     %% für Akkorde!
+  % \override Fingering.direction = #UP      %% für Einzelnoten!
+  \override Fingering.padding = #0.8
+  \override Fingering.staff-padding = #'()
+  \override Fingering.avoid-slur = #'inside
+  \override Slur.direction = #UP
+  \mark \markup { \abs-fontsize #12 "Fis-Dur" }
+  \transpose c fis { \relative c' \Auf }
+  \mark \markup  { \abs-fontsize #12 "Fis-Moll" }
+  \transpose c fis { \relative c'' \Bab }
+  \mark \markup  { \abs-fontsize #12 "G-Dur" }
+  \transpose c g { \relative c' \Auf }
+  \mark \markup  { \abs-fontsize #12 "G-Moll" }
+  \transpose c g { \relative c'' \Bab }
+}
+
+LHfis=  {
+  \clef bass
+  \set Staff.explicitKeySignatureVisibility = #end-of-line-invisible
+  \set Timing.beamExceptions = #'()
+  \set subdivideBeams = ##t
+  \set baseMoment = #(ly:make-moment 1/4)
+  \set beatStructure = #'(2 2 2 2 )
+  \set fingeringOrientations = #'(left)     %% für Akkorde!
+  % \override Fingering.direction = #UP      %% für Einzelnoten!
+  \override Fingering.padding = #0.8
+  \override Fingering.staff-padding = #'()
+  \override Fingering.avoid-slur = #'inside
+  \override Slur.direction = #UP
+  \transpose c fis { \relative d \Auf }
+  \transpose c fis { \relative d \Bab }
+  \transpose c g { \relative d \Auf }
+  \transpose c g { \relative d \Bab }
+}
+
+
 Struktur = {
   s1 * 2 \break
   s1 * 2 \break
@@ -310,5 +395,39 @@ Struktur = {
     }
     \new Staff="lower"
     \LHd
+  >>
+}
+
+\score
+{
+  \new PianoStaff
+  <<
+    \new Staff="upper"
+    \relative c' {
+      \clef treble
+      <<
+        \RHe
+        \context Voice { \Struktur }
+      >>
+    }
+    \new Staff="lower"
+    \LHe
+  >>
+}
+
+\score
+{
+  \new PianoStaff
+  <<
+    \new Staff="upper"
+    \relative c' {
+      \clef treble
+      <<
+        \RHfis
+        \context Voice { \Struktur }
+      >>
+    }
+    \new Staff="lower"
+    \LHfis
   >>
 }
