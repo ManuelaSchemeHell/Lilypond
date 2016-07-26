@@ -1,0 +1,22 @@
+scale = \relative c' {
+  a4 b c d
+  e4 f g a
+}
+
+\new Staff {
+  <<
+    \scale
+    \context NoteNames {
+      \set printOctaveNames = ##f
+      \scale
+    }
+  >>
+  R1
+  <<
+    \scale
+    \context NoteNames {
+      \set printOctaveNames = ##t
+      \scale
+    }
+  >>
+}
