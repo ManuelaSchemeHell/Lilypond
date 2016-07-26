@@ -3,9 +3,9 @@ scale = \relative c' {
   e4 f g a
 }
 \layout {
-\context {
-\Staff
-\remove systemStartDelimiter
+  \context {
+  \Staff
+  \remove systemStartDelimiter
 }
   
   \context {
@@ -14,10 +14,8 @@ scale = \relative c' {
    }
 }
 \new PianoStaff 
-
 <<
-\new Staff \scale
- 
-  \new Staff  \scale
+	\new Staff { \scale \transpose c d \scale }
+ 	\new Staff { \scale \transpose c e \scale }
   >>
   
