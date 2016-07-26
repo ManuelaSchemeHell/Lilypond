@@ -1,0 +1,75 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% http://lists.gnu.org/archive/html/lilypond-user/2016-02/msg00692.html
+% By Abraham Lee
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LSR workaround:
+#(set! paper-alist (cons '("snippet" . (cons (* 150 mm) (* 30 mm))) paper-alist))
+\paper {
+  #(set-paper-size "snippet")
+  tagline = ##f
+  indent = 0
+}
+\markup\vspace #.5
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+#(define-markup-command (ezscore layout props mus) (ly:music?)
+  #:properties ((size 0))
+  (interpret-markup layout props
+    #{
+      \markup {
+        \score {
+          \new RhythmicStaff { $mus }
+          \layout {
+            \context {
+              \RhythmicStaff
+              \remove Clef_engraver
+              \remove Time_signature_engraver
+              \omit StaffSymbol
+              fontSize = #size
+              \override StaffSymbol.staff-space = #(magstep size)
+              \override StaffSymbol.thickness = #(magstep size)
+            }
+            indent = 0
+          }
+        }
+      }
+    #}))
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\markup {
+  Let's try something simple:
+  \note #"8" #UP + \note #"8" #UP =
+  % BEFORE USING EZNOTES...
+  \combine
+    \combine
+      \note #"4" #UP
+      \translate #'(1.25 . 2.8) \beam #3 #0 #.5
+    \concat {
+      \hspace #3
+      \note #"4" #UP
+    }
+  . Yikes! Not so easy by hand.
+}
+
+\markup {
+  Much easier:
+  \note #"8" #UP + \note #"8" #UP =
+  % AFTER USING EZNOTES...
+  \ezscore ##{ { c8[ c] } #}. 
+  % LET'S DO SOMETHING HARDER NOW...
+  Now try constructing
+  \override #'(size . -5)
+  \ezscore ##{ 
+    {
+    \override Score.SpacingSpanner.spacing-increment = #1
+    \override TupletNumber.text =
+      #(tuplet-number::append-note-wrapper
+         (tuplet-number::non-default-tuplet-fraction-text 12 7) "8")
+    \tuplet 12/7 { c4. c c c } 
+    } 
+  #} 
+  manually!
+}
