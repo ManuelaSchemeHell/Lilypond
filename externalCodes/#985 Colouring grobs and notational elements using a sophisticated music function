@@ -1,0 +1,63 @@
+%{
+ With version 2.18.x, \ed Rest and \ed Mmr need the music
+expression to be enclosed into {}. From 2.19.x on (tested for .8),
+this is not required anymore.
+%}
+
+editorsColor = #grey
+ed =
+#(define-music-function (parser location grob col mus)
+   (symbol-list-or-symbol? (color? editorsColor) ly:music?)
+   ;; for abbreviations, we need a symbol instead of a one-element list
+   (let ((grob (if (= 1 (length grob)) (car grob) grob)))
+     (case
+      grob
+      ;; define abbreviations
+      ;; which call the function recursively with a value
+      ;; leading into the (else) clause
+      ;; (or to _another_ abbreviation)
+      ;; be careful to avoid infinite recursion :-)
+      ;; – abbreviation names must not be actual grob names
+      ;; (at least if they’re used in the corresponding
+      ;; clause) or recursion will be infinite also
+      ;; It is recommended to use singular forms only
+      ;; for abbreviations.
+      ((Caut) #{ \ed Staff.AccidentalCautionary #})
+      ((LedgerLine) #{ % barline is workaround to issue 3949
+        \once\hide Staff.BarLine \bar "|"
+        \stopStaff
+        \ed Staff.LedgerLineSpanner {
+          \startStaff
+          $mus
+          \stopStaff
+        }
+        \once\hide Staff.BarLine \bar "|"
+        \startStaff #})
+      ((Mmr) #{ \ed MultiMeasureRest $mus #})
+      ((Note) #{ \ed Staff.Accidental
+                 \ed Beam
+                 \ed Dots
+                 \ed Flag
+                 \ed LedgerLine
+                 \ed NoteHead
+                 \ed Rest
+                 \ed Stem $mus #})
+      ((Pitch) #{ \ed NoteHead $mus #})
+      ((Suggest) #{ \ed Staff.AccidentalSuggestion #})
+      ((StemWithFlag) #{ \ed Stem \ed Flag $mus #})
+      ((Tuplet) #{ \ed TupletNumber \ed TupletBracket $mus #})
+      ;; ‘normal’ case
+      (else
+       #{
+         \override $grob . color = #col
+         $mus
+         \revert $grob . color
+       #}))))
+
+%%%%%%%%%%%%%%%%%%%%%%%%%% EXAMPLE %%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\relative {
+  \ed Note { c'8 d16. e32 fis g a16 r bes }
+  \ed Script e,2\trill
+  \ed Mmr { R1 } % brackets not required anymore in v.2.19.x
+}
