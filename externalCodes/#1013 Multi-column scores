@@ -1,0 +1,68 @@
+%{
+To obtain columns, one can simply put scores into \markup \fill-line contexts,
+but line breaking must be done manually. By obtaining separate line-widths 
+for each score, line breaking can happen automatically. 
+However, page breaking must still be done manually.
+%}
+
+thepaper = \paper {
+  indent = 0
+  tagline = ##f
+}
+columns = #3
+#(define getlinewidth
+   (lambda (paper)
+     (let* (
+             (landscape (ly:output-def-lookup paper 'landscape))
+             (output-scale (ly:output-def-lookup paper 'output-scale))
+             (paper-width (ly:output-def-lookup paper 'paper-width))
+             (paper-height (ly:output-def-lookup paper 'paper-height))
+             (indent (ly:output-def-lookup paper 'indent))
+             (plain-line-width (ly:output-def-lookup paper 'line-width))
+             (plain-left-margin (ly:output-def-lookup paper 'left-margin))
+             (w (if landscape paper-height paper-width))
+             (left-margin (if (null? plain-left-margin)
+                              (if (null? plain-line-width)
+                                  10
+                                  (/ (- w plain-line-width) 2))
+                              plain-left-margin))
+             (line-width (if (null? plain-line-width)
+                             (- w (* (* columns 2) left-margin))
+                             plain-line-width)))
+       (/ line-width columns)
+       )))
+\paper {
+  \thepaper
+}
+\markup \fill-line {
+  \column {
+    \score {
+      \relative c' {
+        \repeat unfold 8 {c4 d e f g1}
+      }
+      \layout {
+        line-width = #(getlinewidth thepaper)
+      }
+    }
+  }
+  \column {
+    \score {
+      \relative c'' {
+        \repeat unfold 8 {g4 f e d c1}
+      }
+      \layout {
+        line-width = #(getlinewidth thepaper)
+      }
+    }
+  }
+  \column {
+    \score {
+      \relative c' {
+        \repeat unfold 8 {c4 d e f g1}
+      }
+      \layout {
+        line-width = #(getlinewidth thepaper)
+      }
+    }
+  }
+}
