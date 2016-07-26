@@ -3,6 +3,22 @@
 
 %LSR updated/modified by P.P.Schneider on Feb.2014
 
+\header {
+  %% taken from titling-init.ly
+  tagline = \markup {
+    \with-url
+    #"http://lilypond.org/web/"
+    \line {
+      %% feel free to translate this line to your own language
+      "This score has been wonderfully engraved thanks to the awesome LilyPond"
+      $(lilypond-version)
+      \char ##x2014
+      "http://lilypond.org"
+    }
+  }
+  tagline=##f
+}
+
 \paper {
   ragged-bottom = ##f
 }
