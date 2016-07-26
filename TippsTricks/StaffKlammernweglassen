@@ -15,7 +15,34 @@ scale = \relative c' {
 }
 \new PianoStaff 
 <<
-	\new Staff { \scale \transpose c d \scale }
- 	\new Staff { \scale \transpose c e \scale }
+ \new Staff { \scale \transpose c d \scale }
+ \new Staff { \scale \transpose c e \scale }
+ \new Staff { \scale \transpose c f \scale }
   >>
   
+  
+  scale = \relative c' {
+  a4 b c d
+  e4 f g a
+}
+\layout {
+  \context {
+  \Staff
+  \remove systemStartDelimiter
+}
+  
+  \context {
+    \Score
+    \omit SystemStartBar
+    \remove systemStartDelimiter
+    \omit SystemStartBrace
+  }
+}
+\new PianoStaff 
+<<
+ \new Staff { \scale \transpose c d \scale }
+ \new Staff { \scale \transpose c e \scale }
+ \new Staff { \scale \transpose c f \scale }
+  >>
+  
+
