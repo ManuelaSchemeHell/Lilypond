@@ -1,0 +1,23 @@
+scale = \relative c' {
+  a4 b c d
+  e4 f g a
+}
+\layout {
+\context {
+\Staff
+\remove systemStartDelimiter
+}
+  
+  \context {
+    \Score
+    \omit SystemStartBar
+   }
+}
+\new PianoStaff 
+
+<<
+\new Staff \scale
+ 
+  \new Staff  \scale
+  >>
+  
