@@ -2,7 +2,7 @@
 %% see also http://lilypond.org/doc/v2.18/Documentation/notation/text
 \version "2.19.37"
 %LSR updated/modified by P.P.Schneider on Feb.2014
-
+#(use-modules (scm accreg))
 \header {
   %% taken from titling-init.ly
   tagline = \markup {
@@ -19,11 +19,31 @@
   tagline=##f
 }
 
-Absatz=#0.4
+#(define-markup-list-command (paragraph layout props args) (markup-list?)
+   #:properties ((par-indent 2))
+   (interpret-markup-list layout props
+     #{\markuplist \justified-lines { \hspace #par-indent #args } #}))
+
+Absatz=#0.5
 #(define Absatz2 0.2) % so kann man das Ziffernverbot umgehen
+#(define Absatz3 0.3)
+
+
 
 \paper {
   ragged-bottom = ##f
+  annotate-spacing = ##f
+  #(include-special-characters)
+  indent = 0\mm
+  line-width = 140\mm
+  top-margin = 20\mm
+  % offset the left padding, also add 1mm as lilypond creates cropped
+  % images with a little space on the right
+  %line-width = #(- line-width (* mm  3.000000) (* mm 1))
+  %line-width = 160\mm - 2.0 * 10.16\mm
+  % offset the left padding, also add 1mm as lilypond creates cropped
+  % images with a little space on the right
+  %line-width = #(- line-width (* mm  3.000000) (* mm 1))
 }
 
 upper = \relative c'' {
@@ -42,62 +62,72 @@ lower = \relative c {
 
 \book {
   \markuplist {
+    \vspace #1
+    \override-lines #'(par-indent . 4) \paragraph {
+      " "
+    }
     % put some space here
-    \vspace#2
-    \wordwrap {
+    \paragraph {
       Regelmäßig mit Metronom üben oder den Ryhthmus mit dem rechten Fuß klopfen. Vor Beginn den Spiels den Rhythmus klopfen.
     }
     \vspace #Absatz
-    \wordwrap {
+    \paragraph {
       Langsam üben, das Metronom darf keinen Stress erzeugen.
     }
     \vspace #Absatz
-    \wordwrap {
+    \paragraph {
       Beim Akkordeon wird die Dynamik mit dem Balg erzeugt, nicht mit dem Tastenanschlag!
     }
     \vspace #Absatz
-    \wordwrap {
+    \paragraph {
       Bei Akkorden besonders auf den kleinen Finger achten.
-      Diesen bewusst anschlagen, er 'zieht' die anderen Finger mit.
+      Diesen bewusst anschlagen, er &frqq;zieht&flqq; die anderen Finger mit.
+      Die Melodieführung erfolgt durch den kleinen Finger,
+      die Akkordtöne werden dazu angeschlagen.
     }
+
     \vspace #Absatz
-    \wordwrap {
+    \paragraph {
       Wenn man den Grundton des Basses eine Spur länger anspielt, grooved die Musik.
       Wichtiger als alle Töne 100"%" exakt zu treffen ist der Groove.
       Von falschen Tönen nicht rausbringen lassen, weiterspielen und lächeln.
     }
     \vspace #Absatz
-    \wordwrap {
-      Pausen und 'Löcher' einfügen, Gefühl reinbringen.
+    \paragraph {
+      Pausen und &frqq;Löcher&flqq; einfügen, Gefühl reinbringen.
       Es klingt nicht gut, wenn alles permanent tönt, Abwechslung reinbringen.
       Rhythmusänderungen unterstreichen die verschiedenen Teile.
+      &bull; Nicht immer alles spielen, auf Reduktionen achten,
+      &bull; auf Melodiebögen achten.
     }
     \vspace #Absatz
-    \wordwrap {
+    \paragraph {
       Rubato = Rhythmusänderung, Spannung aufbauen durch Dynamik, laut/leise
-    }
-    \wordwrap {
-      Those were the days: Intro Rubato, im Refrain schneller werden
+    } \vspace #Absatz2
+    \paragraph {
+      \italic \fontsize #1.5 {  Those were the days: } Intro Rubato, im Refrain schneller werden
       Bei Variation auf Rhythmus achten.
     }
     \vspace #Absatz
-    \wordwrap {
+    \paragraph {
       Wenn das Akkordeon solo spielt, darf man im Vortrag viele Verzierungen ausspielen.
       Begleitet das Akkordeon beim Mitsingen, reduzieren, nur Akkorde spielen z.B.
-
     }
     \vspace #Absatz
-    \wordwrap {
+    \paragraph {
       Variieren innerhalb eines Stückes:
-
     } \vspace #Absatz2
-    \wordwrap {
-      non legato: mit Dynamik
-
-    } \vspace #Absatz2
-    \wordwrap {
-      legato: Aufgänge zelebrieren
-
+    \paragraph {
+      &bull; non legato \super { \fontsize #+6 \arrow-head #X #RIGHT ##t }
+      mit Dynamik
+    } %\vspace #Absatz2
+    \paragraph {
+      &bull; legato \super { \fontsize #+6 \arrow-head #X #RIGHT ##t }
+      Aufgänge zelebrieren
+    }
+    \vspace #Absatz %\wordwrap
+    \paragraph {
+      Die Motivation hinter einem Stück zum Ausdruck bringen.
     }
     % put some space here
     \vspace#1
@@ -189,6 +219,6 @@ lower = \relative c {
   \header {
     title = "Manuelas Akkordeonheft"
     subtitle = "Akkordeonunterricht bei Franziska"
-    subsubtitle = "Großmütterchen Hatz Salon Orchestra"
+    subsubtitle = "verschiedene Erkenntnisse"
   }
 }
