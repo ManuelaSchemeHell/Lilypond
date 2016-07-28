@@ -1,0 +1,215 @@
+\language "deutsch"
+
+\version "2.19.37"
+% automatically converted by musicxml2ly from D:/Noten/Adele/bal4#.xml
+
+\header {
+  encodingdate = "2016-07-23"
+}
+
+\include "myScheme.ily"
+\include "Papier+Layout.ly"
+
+\layout {
+
+}
+
+myPat= { c4 c2 c8.[ c16] }
+nyPat= { c4 c c16 c c c c c c c }
+
+RH =  \relative c'' {
+  \clef "treble" \key c \major
+  \time 4/4
+  \set Timing.beamExceptions = #'()
+  \set Timing.baseMoment = #(ly:make-moment 1/4)
+  \set Staff.beatStructure = #'(1 1 1 1 1 1 1 1 )  %% abhängig vom Takt
+  \set fingeringOrientations = #'(right)     %% für Akkorde!
+  \override Fingering.direction = #UP      %% für Einzelnoten!
+  \override Fingering.padding = #0.8
+  \override Fingering.staff-padding = #'()
+  \override Fingering.avoid-slur = #'inside
+  %\override Slur.direction = #UP
+  %\mark \markup "Lento."
+  \tempo "Lento" 4 = 60
+  r16 g  c  d  r g, c d r g, c d r g, c d
+  r g,  e' g,  r g e' g, r g e' g,
+  r g e' g,
+  \mark \markup \box "A"
+  \changePitch \myPat { < g e'> q  <g e'>  <a f'> }
+  \changePitch \nyPat { <a f'> q~ q q q q q q q <h g'> }
+  \changePitch \myPat { <h g'> q q <c a'> }
+  <g e'>1
+  \changePitch \myPat { < g e'> q  <g e'>  <a f'> }
+  \changePitch \nyPat { <a f'> q~ q q q q q q q <h g'> }
+  \changePitch \myPat { <h g'> q q <c a'> }
+  %\changePitch \myPat { <h g'> q q <c a'> }
+  < g e' >1
+  \mark \markup \box "B"
+  r16 e'_( < c' e > e, < h' d > e, < a c > e )
+  r16 h_( < g' h > h, < fis' a > h, < e g > h )
+  < c a' >4 < h g'>8 f' < d g >32 ( e d c g16 c ) < e, g >4
+  r16 e_( < c' e > e, < h' d > e, < a c > e )
+  r16 h_( < g' h > h, < fis' a > h, < e g > h )
+  < c f a >4 g'8 f16 < c d g  >~ q g c d~ d c d f
+  \set Timing.baseMoment = #(ly:make-moment 1/8)
+  g,32( d' f g g, d' f g d f g d' d, f g d'
+  g, d' f g g, d' f g d f g d' d, f g d'
+  \time 2/4  \ottava #1
+  g, d' f g g, d' f g g, h d g g, h d g ) %^\markup { \musicglyph #"scripts.segno" } )
+  \time 4/4
+  \mark \markup {
+    \center-column
+    {
+      \translate #'(-1 . 0) \line  { \musicglyph #"scripts.segno" }
+      \vspace #0.15 \line { \box "C" }
+    }
+  }
+  \changePitch \myPat { < g, e'>  < g e' >  q  <a f'> }
+  \changePitch \nyPat { <a f'> q~ q q q q q q q <h g'> }
+  \changePitch \myPat { <h g'> q q( <c a'> }
+  < g e' >4 ) g'16 es b g f' c a f < a d > h g8
+  \changePitch \nyPat { <g e'>-> q r q q q q q q <a f'> }
+  \changePitch \nyPat { <a f'>-> q r q q q q q q <h g'> }
+  \changePitch \myPat { <h g'> q q <c a'> }
+  < c e >1^\markup { \musicglyph #"scripts.coda" } \ottava #0
+  \mark \markup \box "D"
+  r16 e,_( < c' e > e, < h' d > e, < a c > e )
+  r16 h_( < g' h > h, < fis' a > h, < e g > h )
+  < f' a >4 < h, g'>8 f'16 g~ g \tuplet 3/2 { e32 d c } g16 e g4
+  r16 e-( < c' e > e, < h' d > e, < a c > e )
+  r16 h-( < g' h > h, < fis' a > h, < e g > h )
+  <<
+    {
+      a'4 ( g8 f16 g~ g2 )
+    } \\ {
+      a16 c, f c g' c, f g r8
+    }
+  >>
+  \set Timing.baseMoment = #(ly:make-moment 1/8)
+  g,32( d' f g g, d' f g d f g d' d, f g d'
+  g, d' f g g, d' f g d f g d' d, f g d'
+  \time 2/4  \ottava #1
+  g, d' f g g, d' f g g, h d g g, h d g ) %^\markup { \musicglyph #"scripts.segno" } )
+  \time 4/4  \mark \markup \box "E"
+  \changePitch \myPat { < g, e'>  < g e' >  q  <a f'> }
+
+  \changePitch \nyPat { <a f'> q~ q q q q q q q <h g'> }
+  \changePitch \myPat { <h g'> q q( <c a'> }
+  < g e' >4 ) g'16 es b g f' c a f < a d > h g8
+  \changePitch \nyPat { <g e'>-> q r q q q q q q <a f'> }
+  \changePitch \nyPat { <a f'>-> q r q q q q q q <h g'> }
+  \changePitch \myPat { <h g'> q q <c a'> } \ottava #0
+  \ottava #1 < c e >2^\markup { \hspace #-2 \musicglyph #"scripts.coda" }
+  f16 a, c f g h, d g
+  \mark \markup \box "F"
+  \changePitch \nyPat { <g, e'>-> < g e'> r q q q q q q <a f'> }
+  \changePitch \nyPat { <a f'>-> q r q q q q q q <h g'> }
+  \changePitch \myPat { <h g'> q q ( <c a'> }
+  < g e'>2 ) r16 a c f g h, d g
+  q2 r16 a, c f g h, d g
+  \ottava #0
+  \override NoteColumn.force-hshift = #0.2 < e,-1 g-2 c-4 e-5 >1\arpeggio
+}
+
+
+
+LH = \relative c' {
+  \clef bass
+  \key c \major
+  \set fingeringOrientations = #'(right) %% für Akkorde!
+  \mergeDifferentlyHeadedOn
+  \mergeDifferentlyDottedOn
+  \override Fingering.direction = #UP  %% für Einzelnoten!
+  \override Fingering.padding = #0.8
+  \override Fingering.staff-padding = #'()
+  \override Fingering.avoid-slur = #'inside
+  %\override Slur.direction = #UP
+  \set Timing.beamExceptions = #'()
+  \set Timing.baseMoment = #(ly:make-moment 1/4)
+  \set Staff.beatStructure = #'(2 2 )  %% abhängig vom Takt
+  %\stemDown
+  c4  c c c
+  << { c c c c } \\ { c,1 } >>
+  c8 g' e' g, c g c g
+  d a' f' a, d a d a
+  g, d' d' d, g d g d
+  c g' e' g, c g e g,
+  c, g' e' g c g c g
+  d a' f' a, d a d a
+  g, d' h' d, g d g d
+  c g' e' g, c, g' < c e >[ h]
+  a, e' a c e,, h' e g
+  f,16 ( c' f c ) g[ ( d' g d )] c4~ c16 g' < c, c' > < h h' >
+  < a a' >8 e a c e, h' e g
+  f,16[ c' f c] f, c' f g,~ g4 g'
+  \set Timing.baseMoment = #(ly:make-moment 1/4)
+  \set Staff.beatStructure = #'(2 2 )  %% abhängig vom Takt
+  d8 g g, g' g,8 g' g, g'
+  g, g' g, g,
+  c g'' e' g, c g c g
+  d a' f' a, d a d a
+  g, d' h' d, g d g d
+  c g' < es g b >4 < f a c > g8. g,16
+  < c, c' >8 ( g'' e' g, ) c, ( g' e' g, )
+  < d, d'>( a'' f' a, ) d,( a' f' a, )
+  g, ( d' h' d, h' d ) r4
+  c,8 g' e' g, c g c g
+  a, e' a c e,, h' e g
+  f,16 ( c' f c ) g[ ( d' g d )]
+  c'8-> d-> c16 ( g c, h )
+  < a a' >8 e a c e, h' e g
+  f,4 r g16_( g' \change Staff = "up" c d ) \change Staff = "down" g,_(
+  \change Staff = "up" c d f ) \change Staff = "down"
+  d8 g g, g' g,8 g' g, g'
+  g, g' g, g,
+  c, g'' e' g, c g c g
+  d a' f' a, d a d a
+  g, d' h' d, g d g d
+  c g' < es g b >4 < f a c > g8. g,16
+  < c, c' >8 ( g'' e' g, ) c, ( g' e' g, )
+  < d, d'>( a'' f' a, ) d,( a' f' a, )
+  g,_\markup {
+    "Dal"
+    \musicglyph #"scripts.segno" "al"
+    \musicglyph #"scripts.coda"
+  }
+  ( d' h' d, h' d ) r4
+  c,8 ( g' c e ) a,4-- h--
+  < c,, c' >8 ( g'' e' g, ) c, ( g' e' g, )
+  < d, d'>( a'' f' a, ) d,( a' f' a, )
+  g, ( d' h' d, h' d ) r4
+  c,8 ( g' c e ) a,4-- h--
+  c,8 ( g' c e ) a,4 h
+  \change Staff = "up" < c-5 g'-2 c-1  >1\arpeggio
+}
+
+
+%\displayLilyMusic \ghostMusic \PartPOneVoiceOne
+
+% The score definition
+
+\score
+{
+  \new PianoStaff \with {
+    instrumentName = \markup {
+      \center-column {
+        \line {
+          "Piano"
+        }
+        \line \large { Paul }
+        \italic \line { Oliver }
+      }
+    }
+    shortInstrumentName = ""
+  }
+  <<
+    \new Staff="up"
+    \RH
+    \new Staff="down"
+    \LH
+  >>
+  %% Falls erforderlich Zeilenlänge und Einzug ändern
+  \layout {
+  }
+  \midi { \tempo 4 = 60 }
+}
