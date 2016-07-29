@@ -27,14 +27,17 @@ ghostRH= {
   s s-( s16 s16 s16 s16 s16 s16)
   s4 s8 s16 s16 ~ s16 s s s ~ s s s s
   % für die 32-stel
-  s32-1->( s-2 s-4 s-5 s-> s s s
+  s32-1->\< ( s-2 s-4 s-5 s-> s s s
   s-1-> s-2 s-3 s-5 s-> s s s
   s-1->-\markup { \bold \italic \fontsize #-0.3 ritardando } s-2 s-4 s-5 s-> s s s
   s-1-> s-2 s-3 s-5 s-> s s s
   \time 2/4 \bar "||"
+  \ottavaShift  #'(0 . 12) #'(0 . 8)
   \ottava #1
   s-1\f->\<-\markup { \bold \italic \fontsize #-0.3 ritardando } s-2 s-4 s-5 s-> s s s
-  s-1-> s-2 s-3 s-5 s-> s s s)
+  s-1-> s-2 s-3 s-5 s-> s s s) \ottava #0
+  \ottavaShift #'(0 . 8) #'(0 . 6)
+  \ottava #1
   \time 4/4 \bar "||"
   \mark \markup \box "C"
   s4->\ff s2->-\markup { \italic \fontsize #0.2 "a tempo" } s1*3/16->[ s16->]
@@ -46,14 +49,19 @@ ghostRH= {
   s1
   \ottava #0
   \mark \markup \box "D"
-  s16 s\mp-( s16 s16 s16 s16 s16 s16) s
-  s-( s16 s16 s16 s16 s16 s16) s4 s8 s16 s ~ s
-  \tuplet 3/2 { s32 s s } s16 s s4 s16
-  s\mf\> ( s16 s16 s16 s16 s16\mp s16 ) s s ( s16 s16 s16 s16 s16 s16 )
+  s16
+  \slurShifts #'(0 . 0.5) #'(2 . 4)
+  s\mp-( s16 s16 s16 s16 s16 s16) s
+  \slurShift #'(0 . 2 )
+  s- ( s16 s16 s16 s16 s16 s16 )
+  s4-3-5 s8-1-4 s16-3 s-5 ~ s
+  \tuplet 3/2 { s32-4 s-3 s-2 } s16-1 s-2 s4_3 s16
+  s_1\mf\> ( s16 s16 s16 s16 s16\mp s16 ) s s ( s16 s16 s16 s16 s16 s16 )
   s1
   s32->\< ( s s s s-> s s s s-> s s s s-> s s s
   s->-\markup { \bold \italic \fontsize #-0.3 ritardando } s s s s-> s s s s-> s s s s-> s s s
   \time 2/4
+  \ottavaShift #'(0 . 10) #'(0 . 8)
   \ottava #1 s->\f\< s s-\markup { \bold \italic \fontsize #-0.3 ritardando } s s-> s s s s-> s s s s-> s s s)
   \time 4/4
   \mark \markup \box "E"
@@ -65,6 +73,9 @@ ghostRH= {
   s4-> s->~ s16-> s16-> s-> s-> s-> s-> s-> s->
   s4->\mf s4 s4\> s1*3/16\p ( s16
   \ottava #0 \ottava #1 s2 ) s16\< s s s s s s s
+  \once \override Score.RehearsalMark.outside-staff-priority = #'()
+  \once \override Score.RehearsalMark.Y-offset = 0
+  \once \override Score.RehearsalMark.extra-offset =#'( -4 . 2)
   \mark \markup \box "F"
   s4->\ff s->~ s16 s16-> s-> s-> s-> s-> s-> s->
   s4-> s->~ s16 s16-> ->s s-> s-> s-> s-> s->
@@ -88,5 +99,5 @@ ghostLH=
   \change Staff = "up" s s) \change Staff = "down" s_(
   \change Staff = "up" s s s) \change Staff = "down"
   s8 s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s4 s s8. s16 s8( s8 s s) s( s s s) s8( s8 s s) s( s s s) s( s s s s s) s4 s8( s s s) s4-- s-- s8( s8 s s) s( s s s) s8( s8 s s) s( s s s) s( s s s s s) s4 s8( s s s) s4-- s-- s8( s s s) s4 s
-  \change Staff = "up" s1\arpeggio
+  \change Staff = "up" s1
 }
