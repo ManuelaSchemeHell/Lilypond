@@ -1,4 +1,4 @@
-\version "2.19.32"
+\version "2.19.37"
 
 mpdolce =
 #(make-dynamic-script
@@ -620,9 +620,59 @@ ghostMusic =
 % that attachment-point unchanged. Syntax: \offsetPositions #'(y1 . y2)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 offsetPositions =
-  #(define-music-function (parser location offsets) (pair?)
-    #{
-       \once \override Slur.positions = #(lambda (grob)
-	 `(,(+ (car offsets) (cdar (ly:slur::calc-control-points grob))) .
-	   ,(+ (cdr offsets) (cdr (cadddr (ly:slur::calc-control-points grob))))))
-    #})
+#(define-music-function (parser location offsets) (pair?)
+   #{
+     \once \override Slur.positions = #(lambda (grob)
+                                         `(,(+ (car offsets) (cdar (ly:slur::calc-control-points grob))) .
+                                            ,(+ (cdr offsets) (cdr (cadddr (ly:slur::calc-control-points grob))))))
+   #})
+
+slurShift=
+#(define-music-function (amount)
+   (pair?)
+   #{
+     \once \override Voice.Slur.extra-offset = $amount
+   #}
+   )
+
+slurShifts=
+#(define-music-function (amount offsets)
+   (pair? pair?)
+   #{
+     \once \override Slur.positions =
+     #(lambda (grob)
+        `(,(+ (car offsets) (cdar (ly:slur::calc-control-points grob))) .
+           ,(+ (cdr offsets) (cdr (cadddr (ly:slur::calc-control-points grob))))))
+     \once \override Voice.Slur.extra-offset = $amount
+   #}
+   )
+
+
+slurShiftx=
+#(define-music-function (amount offsets)
+   (pair? pair?)
+   #{
+     \once \override Slur.positions = $offsets
+     \once \override Voice.Slur.outside-staff-priority = #'()
+     \once \override Voice.Slur.Y-offset = 0
+     \once \override Voice.Slur.extra-offset = $amount
+   #}
+   )
+
+ottavaShift=
+#(define-music-function (1stoffset 2ndoffset)
+   (pair? pair?)
+   #{
+     \once \override Staff.OttavaBracket.outside-staff-priority = #'()
+     \once \override Staff.OttavaBracket.Y-offset = 0
+     \once \override Staff.OttavaBracket.after-line-breaking =
+     #(lambda (grob)
+        (let* ((orig (ly:grob-original grob))
+               (pieces (if (ly:grob? orig)
+                           (ly:spanner-broken-into orig) '() )))
+          (if (or (null? pieces)
+                  (eq? grob (car pieces)))
+              (ly:grob-set-property! grob 'extra-offset 1stoffset)
+              (ly:grob-set-property! grob 'extra-offset 2ndoffset))))
+   #}
+   )
