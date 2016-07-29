@@ -54,13 +54,16 @@ offsetPositions =
     % \override BarNumber.self-alignment-X = #CENTER
     % \override BarNumber.break-visibility = #end-of-line-invisible
     %\override Slur.outside-staff-priority = #150
-    \override OttavaBracket.outside-staff-priority = #1000
-    \override TextScript.outside-staff-priority = #100
+    % \override OttavaBracket.outside-staff-priority = #1000
+    % \override TextScript.outside-staff-priority = #100
+    \override OttavaBracket.outside-staff-priority = #'()
+    \override OttavaBracket.Y-offset = #0
+    \override OttavaBracket.extra-offset = #'(0 . 8)
     %\override OttavaBracket.padding = #5
     %\override OttavaBracket.staff-padding = #6
     explicitClefVisibility = #end-of-line-invisible
     explicitKeySignatureVisibility = #end-of-line-invisible
-   % \override Clef.full-size-change = ##t
+    % \override Clef.full-size-change = ##t
   }
 
   \context {
