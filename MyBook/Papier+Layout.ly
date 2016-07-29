@@ -70,14 +70,19 @@ offsetPositions =
     \Score
     %\remove "Bar_number_engraver" % Taktnummerierung
     %\override BarNumber.break-visibility = #'#(#f #f #f)
-    \override BarNumber.break-visibility = #end-of-line-invisible
-    \override BarNumber.padding = #0
+    \remove Bar_number_engraver
     %\override BarNumber.break-visibility = #end-of-line-invisible
-    \override BarNumber.self-alignment-X = #CENTER
+    %\override BarNumber.padding = #0
+    %\override BarNumber.break-visibility = #end-of-line-invisible
+    %\override BarNumber.self-alignment-X = #CENTER
     %% \override NonMusicalPaperColumn.line-break-permission = ##f
     %% \override NonMusicalPaperColumn.page-break-permission = ##f
     \override RehearsalMark.self-alignment-X = #LEFT
     \override KeyCancellation.break-visibility = #'#(#f #t #t)
     \override TextScript.self-alignment-X = #LEFT
+  }
+  \context {
+    \ChordNames
+    \remove "Staff_performer"
   }
 }
