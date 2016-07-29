@@ -18,9 +18,10 @@ ghostRH= {
   \mark \markup \box "B"
   s16 %\vspace #1
   \once \override Slur.positions = #'(2 . 2)
+  \slurShiftx #'(0 . 2)  #'(2 . 2)
   s-1\mp ( s16-3-5 s16 s16 s16 s16 s16)
   s
-  %\offsetPositions #'(0 . 3)
+  \slurShiftx #'(0 . 2)  #'(2 . 2)
   s-( s16 s16 s16 s16 s16-3-5 s16-1 )
   s4-2-5 s8-1-4 s8-3 s32-2-5\< ( s32-4 s-3 s-2 s16-1 s-5 )
   s4-1-2 s16 s\f\> ( s16 s16 s16 s16\mf s16 s16)
@@ -50,19 +51,24 @@ ghostRH= {
   \ottava #0
   \mark \markup \box "D"
   s16
-  \slurShifts #'(0 . 0.5) #'(2 . 4)
+  \slurShiftx #'(0 . 2) #'(2 . 2)
   s\mp-( s16 s16 s16 s16 s16 s16) s
-  \slurShift #'(0 . 2 )
+  \slurShiftx #'(0 . 2) #'(2 . 2)
   s- ( s16 s16 s16 s16 s16 s16 )
   s4-3-5 s8-1-4 s16-3 s-5 ~ s
   \tuplet 3/2 { s32-4 s-3 s-2 } s16-1 s-2 s4_3 s16
   s_1\mf\> ( s16 s16 s16 s16 s16\mp s16 ) s s ( s16 s16 s16 s16 s16 s16 )
   s1
-  s32->\< ( s s s s-> s s s s-> s s s s-> s s s
-  s->-\markup { \bold \italic \fontsize #-0.3 ritardando } s s s s-> s s s s-> s s s s-> s s s
+  s32-1->\< ( s-2 s-4 s-5 s-> s s s
+  s-1-> s-2 s-3 s-5 s-> s s s
+  s-1\f->\<-\markup { \bold \italic \fontsize #-0.3 ritardando } s-2 s-4 s-5
+  s-> s s s s-1-> s-2 s-3 s-5
+  s-> s s s
   \time 2/4
   \ottavaShift #'(0 . 10) #'(0 . 8)
-  \ottava #1 s->\f\< s s-\markup { \bold \italic \fontsize #-0.3 ritardando } s s-> s s s s-> s s s s-> s s s)
+  \ottava #1
+  s-1->\f\< s-2 s-4-\markup { \bold \italic \fontsize #-0.3 ritardando } s-5 s-> s s s
+  s-1-> s-2 s-3 s-5 s-> s s s )
   \time 4/4
   \mark \markup \box "E"
   s4->\ff s2->-\markup { \italic \fontsize #0.2 "a tempo" }  s1*3/16->\mp s16->
