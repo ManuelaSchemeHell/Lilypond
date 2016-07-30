@@ -1,0 +1,116 @@
+\version "2.19.37"
+\language "deutsch"
+\include "Papier+Layout.ly"
+\include "myScheme.ily"
+
+\header {
+  dedication = "gewidmet: JS Bach"
+  title = "Präludium neu"
+  subtitle = "Untertitel"
+  subsubtitle = "zweiter Untertitel"
+  instrument = "Piano"
+  composer = "ich"
+  arranger = "niemand"
+  poet = "Dichter"
+  meter = "120"
+  piece = "1"
+  opus = "Opus"
+  tagline = "keintag"
+}
+
+defineTransform =
+#(define-scheme-function (parser location pattern)
+   (ly:music?)
+   (define-music-function (parser location pitchseq)
+     (ly:music?)
+     (let ((pitches (list->vector
+                     (reverse!
+                      (fold-some-music
+                       (lambda (m)
+                         (ly:pitch? (ly:music-property m 'pitch)))
+                       (lambda (m l)
+                         (cons (ly:music-property m 'pitch) l))
+                       '()
+                       pitchseq))))
+           (m (ly:music-deep-copy pattern)))
+       (for-some-music
+        (lambda (m)
+          (let ((p (ly:music-property m 'pitch)))
+            (and (ly:pitch? p)
+                 (begin
+                  (set! (ly:music-property m 'pitch)
+                        (vector-ref pitches
+                          (ly:pitch-steps p)))
+                  #t))))
+        m)
+       m)))
+
+%%% This defines one measure of the prelude,
+%%% using the five notes c' d' e' f' g' instead of the "real" notes:
+makePreludeMeasure =
+\defineTransform \transpose c c'  {
+  <<
+    \context Staff = "up" {  e8 d c g }
+    \context Staff = "down" << { c4 } \\ { e4 } >>
+  >>
+}
+
+global = {
+  \key c \major
+  \time 2/4
+}
+
+right = \relative c'' {
+  \global
+  e16 d c g e' d c g
+  f' e d a f' e d a
+  f' d h g f' d h g
+  e' d c g e' d c g
+  a' g f a, a' g f a,
+  fis' d c a fis' d c a
+  g' d h g g' d h g
+  c h g e c' h g e
+  c' h a e c' h a e
+  c' a fis d c' a fis d
+  h' a g d h' a g d
+  cis' b g e cis' b g e
+  d' c a d, d' c a d,
+  h' as f d h' as f d
+  c' g e c c' g e c
+  a' f e a, a' f e a,
+  a' f d a a' f d a
+  g' f h, g g' f h, g
+  e' d c g e' d c g
+  e' d c b e d c b
+}
+
+left = \relative c' {
+  \global
+  \set Timing.beamExceptions = #'()
+  \set Timing.baseMoment = #(ly:make-moment 1/4)
+  \set Staff.beatStructure = #'(2 )  %% abhängig vom Takt
+  c8 g c c,
+  d' a d d,
+  d' h d d,
+  c' g c c,
+}
+
+Akk=\chordmode {
+  c2 d:m
+  g:7/h c a:m d:7/c g c:maj7/h a:m7 d:7 g
+  cis:dim7/g d:m/f h:dim7/f c/e f:maj7/e
+  d:m7 g:7 c c:7 f:maj7 fis:dim7 c:maj7.3-/g
+}
+
+\score {
+  \new PianoStaff \with {
+    instrumentName = "Klavier"
+    shortInstrumentName = "Kl."
+  } <<
+    \context ChordNames = "chords" \Akk
+    \new Staff = "right" \right
+    \new Staff = "left" { \clef bass \left }
+    \new Staff = "Akk" { \clef bass \transpose c c, \Akk }
+  >>
+  \layout { }
+}
