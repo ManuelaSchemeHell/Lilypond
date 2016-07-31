@@ -1,5 +1,7 @@
 \version "2.19.37"
 
+
+
 ghostRH= {
   \override DynamicLineSpanner.staff-padding = #4
   \override TextScript.staff-padding = #5
@@ -23,19 +25,21 @@ ghostRH= {
   s
   \slurShiftx #'(0 . 2)  #'(2 . 2)
   s-( s16 s16 s16 s16 s16-3-5 s16-1 )
-  s4-2-5 s8-1-4 s8-3 s32-2-5\< ( s32-4 s-3 s-2 s16-1 s-5 )
+  s4-2-5 s8-1-4 s8-3
+  \slurShiftx #'(0 . 2)  #'(2 . 2)
+  s32-2-5\< ( s32-4 s-3 s-2 s16-1 s-5 )
   s4-1-2 s16 s\f\> ( s16 s16 s16 s16\mf s16 s16)
   s s-( s16 s16 s16 s16 s16 s16)
   s4 s8 s16 s16 ~ s16 s s s ~ s s s s
   % für die 32-stel
   s32-1->\< ( s-2 s-4 s-5 s-> s s s
   s-1-> s-2 s-3 s-5 s-> s s s
-  s-1->-\markup { \bold \italic \fontsize #-0.3 ritardando } s-2 s-4 s-5 s-> s s s
+  s-1->-\rit s-2 s-4 s-5 s-> s s s
   s-1-> s-2 s-3 s-5 s-> s s s
   \time 2/4 \bar "||"
   \ottavaShift  #'(0 . 12) #'(0 . 8)
   \ottava #1
-  s-1\f->\<-\markup { \bold \italic \fontsize #-0.3 ritardando } s-2 s-4 s-5 s-> s s s
+  s-1\f->\<-\rit s-2 s-4 s-5 s-> s s s
   s-1-> s-2 s-3 s-5 s-> s s s) \ottava #0
   \ottavaShift #'(0 . 8) #'(0 . 6)
   \ottava #1
@@ -50,25 +54,30 @@ ghostRH= {
   s1
   \ottava #0
   \mark \markup \box "D"
-  s16
+  \allgShift #'(-3 . 6.5) Staff TextScript
+  s16-\loco
   \slurShiftx #'(0 . 2) #'(2 . 2)
   s\mp-( s16 s16 s16 s16 s16 s16) s
   \slurShiftx #'(0 . 2) #'(2 . 2)
   s- ( s16 s16 s16 s16 s16 s16 )
   s4-3-5 s8-1-4 s16-3 s-5 ~ s
-  \tuplet 3/2 { s32-4 s-3 s-2 } s16-1 s-2 s4_3 s16
+  \tuplet 3/2 { s32-4 s-3 s-2 } s16-1 s-2 s4_3
+  \bar "||"
+  s16
   s_1\mf\> ( s16 s16 s16 s16 s16\mp s16 ) s s ( s16 s16 s16 s16 s16 s16 )
   s1
   s32-1->\< ( s-2 s-4 s-5 s-> s s s
   s-1-> s-2 s-3 s-5 s-> s s s
-  s-1\f->\<-\markup { \bold \italic \fontsize #-0.3 ritardando } s-2 s-4 s-5
+  s-1-\rit s-2 s-4 s-5
   s-> s s s s-1-> s-2 s-3 s-5
   s-> s s s
+  \bar "||"
   \time 2/4
-  \ottavaShift #'(0 . 10) #'(0 . 8)
+  \ottavaShift #'(0 . 9.5) #'(0 . 9)
   \ottava #1
-  s-1->\f\< s-2 s-4-\markup { \bold \italic \fontsize #-0.3 ritardando } s-5 s-> s s s
+  s-1->\f\< s-2 s-4-\rit s-5 s-> s s s
   s-1-> s-2 s-3 s-5 s-> s s s )
+  \bar "||"
   \time 4/4
   \mark \markup \box "E"
   s4->\ff s2->-\markup { \italic \fontsize #0.2 "a tempo" }  s1*3/16->\mp s16->
@@ -78,17 +87,19 @@ ghostRH= {
   s4->\ff s->~ s16-> s16-> s-> s-> s-> s-> s-> s->
   s4-> s->~ s16-> s16-> s-> s-> s-> s-> s-> s->
   s4->\mf s4 s4\> s1*3/16\p ( s16
-  \ottava #0 \ottava #1 s2 ) s16\< s s s s s s s
-  \once \override Score.RehearsalMark.outside-staff-priority = #'()
-  \once \override Score.RehearsalMark.Y-offset = 0
-  \once \override Score.RehearsalMark.extra-offset =#'( -4 . 2)
+  s2 ) s16\< s s s s s s s
+  %\once \override Score.RehearsalMark.extra-offset =#'( -4 . 2)
+  \allgShift #'( -2 . 5) Score RehearsalMark
   \mark \markup \box "F"
   s4->\ff s->~ s16 s16-> s-> s-> s-> s-> s-> s->
   s4-> s->~ s16 s16-> ->s s-> s-> s-> s-> s->
   s4\mf s4 s4\> s1*3/16\mp ( s16
   s2\> ) s16\p s s s s s s s s2 s16 s-\markup { \bold \italic \fontsize #-0.3 ritardando } s s s s s s
   \ottava #0 \override NoteColumn.force-hshift = #0.2
-  s1%\arpeggio
+  \allgShift #'(0 . 9) Staff TextScript
+
+  s1-\loco
+  \bar "|."
 }
 
 ghostLH=
