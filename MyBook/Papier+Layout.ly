@@ -96,7 +96,8 @@ offsetPositions =
     explicitKeySignatureVisibility = #end-of-line-invisible
     \consists Mark_engraver
     \override RehearsalMark.self-alignment-X = #LEFT
-    \override StaffSymbol.thickness = #0.3
+    \override StaffSymbol.thickness = #0.3 %0.3=optimaler wert
+    %\override Hairpin.thickness = #2
     % \override BarLine.hair-thickness =1.6 %1.9*staff-line thickness  Thickness of the thin line in a bar line.
     %\override BarLine.thick-thickness = 5 %6*staff-line thickness Bar line thickness, measured in line-thickness
   }
@@ -113,6 +114,7 @@ offsetPositions =
     %% \override NonMusicalPaperColumn.line-break-permission = ##f
     %% \override NonMusicalPaperColumn.page-break-permission = ##f
     \remove Mark_engraver
+    %\override Hairpin.thickness = #2
     \override RehearsalMark.self-alignment-X = #LEFT
     \override KeyCancellation.break-visibility = #'#(#f #t #t)
     \override TextScript.self-alignment-X = #LEFT
@@ -123,6 +125,7 @@ offsetPositions =
   }
   \context {
     \Voice
+    \override Hairpin.thickness = #2
     %\override Beam.beam-thickness = #0.4 % 0.48
     %\override Slur.line-thickness = #0.5 % 0.8
     %\override Tie.line-thickness = #0.5
