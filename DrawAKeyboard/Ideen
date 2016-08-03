@@ -16,6 +16,8 @@ Rechteck:
 
 Rechteck= #(define markup-command layout props width height thick color)
 (number? .... )
+(let* ((mythick (ly:irgendwas-deep-look thickness)
+)
 #{
 \markup {
 \override #'(thickness . #thick)
