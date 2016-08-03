@@ -30,3 +30,17 @@ Rechteck= #(define markup-command layout props width height thick color)
 }
 #}
 )
+
+Font:
+
+\paper {
+  #(define fonts
+    (set-global-fonts
+      #:music "emmentaler"
+      #:brace "emmentaler"
+      #:roman "Century Schoolbook L"
+      #:sans "sans-serif"
+      #:typewriter "monospace"
+      #:factor (/ staff-height pt 20)
+  ))
+}
