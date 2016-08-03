@@ -1,0 +1,282 @@
+\version "2.18.0"
+\language "deutsch"
+
+%% often people think that the black keys are centered to the white keys
+%% even in piano teaching books keyboards are drawn this way
+%% this is not the case, black keys are positioned surprisingly excentric
+%% http://lsr.di.unimi.it/LSR/Item?id=791 inspired me
+%% to draw a keyboard with following features:
+%% -- scalable
+%% -- correct positioning of the black keys
+
+%% created by Manuela
+%% feel free to modify and distribute
+
+%% all values are measured by myself on my piano
+
+#(define white-key-width 23.5) %% the width of a white piano key
+#(define white-key-height 150) %% the height of a white piano key
+#(define black-key-width 15)   %% the width of a black piano key
+#(define black-key-height 95)  %% the height of a black piano key
+#(define black-key-y-start (- white-key-height black-key-height)) %% the y-coordinate of black keys
+
+%% left coordinate of black keys cis/des fis/ges
+%% n=0 oder n=3
+#(define black-key-x1-start 13)
+#(define black-key-cis-start 13)
+%% left coordinate of centered black keys gis/as
+%% n=4
+#(define black-key-x2-start 16)
+#(define black-key-gis-start 16)
+%% left coordinate of right black keys dis/es ais/b
+%% n=1 oder n=5
+#(define black-key-x3-start 19)
+#(define black-key-dis-start 19)
+#(define octav-distance (* 7 white-key-width))
+%% define circle diameter for the dots
+%% just try what looks fine
+#(define kreis-dm (/ (* 1.5 black-key-width) 3)) %% circle diameter
+
+%% routine to move and scale a markup
+%% you can add y-offset if you like
+#(define-markup-command (move-and-scale layout props mymark faktor x-offset)
+   (markup? number? number?)
+   (ly:stencil-translate
+    (ly:stencil-scale
+     (interpret-markup layout props mymark)
+     faktor faktor)
+    (cons x-offset 0))
+   )
+
+%% single white key
+wh-taste =
+#(make-connected-path-stencil
+  ;; creates a square which is transformed
+  ;; according to width and height of a white key
+  '((0 0) (1 0) (1 1) (0 1) )
+  0.1 ;; thickness
+  white-key-width
+  white-key-height
+  #t  ;; close path
+  #f  ;; do not fill path
+  )
+
+%% combining 7 single white keys to an octave
+w-tasten=
+#(ly:stencil-add
+  wh-taste
+  (ly:stencil-translate
+   wh-taste (cons white-key-width 0))
+  (ly:stencil-translate
+   wh-taste (cons (* 2 white-key-width) 0))
+  (ly:stencil-translate
+   wh-taste (cons (* 3 white-key-width) 0))
+  (ly:stencil-translate
+   wh-taste (cons (* 4 white-key-width) 0))
+  (ly:stencil-translate
+   wh-taste (cons (* 5 white-key-width) 0))
+  (ly:stencil-translate
+   wh-taste (cons (* 6 white-key-width) 0))
+  )
+
+%% combining two octaves
+dos-w-octavas=
+#(ly:stencil-add
+  w-tasten
+  (ly:stencil-translate
+   w-tasten (cons octav-distance 0)))
+
+%% defining single black key
+bl-taste=
+#(make-connected-path-stencil
+  '((0 0) (1 0) (1 1) (0 1) )
+  0.1
+  black-key-width
+  black-key-height
+  #t  ;; close path
+  #t  ;; fill path
+  )
+
+%% combining 5 black keys for one octave
+b-tasten =
+#(ly:stencil-add
+  (ly:stencil-translate
+   bl-taste
+   (cons black-key-cis-start black-key-y-start))
+  (ly:stencil-translate
+   bl-taste
+   (cons (+ black-key-dis-start white-key-width ) black-key-y-start))
+  (ly:stencil-translate
+   bl-taste
+   (cons (+ black-key-cis-start (* white-key-width 3) ) black-key-y-start))
+  (ly:stencil-translate
+   bl-taste
+   (cons (+ black-key-gis-start (* white-key-width 4) ) black-key-y-start))
+  (ly:stencil-translate
+   bl-taste
+   (cons (+ black-key-dis-start (* white-key-width 5) ) black-key-y-start)))
+
+%% combining to octaves black keys
+dos-b-octavas=
+#(ly:stencil-add
+  b-tasten
+  (ly:stencil-translate
+   b-tasten (cons octav-distance 0)))
+
+complete-keyboard-two-octaves=
+#(ly:stencil-add
+  dos-w-octavas
+  dos-b-octavas)
+
+#(define (music-name x)
+   (if (not (ly:music? x))
+       #f
+       (ly:music-property x 'name)))
+
+#(define (naturalize-pitch p)
+   (let ((o (ly:pitch-octave p))
+         (a (* 4 (ly:pitch-alteration p)))
+         ;; alteration, a, in quarter tone steps,
+         ;; for historical reasons
+         (n (ly:pitch-notename p)))
+     (cond
+      ((and (> a 1) (or (eq? n 6) (eq? n 2)))
+       (set! a (- a 2))
+       (set! n (+ n 1)))
+      ((and (< a -1) (or (eq? n 0) (eq? n 3)))
+       (set! a (+ a 2))
+       (set! n (- n 1))))
+     (cond
+      ((> a 2) (set! a (- a 4)) (set! n (+ n 1)))
+      ((< a -2) (set! a (+ a 4)) (set! n (- n 1))))
+     (if (< n 0) (begin (set! o (- o 1)) (set! n (+ n 7))))
+     (if (> n 6) (begin (set! o (+ o 1)) (set! n (- n 7))))
+     (ly:make-pitch o n (/ a 4))))
+
+#(define (white-key? p)
+   (let
+    ((a (ly:pitch-alteration (naturalize-pitch p))))
+    (if (= a 0)
+        #t
+        #f)))
+
+#(define (start-point-key p)
+   ;; calculation the starting point of a key
+   ;; depending on the pitch p
+   ;; result (x . y)
+   ;; wir berechnen den Startpunkt der Taste
+   ;; abhängig vom Pitch
+   (let*
+    ((m (naturalize-pitch p))
+     (o (ly:pitch-octave m))
+     (a (ly:pitch-alteration m))
+     ;; we must naturalize pitch otherwise wrong result for eis e.g.
+     ;; we subtract the alteration from the notename and add a half
+     ;; so we end up at the same note despite flat oder sharp
+     ;; cis is drawn the same as des e.g.
+     ;; wir subtrahieren die Erhöhung vom Notennamen und addieren 1/2
+     ;; das hat den Sinn, dass ich immer auf die gleiche Note komme
+     ;; des z.B. n=1, a=-1/2 (des) ==> n=0
+     (n  (ly:pitch-notename m))
+     (n1 (+ n a -0.5))
+     (x-shift (* o 7 white-key-width))
+     )
+    (cond
+     ((eq? a 0)
+      ;; alteration eq 0
+      ;; no alteration ==> white key
+      ;; kein Vorzeichen ==> weiße Taste
+      (cons (+ (* n white-key-width) x-shift) 0 ))
+     ((or (= n1 0) (= n1 3))
+      ;; "left" black keys cis/des and fis/ges
+      ;; notename=0 or 3 and alteration
+      ;; links angeordnete Tasten
+      ;; cis/des und fis/ges
+      ;; n=0 oder n=3
+      (cons (+ (* n1 white-key-width) black-key-x1-start x-shift ) black-key-y-start ))
+     ((or (= n1 1) (= n1 5))
+      ;; "right" black keys dis/es and ais/b
+      ;; notename=0 or 3 and alteration
+      ;; rechts angeordnete Tasten
+      ;; dis/es und ais/b
+      ;, n=1 oder n=5
+      (cons (+ (* n1 white-key-width) black-key-x3-start x-shift ) black-key-y-start ))
+     (else
+      ;; only one left, the centered black key gis/as
+      ;; jetzt bleibt nur noch gis/as übrig
+      ;; die einzige mittig angeordnete schwarze Taste
+      (cons (+ (* n1 white-key-width) black-key-x2-start x-shift) black-key-y-start )))))
+
+%% creating a dot for pitch p
+#(define (make-dot p)
+   (let* ((start-p (start-point-key p))
+
+          )
+     (if (white-key? p)
+         (ly:stencil-in-color
+          (ly:stencil-translate
+           (make-circle-stencil  kreis-dm 0 #t)
+           (cons
+            (+ (car start-p) (/ white-key-width 2 ))
+            (+ (cdr start-p) (/ (- white-key-height black-key-height) 1.5))
+            )
+           )
+          0.2 0.5 0.5) ;; color petrol
+         (ly:stencil-in-color
+          (ly:stencil-translate
+           (make-circle-stencil (/ kreis-dm 1.5) 0 #t)
+           (cons
+            (+ (car start-p) (/ black-key-width 2 ))
+            (+ (cdr start-p) (/ (* 1 black-key-height) 8))
+            )
+           )
+          0.4 0.7 0.7) ;; color petrol
+         )))
+
+%% creating a stencil list of dots
+#(define (make-dot-list l1)
+   (if (null? l1)
+       empty-stencil
+       (ly:stencil-add
+        (make-dot (car l1))
+        (make-dot-list (cdr l1)))))
+
+#(define (sort-white-black-key-pitches pitch-list)
+   (call-with-values
+    (lambda ()
+      (partition
+       (lambda (p) (= 0 (ly:pitch-alteration p)))
+       pitch-list))
+    (lambda (a b) (list a b))))
+
+#(define-markup-command
+  (make-dots layout props the-chord)
+  (ly:music?)
+  (let*
+   ((chord
+     (map
+      (lambda (m) (ly:music-property m 'pitch))
+      (extract-named-music the-chord 'NoteEvent)))
+    (sorted-chord-pitches
+     (sort-white-black-key-pitches (map naturalize-pitch chord)))
+    (mycolor (x11-color 'honeydew)) ;GhostWhite))
+    )
+   (ly:stencil-add
+    (make-dot-list chord))))
+
+meinAkkord = \chordmode { b:sus4 }
+
+ZweiOktaven=
+\markup {
+  \combine \stencil \dos-w-octavas
+  \combine \stencil \dos-b-octavas
+  \combine \make-dots #meinAkkord
+  \null
+}
+
+KeyboardScaled=\markup \move-and-scale \ZweiOktaven #0.1 #0
+
+<<
+  \new ChordNames \meinAkkord
+  \relative c'' { \meinAkkord s s s^\KeyboardScaled  }
+>>
