@@ -1,0 +1,338 @@
+%% http://lsr.di.unimi.it/LSR/Item?id=904
+% Add by P.P.Schneider on March 2014.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LSR workaround:
+#(set! paper-alist (cons '("snippet" . (cons (* 80 mm) (* 60 mm))) paper-alist))
+\paper {
+  #(set-paper-size "snippet")
+  tagline = ##f
+}
+\markup\vspace #.5
+#(set-global-staff-size 25)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%here starts the snippet:
+
+%%% Smiley defs to be saved as smiley.ily:
+lovePath = \markup {
+  \combine 
+  \override #'(filled . #t) 
+  \with-color #(x11-color 'DeepPink)
+  \path #0.01 
+  #'((moveto    0.00   0.75)
+     (curveto   0.00   1.30   0.35   1.90   1.10   1.90)
+     (curveto   1.50   1.90   1.70   1.75   2.00   1.40)
+     (curveto   2.30   1.75   2.50   1.90   2.90   1.90)
+     (curveto   3.65   1.90   4.00   1.30   4.00   0.75)
+     (curveto   4.00  -0.30   3.00  -0.50   2.05  -1.80)
+     (curveto   2.00  -1.85   2.00  -1.85   1.95  -1.80)
+     (curveto   1.00  -0.50   0.00  -0.30   0.00   0.75))
+  \combine 
+  \path #0.15 
+  #'((moveto    0.00   0.75)
+     (curveto   0.00   1.30   0.35   1.90   1.10   1.90)
+     (curveto   1.50   1.90   1.70   1.75   2.00   1.40)
+     (curveto   2.30   1.75   2.50   1.90   2.90   1.90)
+     (curveto   3.65   1.90   4.00   1.30   4.00   0.75)
+     (curveto   4.00  -0.30   3.00  -0.50   2.05  -1.80)
+     (curveto   2.00  -1.85   2.00  -1.85   1.95  -1.80)
+     (curveto   1.00  -0.50   0.00  -0.30   0.00   0.75))
+  \override #'(filled . #t) 
+  \with-color #(x11-color 'LightPink)
+  \path #0.01 
+  #'((moveto    0.20   0.75)
+     (curveto   0.20   1.75   1.23   1.84   1.57   1.55)
+     (curveto   1.05   1.52   0.70   1.10   0.70   0.65)
+     (curveto   0.70  -0.20   1.30  -0.40   1.86  -1.40)
+     (curveto   1.10  -0.40   0.20  -0.20   0.20   0.75))
+}
+
+smilePath = \markup {
+  \combine 
+  \override #'(filled . #t) 
+  \with-color #(x11-color 'gold)
+  \path #0.01 
+  #'((moveto    0.00   0.00)
+     (curveto   0.00   1.10   0.90   1.82   1.82   1.82)
+     (curveto   2.70   1.82   3.63   1.10   3.63   0.00)
+     (curveto   3.63  -1.10   2.70  -1.82   1.82  -1.82)
+     (curveto   0.91  -1.82   0.00  -1.10   0.00   0.00))
+  \combine 
+  \path #0.15
+  #'((moveto    0.00   0.00)
+     (curveto   0.00   1.10   0.90   1.82   1.82   1.82)
+     (curveto   2.70   1.82   3.63   1.10   3.63   0.00)
+     (curveto   3.63  -1.10   2.70  -1.82   1.82  -1.82)
+     (curveto   0.91  -1.82   0.00  -1.10   0.00   0.00)
+     (moveto    0.40  -0.13)
+     (curveto   0.44  -0.10   0.58  -0.04   0.73  -0.09)
+     (moveto    0.56  -0.08)
+     (curveto   0.65  -1.63   3.00  -1.63   3.06  -0.07)
+     (moveto    2.90  -0.07)
+     (curveto   2.95  -0.06   3.09  -0.04   3.22  -0.12))
+  \override #'(filled . #t) 
+  \path #0.01 
+  #'((moveto    1.34   1.23)
+     (curveto   1.61   1.23   1.61   0.17   1.34   0.17)
+     (curveto   1.09   0.17   1.09   1.23   1.34   1.23)
+     (moveto    2.31   1.23)
+     (curveto   2.58   1.23   2.59   0.17   2.31   0.17)
+     (curveto   2.06   0.17   2.06   1.23   2.31   1.23))
+}
+
+winkPath = \markup {
+ \combine 
+ \override #'(filled . #t) 
+ \with-color #(x11-color 'gold)
+ \path #0.01 
+ #'((moveto    0.00    0.00)
+    (curveto   0.00    1.10   0.90   1.82   1.82   1.82)
+    (curveto   2.70    1.82   3.63   1.10   3.63   0.00)
+    (curveto   3.63   -1.10   2.70  -1.82   1.82  -1.82)
+    (curveto   0.91   -1.82   0.00  -1.10   0.00   0.00))
+ \combine 
+ \path #0.15
+ #'((moveto    0.00    0.00)
+    (curveto   0.00    1.10   0.90   1.82   1.82   1.82)
+    (curveto   2.70    1.82   3.63   1.10   3.63   0.00)
+    (curveto   3.63   -1.10   2.70  -1.82   1.82  -1.82)
+    (curveto   0.91   -1.82   0.00  -1.10   0.00   0.00)
+    (moveto    0.40   -0.13)
+    (curveto   0.44   -0.10   0.58  -0.04   0.73  -0.09)
+    (moveto    0.56   -0.08)
+    (curveto   0.65   -1.63   3.00  -1.63   3.06  -0.07)
+    (moveto    2.90   -0.07)
+    (curveto   2.95   -0.06   3.09  -0.04   3.22  -0.12)
+    (moveto    2.00    0.50)
+    (curveto   2.10    0.60   2.20   0.80   2.60   0.70)
+    (moveto    2.00    0.50)
+    (curveto   2.10    0.50   2.20   0.70   2.60   0.50))
+ \override #'(filled . #t) 
+ \path #0.01 
+ #'((moveto    1.34    1.23)
+    (curveto   1.61    1.23   1.61   0.17   1.34   0.17)
+    (curveto   1.09    0.17   1.09   1.23   1.34   1.23))
+}
+
+straitPath = \markup {
+ \combine 
+ \override #'(filled . #t) 
+ \with-color #(x11-color 'gold)
+ \path #0.01 
+ #'((moveto    0.00    0.00)
+    (curveto   0.00    1.10   0.90   1.82   1.82   1.82)
+    (curveto   2.70    1.82   3.63   1.10   3.63   0.00)
+    (curveto   3.63   -1.10   2.70  -1.82   1.82  -1.82)
+    (curveto   0.91   -1.82   0.00  -1.10   0.00   0.00))
+ \combine 
+ \path #0.15
+ #'((moveto    0.00    0.00)
+    (curveto   0.00    1.10   0.90   1.82   1.82   1.82)
+    (curveto   2.70    1.82   3.63   1.10   3.63   0.00)
+    (curveto   3.63   -1.10   2.70  -1.82   1.82  -1.82)
+    (curveto   0.91   -1.82   0.00  -1.10   0.00   0.00))
+ \combine 
+ \override #'(filled . #t) 
+ \path #0.01 
+ #'((moveto    1.34    1.23)
+    (curveto   1.61    1.23   1.61   0.17   1.34   0.17)
+    (curveto   1.09    0.17   1.09   1.23   1.34   1.23)
+    (moveto    2.31    1.23)
+    (curveto   2.58    1.23   2.59   0.17   2.31   0.17)
+    (curveto   2.06    0.17   2.06   1.23   2.31   1.23))
+ \path #0.2
+ #'((moveto    1.14   -0.65)
+    (lineto    2.51   -0.65))
+}
+
+eiffelPath = \markup {
+  \combine
+  \override #'(filled . #t) 
+  \with-color #(x11-color 'burlywood)
+  \path #0.01 
+  #'((moveto  -0.05   0.00)
+     (lineto   0.71   0.99)
+     (lineto   1.04   0.99)
+     (lineto   0.96   1.36)
+     (lineto   0.78   1.36)
+     (lineto   0.71   0.99)
+     (lineto  -0.05   0.00)
+     (lineto   0.35   0.75)
+     (lineto   0.35   0.83)
+     (lineto   0.33   0.86)
+     (lineto   0.33   0.96)
+     (lineto   0.40   0.96)
+     (lineto   0.63   1.56)
+     (lineto   0.60   1.56)
+     (lineto   0.59   1.62)
+     (curveto  0.57   1.70   0.58   1.70   0.63   1.70)
+     (lineto   0.63   1.73)
+     (lineto   0.66   1.73)
+     (curveto  0.72   2.30   0.78   2.70   0.79   3.56)
+     (lineto   0.77   3.60)
+     (lineto   0.76   3.68)
+     (lineto   0.78   3.74)
+     (curveto  0.85   3.75   0.86   3.78   0.87   4.03)
+     (curveto  0.88   3.78   0.90   3.74   0.96   3.74)
+     (lineto   0.98   3.68)
+     (lineto   0.97   3.60)
+     (lineto   0.95   3.56)
+     (curveto  0.97   2.70   1.02   2.30   1.08   1.73)
+     (lineto   1.11   1.73)
+     (lineto   1.11   1.70)
+     (curveto  1.17   1.70   1.17   1.70   1.15   1.62)
+     (lineto   1.14   1.56)
+     (lineto   1.11   1.56)
+     (lineto   1.34   0.96)
+     (lineto   1.41   0.96)
+     (lineto   1.41   0.86)
+     (lineto   1.39   0.83)
+     (lineto   1.39   0.75)
+     (lineto   1.79   0.00)
+     (lineto   1.36   0.00)
+     (curveto  1.36   0.30   1.10   0.51   0.87   0.51)
+     (curveto  0.60   0.51   0.38   0.30   0.38   0.00)
+     (lineto  -0.05   0.00))
+  \path #0.08 
+  #'((moveto   0.71   0.99)
+     (lineto   1.04   0.99)
+     (lineto   0.96   1.36)
+     (lineto   0.78   1.36)
+     (lineto   0.71   0.99)
+     (moveto  -0.05   0.00)
+     (lineto   0.35   0.75)
+     (lineto   0.35   0.83)
+     (lineto   0.33   0.86)
+     (lineto   0.33   0.96)
+     (lineto   0.40   0.96)
+     (lineto   0.63   1.56)
+     (lineto   0.60   1.56)
+     (lineto   0.59   1.62)
+     (curveto  0.57   1.70   0.58   1.70   0.63   1.70)
+     (lineto   0.63   1.73)
+     (lineto   0.66   1.73)
+     (curveto  0.72   2.30   0.78   2.70   0.79   3.56)
+     (lineto   0.77   3.60)
+     (lineto   0.76   3.68)
+     (lineto   0.78   3.74)
+     (curveto  0.85   3.75   0.86   3.78   0.87   4.03)
+     (curveto  0.88   3.78   0.90   3.74   0.96   3.74)
+     (lineto   0.98   3.68)
+     (lineto   0.97   3.60)
+     (lineto   0.95   3.56)
+     (curveto  0.97   2.70   1.02   2.30   1.08   1.73)
+     (lineto   1.11   1.73)
+     (lineto   1.11   1.70)
+     (curveto  1.17   1.70   1.17   1.70   1.15   1.62)
+     (lineto   1.14   1.56)
+     (lineto   1.11   1.56)
+     (lineto   1.34   0.96)
+     (lineto   1.41   0.96)
+     (lineto   1.41   0.86)
+     (lineto   1.39   0.83)
+     (lineto   1.39   0.75)
+     (lineto   1.79   0.00)
+     (lineto   1.36   0.00)
+     (curveto  1.36   0.30   1.10   0.51   0.87   0.51)
+     (curveto  0.60   0.51   0.38   0.30   0.38   0.00)
+     (lineto  -0.05   0.00))
+}
+
+#(define-markup-command (smiley layout props smiley-choice smiley-size) (string? number?)
+  "Include a smiley in a text"
+  (interpret-markup layout props
+    (cond
+      ((string=? smiley-choice ":)")  
+        #{
+           \markup
+           \scale #(cons (* 0.3 smiley-size)(* 0.3 smiley-size))
+           \smilePath
+        #})
+      ((string=? smiley-choice ";)")  
+        #{
+           \markup
+           \scale #(cons (* 0.3 smiley-size)(* 0.3 smiley-size))
+           \winkPath
+        #})
+      ((string=? smiley-choice ":|")  
+        #{
+           \markup
+           \scale #(cons (* 0.3 smiley-size)(* 0.3 smiley-size))
+           \straitPath
+        #})
+      ((string=? smiley-choice "<3")  
+        #{
+           \markup
+           \scale #(cons (* 0.3 smiley-size)(* 0.3 smiley-size))
+           \lovePath
+        #})
+       ((string=? smiley-choice "A")  
+        #{
+           \markup
+           \scale #(cons (* 0.3 smiley-size)(* 0.3 smiley-size))
+           \eiffelPath
+        #})
+      (else 
+        #{
+           \markup
+           \null
+        #})
+      )))
+
+%%%% And even put it as a notehead:
+smileyNoteHead = 
+#(define-music-function 
+  (parser location smiley-choice) (string?)
+    #{
+        \once\override NoteHead.stencil = 
+          #(lambda (grob) (grob-interpret-markup grob 
+              #{ 
+                \markup\smiley $smiley-choice #0.9 
+              #}))
+        \once\override NoteHead.stem-attachment = #'(1 . -.2)
+        \once\override Stem.layer = #0
+    #})
+
+%%%% End smiley.ily:
+
+%%% TESTS %%%%
+
+%\version "2.18.2"
+%\include "smiley.ily"
+
+\header {
+  title = \markup\concat { 
+    "I" \hspace #.3
+    \raise #1.2 \smiley #"<3" #3 \hspace #.3
+    "P" \hspace #-.6
+    \raise #0.07 \smiley #"A" #4 \hspace #.1
+    \smallCaps "ris" 
+  }
+}
+
+\score {
+  \new Staff {
+    c'1_\markup\smiley #":)" #3
+    \mark\markup\smiley #":|" #2
+    \smileyNoteHead #":|" c'4  
+    \smileyNoteHead #":)" a' 
+    \smileyNoteHead #"<3" \tweak stem-attachment #'(0.98 . 0) f' 
+    s8
+  }
+  \layout {
+    indent = 15
+    \context {
+      \Staff
+      instrumentName = \markup\smiley #"A" #10
+      \once\override TimeSignature.stencil = 
+        #(lambda (grob) (grob-interpret-markup grob 
+            #{ \markup\smiley #";)" #2 #}))
+    }
+  }
+}
+
+%% snippet end
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LSR workaround:
+\markup\vspace #.5
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
