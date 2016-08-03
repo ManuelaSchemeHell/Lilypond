@@ -1,3 +1,14 @@
 Ein Rechteck zeichnen:
 move-to als Quadrat
 dann ly:scale mit unterschiedlichen x- y- Werten!
+
+Rechteck:
+
+\markup {
+\override #'(thickness . 1)
+ \combine \draw-line #'(0 . 10)
+   \combine   \draw-line #'(10 . 0)
+   \combine \translate #'(10 . 0 ) \draw-line #'(0 . 10)
+   \combine \translate #'(0 . 10 ) \draw-line #'(10 . 0)
+   \null
+}
