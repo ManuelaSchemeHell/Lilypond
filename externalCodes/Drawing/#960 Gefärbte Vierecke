@@ -1,0 +1,50 @@
+% http://lsr.di.unimi.it/LSR/Item?u=1&id=960
+%% => http://lilypond.1069038.n5.nabble.com/scheme-problem-colored-background-layers-tc169023.html
+
+colorSpan =
+#(define-music-function (parser location y-lower y-upper color) 
+     (number? number? color?)
+    #{
+      \once\override HorizontalBracket.stencil =
+        $(lambda (grob)
+          (let* (
+            (area (ly:horizontal-bracket::print grob))
+              (X-ext (ly:stencil-extent area X))
+              (Y-ext (ly:stencil-extent area Y)))
+            (set! Y-ext (cons y-lower y-upper))
+            (ly:grob-set-property! grob 'layer -10)
+            (ly:make-stencil (list 'color color
+              (ly:stencil-expr (ly:round-filled-box X-ext Y-ext 0))
+              X-ext Y-ext))))
+      \once\override HorizontalBracket.Y-offset = #0
+      \once\override HorizontalBracket.shorten-pair = #'(-.95 . -1.65)
+    #})
+
+\score {
+  { 
+    R1
+    <<
+      {
+        \colorSpan #-5 #5 #(rgb-color 1.0 0.9 0.5) 
+        c'2\startGroup g' c'\stopGroup
+      }
+      \\
+      {
+        \override ClusterSpanner.color = #(rgb-color 0.5 0.6 1)
+        \override ClusterSpanner.layer = #-1
+        \makeClusters { c'2 g' c' }
+      }
+    >>
+    \colorSpan #-2 #2 #(rgb-color 0.5 1.0 0.5) 
+    r4\startGroup r \stopGroup   
+    
+    \colorSpan #-2 #0 #red 
+    r\startGroup s s r\stopGroup 
+  }
+  \layout {
+    \context {
+      \Voice
+      \consists "Horizontal_bracket_engraver"
+    }
+  }
+}
