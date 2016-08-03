@@ -6,6 +6,7 @@ Rechteck:
 
 \markup {
 \override #'(thickness . 1)
+\with-color #green
  \combine \draw-line #'(0 . 10)
    \combine   \draw-line #'(10 . 0)
    \combine \translate #'(10 . 0 ) \draw-line #'(0 . 10)
