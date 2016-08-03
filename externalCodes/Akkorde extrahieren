@@ -1,0 +1,33 @@
+% http://www.lilypondforum.de/index.php?topic=2281.msg12730#msg12730
+
+\version "2.18.2"
+
+#(define function
+   (lambda(x)
+     (cond ;; (1) Vergleich des Namens, via (ly:music-property x 'name)
+           ((eq? (ly:music-property x 'name) 'EventChord)
+             (begin (display-scheme-music x) x))
+           ;; (2) Vergleich des Namens, via (music-is-of-type? x 'event-chord)
+           ;; Nach meiner Erfahrung klappt das aber nicht immer
+           ((music-is-of-type? x 'event-chord)
+             (begin (display-scheme-music x) x))
+           ;; (3) Filter nach 'EventChord via (extract-named-music x 'EventChord)
+           ;; Gibt eine Liste aus.
+           ;; Je nach Absicht das elegenteste
+           (#t
+             (let ((ev-chords-list (extract-named-music x 'EventChord)))
+               (begin
+                 (display-scheme-music ev-chords-list)
+                 x)))
+           (else x))))
+ 
+test =
+#(define-music-function (parser location original-music)
+   (ly:music?)
+    (music-map
+      function
+      original-music ))
+
+\score {
+  \new Voice { \test { e'1 <g' c''>1 } }	
+}
