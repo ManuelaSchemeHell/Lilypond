@@ -13,3 +13,18 @@ Rechteck:
    \combine \translate #'(0 . 10 ) \draw-line #'(10 . 0)
    \null
 }
+
+Rechteck= #(define markup-command layout props width height thick color)
+(number? .... )
+#{
+\markup {
+\override #'(thickness . #thick)
+\with-color #green
+ \combine \draw-line #(cons 0 width)
+   \combine   \draw-line #(cons height 0)
+   \combine \translate #(cons height 0) \draw-line  #(cons 0 width)
+   \combine \translate #(cons 0 width) \draw-line #(cons height 0)
+   \null
+}
+#}
+)
