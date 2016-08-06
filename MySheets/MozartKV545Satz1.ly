@@ -2,22 +2,72 @@
 \language "deutsch"
 
 \include "myScheme.ily"
-\include "Papier+Layout.ly"
+%\include "Papier+Layout.ly"
 
 \header {
   title = "Sonate 16 in C major"
   subtitle = "Sonata facile"
   composer = "W. A. Mozart"
   opus = "K 545"
-  %piece = "Allegro"
-  mutopiatitle = "Sonata Facile - First movement"
-  mutopiacomposer = "MozartWA"
-  mutopiainstrument = "Piano"
-
 }
 
 #(define afterGraceFraction (cons 15 16))
+\paper {
+  #(set-paper-size "a4")
+  myStaffSize = #20
+  oddFooterMarkup = \markup \fill-line {
+    \abs-fontsize #7 { \FootLeft }
+  }
+  annotate-spacing = ##f
+  left-margin = #15
+  page-count = #4
+  top-margin = #10
+  ragged-right = ##f
+  bottom-margin = #10
+  last-bottom-spacing.basic-distance = #10
+  #(include-special-characters)
+}
 
+\layout {
+  indent = #15
+  ragged-last-bottom = ##t
+  ragged-last = ##f
+  ragged-bottom = ##f
+  line-width = #185
+
+  \context {
+    \Staff
+    explicitClefVisibility = #end-of-line-invisible
+    explicitKeySignatureVisibility = #end-of-line-invisible
+    \consists Mark_engraver
+    \override RehearsalMark.self-alignment-X = #LEFT
+    \override StaffSymbol.thickness = #0.35 %0.3=optimaler wert
+    \override DynamicLineSpanner.staff-padding = #3
+  }
+
+  \context {
+    \Score
+    \remove Bar_number_engraver
+    \override NonMusicalPaperColumn.line-break-permission = ##f
+    \override NonMusicalPaperColumn.page-break-permission = ##f
+    \remove Mark_engraver
+    \override RehearsalMark.self-alignment-X = #LEFT
+    \override KeyCancellation.break-visibility = #'#(#f #t #t)
+    \override TextScript.self-alignment-X = #LEFT
+    \override TextScript.staff-padding = #3.5
+  }
+  \context {
+    \ChordNames
+    \remove "Staff_performer"
+  }
+  \context {
+    \Voice
+    \override Hairpin.thickness = #2.5
+    \override PhrasingSlur.outside-staff-priority = #150
+    \override Slur.outside-staff-priority = #150
+    \override Script.stencil = #bold-tenuto-script-stencil
+  }
+}
 soft =
 -\tweak stencil
 #(lambda (grob)
@@ -74,26 +124,26 @@ RH= \relative c'' {
   \allgShift #'(-4 . 8) Score MetronomeMark
   \tempo "Allegro" 4 = 120
   \phrasingSlurDashed
+  \allgShift #'(4 . 5) Score RehearsalMark
+  \mark \markup \box "A"
   c2-1-\pleg (
   e4-3 g-5
   h,4.-1 c16 d c4 ) r
   \slurShiftx #'( 0 . 3 ) #'( -2 . 3)
   a'2-3 (-> g4\< c\!
   g-3 f8\trill\> e16 f e4)\! r
-  a,8\p\<\( h16 c d-1 e f g\!  a\> g f e d c-4 h a\!
-  g8_1\< a16 h c-1 d e f\!  g\> f e d c
+  a,8-1 \p \< \( h16 c d-1 e f g\!  a-5 \> g f e d-1 c-4 h a\!
+  g8_1\< a16 h c-1 d e f\!  g-5 \> f e d c_1
   h_4
   a g\!
-  f8\< g16 a h-1 c d e\!  f\> e d c
-  \tag #'first { h a_4 g f\! }
-
-
-  e8\< f16 g  a-1 h c d\!  e\> d c h a
-  g_3 f e\!\)
-  d8-\markup {
+  f8-1 \< g16 a h-1 c d e\!  f-5 \> e d c
+  h_1 a_4 g f-2 \!
+  e8-1 \< f16-2 g  a-1 h c d\!  e-5 \> d c h a_1
+  g_4 f e_2 \! \)
+  d8_1-\markup {
     \dynamic "p"
     \parenthesize \italic \fontsize #1 "cresc."
-  } \( e16 f  g_1 a h cis    d a \< h cis d-1 e f g-1 \!
+  } \( e16 f-3  g_1 a h cis-4 d-5 a-1 \< h cis-3 d-1 e f g-1 \!
   a h c!-4 h  a g-1 f-3 e-2 f-3 g-4 a-5 g  f e d-1 c-2 \)
 
   h8-1 \f g' e-3 c-1  d-2 g e c
@@ -101,6 +151,8 @@ RH= \relative c'' {
     \parenthesize \dynamic "f"
   }
   <h d g> g_2 r4
+  % \allgShift #'(4 . 5) Score RehearsalMark
+  \mark \markup \box "B"
   r1-\markup {
     \parenthesize \dynamic "p"
   }
@@ -126,6 +178,7 @@ RH= \relative c'' {
   } \stopTrillSpan g16-2( d-\soft g h-4 d-5 h-4 g h-4 c-5 a-3 fis-2 a-4
   g4) g,16-2( d_\soft g h-4 d h-4 g h-4 c a-3 fis-2 a-4
   g4) <d' h'> <h g'-4> r4 \bar ":..:"
+  \mark \markup \box "C"
   g4 g'16-2( d-\soft g b-3 d-5 b-3 g b c-5 a-3 fis-2 a-4
   g4) g,16-2_( d_\soft g b-3 d b-3 g b  c-5 a-3 fis-2 a-4
   g4) r r16 g'-2 b-4 a g f e-4 d
@@ -146,22 +199,24 @@ RH= \relative c'' {
     \parenthesize \italic \fontsize #1 "dim."
   }
   \override Fingering.direction = #DOWN
-  d c  b a g f-3  e\> f-1 g a  b c^1 d e\!
+  d-5 c  b a g f-3  e-2 \> f-1 g a  b c^1 d e\!
   \override Fingering.direction = #UP
+   \allgShift #'(-2 . 6) Score RehearsalMark
+  \mark \markup \box "D"
   f2-1 (\mp a4-3 c-5
   e,4.-1 f16 g f4 )  r4
   %\once \override Script.outside-staff-priority = #1000 %##f %'()
   \slurShift #'( 0 . -4 )
   d'2-3 ( c4\< f\!
-  c-3_\accent b8 \trill\> a16 b a4 )\! r4 % \break
+  c-3 b8 \trill\> a16 b a4 )\! r4 % \break
 
-  d,8-1 \p \< \( e16 f g-1 a b c\!  d-5\> c b a g f-4 e d\!
-  c8\< d16 e f-1 g a b\!  c\> b a g f-1
-  e-3 d c\!
-  b8\< c16 d e-1 f g a\!  b\> a g f   e-3 d c b-2\!
+  d,8-1 \p \< \( e16 f g-1 a b c\!  d-5\> c b a g-1 f-4 e d\!
+  c8-1 \< d16 e f-1 g a b-4 \! c-5 \> b a g f-1
+  e-3 d c-1 \!
+  b8-2 \< c16-1 d-2 e-3 f-1 g-2 a-3 \! b-4 \> a g f-1 e-3 d c b-2\!
 
-  a8\< b16 c  d-1 e f g\!  a\> g f e d  c-3 b a\! \)
-  a4 r r <c a'-5>
+  a8-1 \< b16-2 c-3  d-1 e f g\!  a-5\> g f e d-1 c-3 b a-1 \! \)
+  a'4-5 r r <c, a'-5>
   <c g'-4> r r <c g'-5>
   <c f-4> r r <h f'-5>
   <c-2 e-4> r r <c-5 e-3>
@@ -175,12 +230,14 @@ RH= \relative c'' {
   \override Fingering.direction = #UP
   d-5 a-1 h cis  d-1 e f g-1
 
-  a h c h  a g f e  f g a g  f e d c-2 \)
+  a h c-4 h  a g-1 f-3 e-2 f-3 g-4 a-5 g  f e d-1 c-2 \)
   h8-1 \f  g'-5   e-3 c-1  d-2 g  e c
   d4-\markup {
     \parenthesize \dynamic "f"
   }
   <h d g> g r4
+  % \allgShift #'(4 . 5) Score RehearsalMark
+  \mark \markup \box "E"
   r1-\markup {
     \parenthesize \dynamic "p"
   }
@@ -306,7 +363,7 @@ LH=  \relative c'' {
   a4\sf) r r16 h-5-( f' e  d c-1 h a
   \clef bass gis4\sf ) r
   \override Fingering.direction = #UP
-   r16 a-3( c-1 h  a g-1 f e
+  r16 a-3( c-1 h  a g-1 f e
 
   d2\sf) <c g' b>\sf
   \clef treble
@@ -413,15 +470,17 @@ Struktur= {
       \context Voice \Struktur
       % \context Voice \ghostRH
     >>
-   % \context ChordNames \Akk
+    % \context ChordNames \Akk
     \new Staff="down" \LH
     % \new Dynamics \Pedal
   >>
   %% Falls erforderlich Zeilenlänge und Einzug ändern
-  \layout {
-  }
+
   \midi {
     \tempo 4 = 120
+  }
+
+  \layout {
   }
 }
 %}
