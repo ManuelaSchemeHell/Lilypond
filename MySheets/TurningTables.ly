@@ -1,27 +1,12 @@
 \version "2.19.37"
 \language "deutsch"
-
 \include "myScheme.ily"
-%\include "Papier+Layout.ly"
+
+FootLeft = #(string-append "" )
+FootCenter = #(string-append "")
+FootLeft = #(string-append "gesetzt mit LILYPOND " (lilypond-version) " am " (strftime "%d.%m.%Y %H:%M:%S" (localtime (current-time))))
 #(set-global-staff-size 20)
 
-\header {
-
-  composer  =  \markup  {
-    \right-column {
-      %\once \override TextScript.extra-offset = #'( 0 . 0.5)
-      %\draw-circle #0.5 #0.3 ##f
-      \line { Words and Music by Adele Adkins }
-      \line { and Ryan Tedder }
-    }
-  }
-  title    = \markup \fontsize #0 { "Turning Tables" }
-  subtitle = \markup \fontsize #0.9 { "" }
-  %piece      =  "Moderade Ballad"
-  poet = "Moderade Ballad"
-}
-
-%% wenn erforderlich linken Abstand ändern
 \paper {
   #(set-paper-size "a4")
   myStaffSize = #20
@@ -30,28 +15,23 @@
   }
   annotate-spacing = ##f
   %left-margin = #15
-  line-width = #180
-
   %page-count = #4
   top-margin = #10
-  ragged-last-bottom = ##f
   ragged-right = ##f
   bottom-margin = #10
   last-bottom-spacing.basic-distance = #10
+  #(set-paper-size "a4")
+  %left-margin = #15
+  line-width = #180
   #(include-special-characters)
 }
 
 \layout {
   indent = #15
+  ragged-last-bottom = ##t
   ragged-last = ##f
   ragged-bottom = ##f
-  %line-width = #180
-
-  \context {
-    \Staff
-    explicitClefVisibility = #end-of-line-invisible
-    explicitKeySignatureVisibility = #end-of-line-invisible
-  }
+  line-width = #185
   \context {
     \ChordNames
     chordNameLowercaseMinor = ##f
@@ -119,18 +99,28 @@
     %\override ChordName.font-shape =#'italic %upright, italic, caps
   }
   \context {
-    \Score
-    %\remove Bar_number_engraver
-    \override BarNumber.break-visibility = #end-of-line-invisible
-    \override BarNumber.padding = #0
-    %\override BarNumber.break-visibility = #end-of-line-invisible
-    \override BarNumber.self-alignment-X = #CENTER
-    \override NonMusicalPaperColumn.line-break-permission = #'allow
-    \override NonMusicalPaperColumn.page-break-permission = #'allow
+    \Staff
+    explicitClefVisibility = #end-of-line-invisible
+    explicitKeySignatureVisibility = #end-of-line-invisible
+    \consists Mark_engraver
     \override RehearsalMark.self-alignment-X = #LEFT
-    \override StaffSymbol.thickness = #0.3 %0.3=optimaler wert
+    \override StaffSymbol.thickness = #0.35 %0.3=optimaler wert
     \override DynamicLineSpanner.staff-padding = #3
+    \override TimeSignature.style = #'numbered
   }
+
+  \context {
+    \Score
+    \remove Bar_number_engraver
+    \override NonMusicalPaperColumn.line-break-permission = ##f
+    \override NonMusicalPaperColumn.page-break-permission = ##f
+    \remove Mark_engraver
+    \override RehearsalMark.self-alignment-X = #LEFT
+    \override KeyCancellation.break-visibility = #'#(#f #t #t)
+    \override TextScript.self-alignment-X = #LEFT
+    \override TextScript.staff-padding = #3.5
+  }
+
   \context {
     \Voice
     \override Hairpin.thickness = #2.5
@@ -139,177 +129,140 @@
     \override Script.stencil = #bold-tenuto-script-stencil
   }
 }
-AK = \chordmode {
-  \set chordChanges = ##f
-  c1:m7 as:7 f:m9 as
-  c1:m7 as:7 f:m9 as
-  c1:m7 as:7 f:m9 as
-}
 
-global = {
+RH= \relative c' {
   \key es \major
-  \numericTimeSignature
+  \time 2/2
+  \tempo 4=70
+  \clef treble
+  \repeat unfold 4 { c8 es c es b' es, b' es, }
+  c d c es g es g es c es c es g es g es c es c es as es as es c es c c' b c, es4
+  r2 es'4 d8 es~ es4 d8 es~ es4 d8 c~ c1
+  r2 es4 es8 es~ es4 c2. r4 r8 c es4 es8 c~ c1~ c
+  r2 es8 es d es~ es es f g~ g4 es c1 r2 d4 es8 es~
+  es4 c2. r4 r8 es es8. es16 es8 es~ es es f c~ c2~ c1
+  < as c >4 es8 < b' d >~ q f < c' es >4
+  as8 < d f >4 f,8 \stemUp < c' es > as < b d > f \stemNeutral
+  < as c >4 es8 < b' d >~ q f < c' es >4
+  as8 < d f >4 f,8 \stemUp < c' es > as < b d > f \stemNeutral
+  < as c >4 es8 < b' d >~ q f < c' es >4~
+  < c es > < b es, >2 < b d >4~ q1 q2. r8 b \bar "||"
+  < es g b >4. < c es g >8~ q2 < es g b >4. < c es g >8~ q2
+  < b es g >4 g'8 q8~ q4 f8 < c es as >~
+  \time 3/4
+  q4 < as c g' > < as c es >
   \time 4/4
+  < es' g b >2 < c es g >
+  \time 5/4
+  < es g b > < c es g >2.
+  \time 4/4
+  < b es g >4 g'8 q~ q4 f8 < c f as >~
+  q4 < as c g' > < as c es >8 < as c f >4 < c es g >8~
+  q < es g b >4. es,8 b' < es b' >4
+  < c, es g >4. < es g b >8 es2
+  < c' es as c >4 < b b' >8 < b es g b >~ q4 < g g' >8 < as c es as >
+  < g g' > < f b d f >~ q4 r8 < f f' > q < g g' >
+  < c f as >4. < b es g >4~ q8 < es, as c es >4~ q2. < c c' >4
+  r4 r8 f' es4 d8 es~ es~ es4. < b es, >2
+  < c, g > < es b' > < as c > < es b' > < as es >4. f'8 es4 d8 es~
+  es < es b' >~ q2.
 }
 
-lmy={ c4 c c8. c16 c8. c16 }
-lny={ c8. c16 c4 }
-loy={ c8. c16~ c8 c~ c4 c }
-rmy={ c8. c16 c8 c8 c16 c8. c8 c }
-rny={ c8. c16 c c c c }
-TaktIr= { c16 es c es b' es, b' es, }
-TaktIl= { c4 b' c,8. g'16 b8. es,16 }
-
-right = \relative c' {
-  \global
-  \tempo "moderat" 4 = 70
-  \repeat unfold 4 { \TaktIr }
-  c es c es g es g es c es c es g es g es
-  c es c es as es as es c es c as' g c, es c
-  c es c8 es d16 es~ es8 d16 es~ es8 d16 c~
-  c4 b'16 es, b' es, c es c8 es es16 es~
-  es8 c g'16 es g es c16 es8 c16 es8 es16 c~
-  c4 r r2
-  c16 es c8 es16 es d es~ es es f g~ g8 es
-  c4 b'16 es, b' es, c es c es d8 es16 es~
-  es8 c g'16 es g es c es c es \tuplet 3/2 { es8 es es~ }
-  es16 es f c as' es as es c es c as' g c, es c
-  \changePitch \rmy {
-    < es, as c > < f~ as~ d~ > < f as d > < g~ as~ es'~ > < g as es' > < as c f > < as c es > d
-    < f, as c > < g~ as~ d~ > q < as~ c~ es~ > q < as c f > < as c es > < as c d >
-    < es as c > < es~ as~ d~ > q < es~ as~ es'~ >
-  }
-  q8 < es as b >4 < f~ b~ d~ >8 q2.~ q8. es'16
-  \changePitch \rny {
-    < c es b' > < c~ es~ g~ > q c es c
-    < c es b' > < c~ es~ g~ > q c es c
-  }
-  < b es g >8 g'16 < b, es g >~ q8 f'16 < c es as>~ q8 < c es g> < c es > < c es b' >~
-  q < c es g >4 < c es b' >8~ q8 < c es g >4.
-  < b es g>8 g'16 < b, es g >16~ q8 f'16 < c es as >~ q8 < c es g > < c es>16 f8 < c es g>16~
-  q8 < c es b'>~ q16 q8.
-  \tuplet 3/2 { <es' g>8[ < d f > < c es >] }
-  \tuplet 3/2 { < as c >[ < g b > < f as>] }
-  < es as c>8 b'16 < es, g b>~q8 g16 < b, es g>~ q < b d f >8.~ q16 es f g
-  \time 2/4
-  < c, f as >8. < b es g>16~ q8
-  <<
-    {
-      < es>~ \time 4/4
-      es2~ es8. es16 es8 d16 es_~ es es c es
-    } \\
-    {
-      \stemUp
-      \once \omit Flag
-      < as, c >8~
-      < as c >1
-    }
-
-  >>
-  b'16 es, b' es, c es c es b' es, b' es,
-  \override Score.RehearsalMark.self-alignment-X = #CENTER
-  %\once \override Score.RehearsalMark.extra-offset = #'( -5 . 0 )
-  \mark \markup {
-    \center-column {
-      \line {  \fontsize #0.7 "To Coda" \musicglyph #"scripts.coda" }
-      % \line { \musicglyph #"scripts.coda" }
-    }
-  }
-  c es c es b' es, b' es, c es c es c8 d16 es~
-  es es c es g es g es c es c es g es g es
-  c es c es as es as es c es c as' g c, es c
-  c es c8 es d16 es~ es8 d16 es es8 d16 es~
-  es8 c16 es b' es, b' es, c8 es16 f as g f es~
-  es4 es16 es d es~ es8 es16 g~ g8 es16 c~
-  c es c es as es as es c es c as' g c, es c
-  c es c es g g g < c, es g >~ q8 g'16 < c, es b'>~ q4~
-  q16 g' < c, es as> g' < c, f>16 es8. c16 es c es es f g < c, es b'>~
-  q8 es16 < c f >~ q8 < c es g >16 f < c es > c8. r16 < c es g >8 q16~
-  \override Score.RehearsalMark.self-alignment-X = #RIGHT
-  q4~ q16 f g f < c es >8 c16 as' g c, es c
-  \allgShift #'( 0 . 4) Score RehearsalMark
-  \mark \markup {   "D.S. al Coda" }
+LH = \relative c {
+  \clef bass
+  \key es \major
+  < c c, >2 b'~ b4. g8 b4. es,8
+  as,4. es'8 b'2~ b4. es,8 b'4. es,8
+  f,4. c'8 as'2~ as4. c,8 as'4. es8
+  < as, as' >4. es'8 as2~ as es4. g,8
+  \clef treble
+  < c c' > es' c es b' es, b' es, < c c, > es c es b' es, b' es,
+  c es c es b' es, b' es,
+  < c c, > es c es g es g es < c f, > es c es g es g es
+  c es c es g es g es < c as > es c es b' es, b' es,
+  c es c as' g c, es g,
+  < c c, > es c es g es g es c es c es g es g es
+  < as, as, > as c es b' es, b' es,
+  c es c es b' es, b' es,
+  < c f, > es c es g es g es c es c es g es g es
+  < c as > es c es b' es, b' es, c es c as' g c, es g,
+  \clef bass
+  < as as, >4. q8~ q4 q4~ q8 q4. q4 q
+  < f f, >4. q8~ q4 q~ q8 q4. q4 q
+  < as as, >4. q8~ q4 q~ q q f < b b,>~ q1~ q1
+  < c, c, >8 c g' < g c >~ q c, q c
+  < as as, >8 as es' < es as >~ q as, q as
+  < es' es, >8 es b' < b es >~ q es, q es
+  < f f, >8 f c' < c f >~ q f,,
+  < c' c, >8 c g' < g c >~ q c, q c
+  < as as, >8 as es' < es as >~ q as, q as < as as, > es
+  < es' es, >8 es b' < b es >~ q es, q es
+  < f, f, > f c' f c' f, < f c > f,
+  < c c' > es' < g es' > < g b > c, g' < g c > c,
+  < as as, > as es' as c as es as
+  < as as, >4. < g g, >8~ q c4 < b, b, >8
+  f' < b d >4 f8 f,4 < b b, >
+  < f' f, >8 c' f, < es es, >~ q es, < as as, >4~ q1~ q
+  < c c, >8 es c es b' es, b' es,
+  c es c es b' es, b' es,
+  < as, as, > as c es b' es, b' es, c es c es b' es, b' es,
+  < c f, > es c es g es g es
 }
 
-RCoda= \relative c' {
-  \break
-  \override Score.RehearsalMark.self-alignment-X = #LEFT
-  %\once \override Score.RehearsalMark.extra-offset = #'( -5 . 0 )
-  \mark \markup {
-    \center-column {
-      \line { \bold \fontsize #0.7 "Coda" }
-      \line { \musicglyph #"scripts.coda" }
-    }
-  }
-  c16 es c es b' es, b' es, c es c es b' as g as
-  g16 f es8 g16 es g es c es c es g es g es
-  c es c es as es as es c es c as' g c, es c
+AK = \chordmode {
+  c:m
 }
 
-left = \relative c {
-  \global
-  \set Timing.beamExceptions = #'()
-  \set Timing.baseMoment = #(ly:make-moment 1/4)
-  \set Staff.beatStructure = #'(2 2 ) % abhängig vom Takt
-  \repeat unfold 3
-  {
-    \changePitch \lmy { c b' c, g' b es, }
-    \changePitch \lny
-    {
-      as, es' b' as, es' b'
-      f, c' as' f, c' as'
-      as, es' as
-    }
-    as,2
-  }
-  \set Staff.beatStructure = #'(1 1 1 1 ) % abhängig vom Takt
-
-  \changePitch \loy {
-    as as as as as as
-    f f f f f f
-    as as as as
-  }
-  as4. b8~ b1
-  c2 as es f4. c'8 ~
-  c4. as8~ as2
-  es2 f c' as
-  as8. g16~ g8. b16~ b b8.~ b4
-  f8. es16~ es8 as~ as1
-  \repeat unfold 3 {
-    \changePitch \lmy { c b' c, g' b es, }
-    \changePitch \lny
-    {
-      as, es' b' as, es' b'
-      f, c' as' f, c' as'
-      as, es' as
-    }
-    as,2
-  }
-
+Struktur= {
+  s1 * 4 \break
+  s1 * 4 \break
+  s1 * 4 \break
+  s1 * 4 \break
+  s1 * 4 \break
+  s1 * 4 \pageBreak
+  s1 * 5 \break
+  s1 * 6 \break
+  s1 * 4 \break
+  s1 * 5 \break
+  s1 * 4 \break
 }
 
-\score {
+\score
+{
   \new PianoStaff \with {
-    \once \override InstrumentName.font-name = #"Orator10 BT"
-    instrumentName = "Piano"
-
+    instrumentName = \markup {
+      \center-column {
+        \line \large { Piano }
+      }
+    }
     shortInstrumentName = ""
-  } <<
-    \new Staff = "right"
+  }
+  <<
+    \new Staff="up" \with {
+      \consists Bar_number_engraver
+      \override BarNumber.break-visibility = #end-of-line-invisible
+      \override BarNumber.padding = #0
+      \override BarNumber.self-alignment-X = #CENTER
+    }
     <<
-
-      \context ChordNames \AK
-      \context Voice \right
+      \context Voice \RH
+      \context Voice \Struktur
+      % \context Voice \ghostRH
     >>
-    \new Staff = "left" { \clef bass \left }
+    % \context ChordNames \AK
+    \new Staff="down" \LH
+    % \new Dynamics \Pedal
   >>
-  \layout { }
+  %% Falls erforderlich Zeilenlänge und Einzug ändern
 
   \midi {
     \context {
       \ChordNames
       \remove "Staff_performer"
     }
-    \tempo 4 = 70
+    \tempo 2 = 70
+  }
+
+  \layout {
   }
 }
