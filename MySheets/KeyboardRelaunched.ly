@@ -1,20 +1,8 @@
-\version "2.18.0"
+\version "2.19.37"
 \language "deutsch"
 
-%% often people think that the black keys are centered to the white keys
-%% even in piano teaching books keyboards are drawn this way
-%% this is not the case, black keys are positioned surprisingly excentric
-%% http://lsr.di.unimi.it/LSR/Item?id=791 inspired me
-%% to draw a keyboard with following features:
-%% - scalable
-%% - correct positioning of the black keys
-%% - entering of a chord which notes are represented by dots
-
-%% created by Manuela
-%% feel free to modify and distribute
-
-%% all values are measured by myself on my piano
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% definitions for the measures of the keyboard keys
 #(define white-key-width 23.5) %% the width of a white piano key
 #(define white-key-height 150) %% the height of a white piano key
 #(define black-key-width 15)   %% the width of a black piano key
@@ -37,7 +25,39 @@
 %% just try what looks fine
 #(define kreis-dm (* black-key-width 0.5)) %% circle diameter
 
-%% scheme routines needed
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% COLOR definitions for the music
+%% just chose the colors you prefer
+%% some examples as comment
+%% check out the x11-colorlist http://lsr.di.unimi.it/LSR/Item?id=394
+%% notation manual list of colors (German: p. 623)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+#(define w-key-color (x11-color 'azure1)) % LightBlue linen WhiteSmoke cornsilk honeydew azure1
+#(define b-key-color (x11-color 'DarkOliveGreen4))  % SaddleBrown blue4 DarkOliveGreen4 maroon DarkGrey DarkBlue
+
+
+%% define complete scale plus c als pitchlist
+#(define twelve-tones (list
+                       (ly:make-pitch 0 0 0) ;c
+                       (ly:make-pitch 0 0 SHARP) ; cis
+                       (ly:make-pitch 0 1 0) ; d
+                       (ly:make-pitch 0 1 SHARP) ; dis
+                       (ly:make-pitch 0 2 0) ; e
+                       (ly:make-pitch 0 3 0) ; f
+                       (ly:make-pitch 0 3 SHARP) ; fis
+                       (ly:make-pitch 0 4 0) ; g
+                       (ly:make-pitch 0 4 SHARP) ; gis
+                       (ly:make-pitch 0 5 0) ; a
+                       (ly:make-pitch 0 5 SHARP) ; ais
+                       (ly:make-pitch 0 6 0) ; h
+                       (ly:make-pitch 1 0 0)
+                       ))
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Scheme programs needed for analyzing music
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 #(define (naturalize-pitch p)
    ;; reduces alteration greater than a half tone step
    ;; #(display (naturalize-pitch #{ fes #}))
@@ -104,8 +124,22 @@
                (o2 (inexact->exact (- o1 l-oct)))
                (n1 (ly:pitch-notename p1)))
           (ly:make-pitch o2 n1 a1)))
-      (sort (all-pitches-from-music music) ly:pitch<?))
-     ))
+      (sort (all-pitches-from-music music) ly:pitch<?))))
+
+#(define (white-key? p)
+   (let
+    ((a (ly:pitch-alteration (naturalize-pitch p))))
+    (if (= a 0)
+        #t
+        #f)))
+
+%% removes all pitches without alteration, leaves only black keys
+#(define (bl-filter p-list)
+   (remove (lambda (p) (= 0 (ly:pitch-alteration p))) p-list))
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Scheme programs for drawing stencils
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% routine to move and scale a markup
 #(define-markup-command (move-and-scale layout props mymark faktor x-offset)
@@ -116,114 +150,7 @@
      faktor faktor)
     x-offset X))
 
-%% single white key
-wh-taste =
-#(make-connected-path-stencil
-  ;; creates a square which is transformed
-  ;; according to width and height of a white key
-  '((0 0) (1 0) (1 1) (0 1))
-  0.1 ;; thickness
-  white-key-width
-  white-key-height
-  #t  ;; close path
-  #f  ;; do not fill path
-  )
-
-w-tasten=
-#(apply
-  ly:stencil-add
-  empty-stencil ; wh-taste
-  (map
-   (lambda (i) (ly:stencil-translate-axis wh-taste (* i white-key-width) X))
-   (iota 7 )))
-
-%% combining two octaves
-dos-w-octavas=
-#(ly:stencil-add
-  w-tasten
-  (ly:stencil-translate-axis w-tasten octav-distance X))
-
-%% defining single black key
-bl-taste=
-#(make-connected-path-stencil
-  '((0 0) (1 0) (1 1) (0 1) )
-  0.1
-  black-key-width
-  black-key-height
-  #t  ;; close path
-  #t  ;; fill path
-  )
-
-%% combining 5 black keys for one octave
-b-tasten =
-#(ly:stencil-add
-  (ly:stencil-translate
-   bl-taste
-   (cons black-key-cis-start black-key-y-start))
-  (ly:stencil-translate
-   bl-taste
-   (cons (+ black-key-dis-start white-key-width ) black-key-y-start))
-  (ly:stencil-translate
-   bl-taste
-   (cons (+ black-key-cis-start (* white-key-width 3) ) black-key-y-start))
-  (ly:stencil-translate
-   bl-taste
-   (cons (+ black-key-gis-start (* white-key-width 4) ) black-key-y-start))
-  (ly:stencil-translate
-   bl-taste
-   (cons (+ black-key-dis-start (* white-key-width 5) ) black-key-y-start)))
-
-%% combining white and black keys to one octave
-
-#(define (draw-music-complete music)
-   (let* ((low-key (low-pitch music))
-          (high-key (high-pitch music))
-          (o-diff (- (ly:pitch-octave high-key) (ly:pitch-octave low-key)))
-          (octave (ly:stencil-add w-tasten b-tasten)))
-     ;; body of function
-     ;; creates as many keyboardoctaves as music contains octaves
-     ;(display o-diff)
-     (apply
-      ly:stencil-add
-      empty-stencil
-      (map
-       (lambda (i) (ly:stencil-translate-axis octave (* i octav-distance) X))
-       (iota o-diff )))
-     ))
-
-#(define (draw-stencil-keys-complete music mystencil)
-   (let* ((low-key (low-pitch music))
-          (high-key (high-pitch music))
-          (o-diff (+ 1 (- (ly:pitch-octave high-key) (ly:pitch-octave low-key))))
-          (octave (ly:stencil-add w-tasten b-tasten)))
-     ;; body of function
-     ;; creates as many keyboardoctaves as music contains octaves
-     ;(display o-diff)
-     (apply
-      ly:stencil-add
-      empty-stencil
-      (map
-       (lambda (i) (ly:stencil-translate-axis mystencil (* i octav-distance) X))
-       (iota o-diff )))))
-
-%% combining to octaves black keys
-dos-b-octavas=
-#(ly:stencil-add
-  b-tasten
-  (ly:stencil-translate-axis b-tasten octav-distance X))
-
-complete-keyboard-two-octaves=
-#(ly:stencil-add
-  dos-w-octavas
-  dos-b-octavas)
-
-#(define (white-key? p)
-   (let
-    ((a (ly:pitch-alteration (naturalize-pitch p))))
-    (if (= a 0)
-        #t
-        #f)))
-
+%%calculation the starting point of a key
 #(define (start-point-key p)
    ;; calculation the starting point of a key
    ;; depending on the pitch p
@@ -259,162 +186,175 @@ complete-keyboard-two-octaves=
       ;; only one left, the centered black key gis/as
       (cons (+ (* n1 white-key-width) black-key-gis-start x-shift) black-key-y-start )))))
 
-#(define (make-taste p)
-   (let* ((wh-key
-           (ly:stencil-add
-            (ly:stencil-in-color
-             (make-connected-path-stencil
-              ;; creates a square which is transformed
-              ;; according to width and height of a white key
-              '((0 0) (1 0) (1 1) (0 1))
-              0.1 ;; thickness
-              white-key-width
-              white-key-height
-              #t  ;; close path
-              #t  ;; do not fill path
-              ) 0.7 0.95 1)
-            (make-connected-path-stencil
-             ;; creates a square which is transformed
-             ;; according to width and height of a white key
-             '((0 0) (1 0) (1 1) (0 1))
-             0.1 ;; thickness
-             white-key-width
-             white-key-height
-             #t  ;; close path
-             #f  ;; do not fill path
-             )))
-          (bl-key
-           (ly:stencil-in-color
-            (make-connected-path-stencil
-             '((0 0) (1 0) (1 1) (0 1) )
-             0.1
-             black-key-width
-             black-key-height
-             #t  ;; close path
-             #t  ;; fill path
-             ) 0.2 0.4 0.6))
-          (start-p (start-point-key p)))
-     (if (white-key? p)
-         (ly:stencil-translate  wh-key start-p)
-         (ly:stencil-translate  bl-key start-p)
-         )))
-#(set! paper-alist (cons '("mein Format" . (cons (* 35 in) (* 5 in))) paper-alist))
-\paper {
-  #(set-paper-size "mein Format")
-}
+%% defining key as stencil depending on pitch
+#(define (draw-key p)
+   ;; draws either a white key or a black key
+   ;; the distance from origin depends on the pitch
+   (let*
+    ((wh-key
+      (make-connected-path-stencil
+       ;; creates a square which is transformed
+       ;; according to width and height of a white key
+       '((0 0) (1 0) (1 1) (0 1))
+       0.1 ;; thickness
+       white-key-width
+       white-key-height
+       #t  ;; close path
+       #f  ;; do not fill path
+       ))
+     (bl-key
+      (make-connected-path-stencil
+       '((0 0) (1 0) (1 1) (0 1) )
+       0.1
+       black-key-width
+       black-key-height
+       #t  ;; close path
+       #t  ;; fill path
+       ))
+     (start-p (start-point-key p)))
+    (if (white-key? p)
+        (ly:stencil-translate wh-key start-p)
+        (ly:stencil-translate bl-key start-p)
+        )))
 
-TestMusik= \transpose c dis'' { c, dis d dis' e' g'' f''' }
-#(define (male-tasten music)
-   ;; draw all keys
-   ;; black would not be necessary but I don't bother to filter them
-   (apply
-    ly:stencil-add
-    empty-stencil
-    (map
-     (lambda (p) (make-taste p) )
-     (normalize-music music))))
-
-#(define (male-bl-tasten music)
-   ;; draw only black keys
-   (apply
-    ly:stencil-add
-    empty-stencil
-    (map
-     (lambda (p) (make-taste p) )
-     (remove (lambda (p) (= 0 (ly:pitch-alteration p))) (normalize-music music))
-     )))
-
-#(display (remove (lambda (p) (= 0 (ly:pitch-alteration p)))
-            ( normalize-music TestMusik)))
-
-%\markup \move-and-scale \stencil #(male-tasten TestMusik) #0.3 #0
-
-#(define (overlap-keys music)
-   (ly:stencil-add
-    (draw-stencil-keys-complete music w-tasten)
-    (male-tasten music)
-    (draw-stencil-keys-complete music b-tasten)
-    (male-bl-tasten music)))
-\markup \move-and-scale \stencil #(overlap-keys TestMusik) #0.4 #0
-
-#(define (make-dot p)
-   (let* ((start-p (start-point-key p)))
-     (if (white-key? p)
-         (ly:stencil-in-color
-          (ly:stencil-translate
-           (make-circle-stencil kreis-dm 0 #t)
-           (cons
-            (+ (car start-p) (/ white-key-width 2 ))
-            (+ (cdr start-p) (/ (- white-key-height black-key-height) 1.5))))
-          0.2 0.5 0.5) ;; color petrol
-         (ly:stencil-in-color
-          (ly:stencil-translate
-           (make-circle-stencil kreis-dm 0 #t)
-           (cons
-            (+ (car start-p) (/ black-key-width 2 ))
-            (+ (cdr start-p) (/ black-key-height 5))))
-          0.4 0.7 0.7) ;; color slightly lighter petrol than above
+%brightness  =  sqrt( .299 R2 + .587 G2 + .114 B2 )
+#(define (brightness colour)
+   (let* ((r (first colour))
+          (g (second colour))
+          (b (third colour))
+          (r2 (* r r))
+          (g2 (* g g))
+          (b2 (* b b))
+          (wurzel (sqrt (+ (* r2 0.299) (* g2 0.587) (* b2 0.114)))))
+     (if (> wurzel 0)
+         wurzel
+         1   ;; prevent dividing by zero
          )))
 
-%% creating a single stencil of multiple dots for a list of pitches
-#(define (make-dot-list l1)
-   (if (every ly:pitch? l1)
-       (apply ly:stencil-add (map make-dot l1))
-       empty-stencil))
+#(display (brightness b-key-color))
 
+%% define key as stencil with colors
+#(define (draw-colored-key p)
+   (let*
+    ((wh-key
+      (ly:stencil-add
+       (ly:stencil-in-color
+        (make-connected-path-stencil
+         ;; creates a square which is transformed
+         ;; according to width and height of a white key
+         '((0 0) (1 0) (1 1) (0 1))
+         0.1 ;; thickness
+         white-key-width
+         white-key-height
+         #t  ;; close path
+         #t  ;; do not fill path
+         ) (first w-key-color) (second w-key-color) (third w-key-color))
+       (make-connected-path-stencil
+        ;; creates a square which is transformed
+        ;; according to width and height of a white key
+        '((0 0) (1 0) (1 1) (0 1))
+        0.1 ;; thickness
+        white-key-width
+        white-key-height
+        #t  ;; close path
+        #f  ;; do not fill path
+        )))
+     (bl-key
+      (ly:stencil-in-color
+       (make-connected-path-stencil
+        '((0 0) (1 0) (1 1) (0 1) )
+        0.1
+        black-key-width
+        black-key-height
+        #t  ;; close path
+        #t  ;; fill path
+        ) (first b-key-color) (second b-key-color) (third b-key-color)))
+     (start-p (start-point-key p)))
+    (if (white-key? p)
+        (ly:stencil-translate  wh-key start-p)
+        (ly:stencil-translate  bl-key start-p)
+        )))
+
+#(define (draw-keyboard music)
+   (let*
+    ((l-p (low-pitch music))  ;; lowest pitch of music
+      (u-p (high-pitch music))  ;; highest pitch of music
+      (l-oct (ly:pitch-octave l-p)) ;; octave of lowest pitch
+      (u-oct (+ 1 (ly:pitch-octave u-p)))
+      (oct-diff (inexact->exact (- u-oct l-oct))) ;; difference of octaves
+      (c-up (ly:make-pitch oct-diff 0 0)) ;; make the highest pitch to draw; we start at 0 anyway
+      (p-list (normalize-music music))  ;; make a list of normalized pitches (starting with octave 0)
+      (bl-list (bl-filter p-list)) ;; only black keys of music
+      ;; stencils; for clarity; could all be merged in one statement
+      (octave (apply ly:stencil-add  ;; complete octave
+                empty-stencil
+                (map (lambda (p) (draw-key p))
+                  twelve-tones)))
+      (all-octaves (apply ly:stencil-add ;; complete keyboard in the range of the music
+                     empty-stencil
+                     (map (lambda (i)
+                            (ly:stencil-translate-axis octave (* i 7 white-key-width) X))
+                       (iota oct-diff ))))
+      (cl-octave (apply ly:stencil-add  ;; complete octave
+                   empty-stencil
+                   (map (lambda (p) (draw-colored-key p))
+                     p-list)))
+      (bl-octave (apply ly:stencil-add  ;; black keys of one octave
+                   empty-stencil
+                   (map (lambda (p) (draw-key p))
+                     (bl-filter twelve-tones))))
+      (all-bl-octaves (apply ly:stencil-add ;; all black keys in the range of music; we must draw it again
+                        empty-stencil
+                        (map (lambda (i)
+                               (ly:stencil-translate-axis bl-octave (* i 7 white-key-width) X))
+                          (iota oct-diff))))
+      (cl-bl-octave (apply ly:stencil-add
+                      empty-stencil
+                      (map (lambda (p) (draw-colored-key p))
+                        (bl-filter p-list)))))
+    ;; procedure body
+    (ly:stencil-add
+     all-octaves     ;; complete keyboard
+     cl-octave       ;; white keys of music
+     all-bl-octaves  ;; draw again black keys
+     cl-bl-octave)   ;; black keys of music
+    ))
+
+%% defining markup command with scale-faktor and music
+%% scale-faktor: approx. times height of stave
 #(define-markup-command
-  (make-dots layout props the-chord)
-  (ly:music?)
-  (let*
-   ((chord
-     (map
-      (lambda (m) (ly:music-property m 'pitch))
-      (extract-named-music the-chord 'NoteEvent))))
-   (make-dot-list chord)))
-
-%% with newer versions use:
-%#(define-markup-command
-%  (make-dots layout props the-chord)
-%  (ly:music?)
-%  (make-dot-list (music-pitches the-chord)))
-
-#(define-markup-command
-  (complete layout props the-chord)
-  (ly:music?)
+  (draw-keyboard-with-music layout props scale-factor music)
+  (number? ly:music?)
   (ly:stencil-scale
-   (ly:stencil-add
-    dos-w-octavas
-    dos-b-octavas
-    (make-dot-list (music-pitches the-chord))
-    ) 0.035 0.035)
-  )
+   (draw-keyboard music)
+   (* scale-factor 0.035) (* scale-factor 0.035)))
 
-ChordwithKeyboard=
+KeyboardwithMusic=
 #(define-music-function
-  (the-chord)
-  (ly:music?)
-  #{ <>^\markup \complete #the-chord
-     $the-chord
+  (scale-factor music)
+  (number? ly:music?)
+  #{
+    <<
+      \new Staff $TestMusik
+      \new NoteNames { \textLengthOn $TestMusik }
+      \new Staff \with
+      {
+        \remove Time_signature_engraver
+        \remove Clef_engraver
+        \remove Staff_symbol_engraver
+      }
+      { s1-\markup \draw-keyboard-with-music #scale-factor #TestMusik }
+    >>
   #}
   )
 
-twoOctaves=
-\markup {
-  \combine \stencil \dos-w-octavas
-  \combine \stencil \dos-b-octavas
-  \null
-}
+TestMusik= \relative c'' { c d cis < fes g >  ces, dis }
 
-%\markup "Draw a correct Keyboard with 2 octaves"
-%\markup \move-and-scale \twoOctaves #0.3 #0
-%\markup \move-and-scale \twoOctaves #0.3 #0
-\markup \move-and-scale \stencil #(draw-music-complete TestMusik) #0.3 #0
+\markup { "Draw a keyboard with all notes contained in music" }
+\markup { \null \vspace #1 }
+\TestMusik
+\markup \draw-keyboard-with-music #6 #TestMusik
+\markup { \null \vspace #1 }
 
-%\markup { \null \vspace #4 "Draw a correct Keyboard with 2 octaves (approx. one staff high) and a chord" }
-
-\score {
-  <<
-    \new Staff \ChordwithKeyboard \chordmode { b:sus4 }
-    \new ChordNames \chordmode { b:sus4 }
-  >>
-}
+\markup { "Draw a keyboard with as music function" }
+\KeyboardwithMusic #3 #TestMusik
