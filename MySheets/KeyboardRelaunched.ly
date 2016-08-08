@@ -33,9 +33,8 @@
 %% notation manual list of colors (German: p. 623)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-#(define w-key-color (x11-color 'azure1)) % LightBlue linen WhiteSmoke cornsilk honeydew azure1
+#(define w-key-color (x11-color 'maroon)) % LightBlue linen WhiteSmoke cornsilk honeydew azure1
 #(define b-key-color (x11-color 'DarkOliveGreen4))  % SaddleBrown blue4 DarkOliveGreen4 maroon DarkGrey DarkBlue
-
 
 %% define complete scale plus c als pitchlist
 #(define twelve-tones (list
@@ -217,22 +216,6 @@
         (ly:stencil-translate bl-key start-p)
         )))
 
-%brightness  =  sqrt( .299 R2 + .587 G2 + .114 B2 )
-#(define (brightness colour)
-   (let* ((r (first colour))
-          (g (second colour))
-          (b (third colour))
-          (r2 (* r r))
-          (g2 (* g g))
-          (b2 (* b b))
-          (wurzel (sqrt (+ (* r2 0.299) (* g2 0.587) (* b2 0.114)))))
-     (if (> wurzel 0)
-         wurzel
-         1   ;; prevent dividing by zero
-         )))
-
-#(display (brightness b-key-color))
-
 %% define key as stencil with colors
 #(define (draw-colored-key p)
    (let*
@@ -248,7 +231,10 @@
          white-key-height
          #t  ;; close path
          #t  ;; do not fill path
-         ) (first w-key-color) (second w-key-color) (third w-key-color))
+         )
+        (first w-key-color)
+        (second w-key-color)
+        (third w-key-color))
        (make-connected-path-stencil
         ;; creates a square which is transformed
         ;; according to width and height of a white key
@@ -349,6 +335,7 @@ KeyboardwithMusic=
   )
 
 TestMusik= \relative c'' { c d cis < fes g >  ces, dis }
+
 
 \markup { "Draw a keyboard with all notes contained in music" }
 \markup { \null \vspace #1 }
