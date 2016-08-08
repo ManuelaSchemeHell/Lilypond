@@ -1,7 +1,24 @@
-\version "2.19.37"
+\version "2.18.0"
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LSR workaround:
+#(set! paper-alist (cons '("snippet" . (cons (* 190 mm) (* 155 mm))) paper-alist))
+\paper {
+  #(set-paper-size "snippet")
+  tagline = ##f
+  indent = 0
+}
+\markup\vspace #1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \language "deutsch"
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% I have evolved my keyboard snippet http://lsr.di.unimi.it/LSR/Item?id=1042
+%% with more Scheme functions
+%% Usage as markup: \markup \draw-keyboard-with-music #scalefactor #music
+%% scalefactor is appr. the staff height
+%% example usage as music function: \KeyboardwithMusic #scalefactor #music
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% definitions for the measures of the keyboard keys
 #(define white-key-width 23.5) %% the width of a white piano key
 #(define white-key-height 150) %% the height of a white piano key
@@ -25,16 +42,16 @@
 %% just try what looks fine
 #(define kreis-dm (* black-key-width 0.5)) %% circle diameter
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% COLOR definitions for the music
 %% just chose the colors you prefer
 %% some examples as comment
 %% check out the x11-colorlist http://lsr.di.unimi.it/LSR/Item?id=394
 %% notation manual list of colors (German: p. 623)
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-#(define w-key-color (x11-color 'maroon)) % LightBlue linen WhiteSmoke cornsilk honeydew azure1
-#(define b-key-color (x11-color 'DarkOliveGreen4))  % SaddleBrown blue4 DarkOliveGreen4 maroon DarkGrey DarkBlue
+#(define w-key-color (x11-color 'PeachPuff)) % LavenderBlush LightBlue linen WhiteSmoke cornsilk honeydew azure1 PeachPuff
+#(define b-key-color (x11-color 'blue4))  % SaddleBrown blue4 DarkOliveGreen4 maroon DarkGrey DarkBlue
 
 %% define complete scale plus c als pitchlist
 #(define twelve-tones (list
@@ -53,9 +70,9 @@
                        (ly:make-pitch 1 0 0)
                        ))
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Scheme programs needed for analyzing music
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 #(define (naturalize-pitch p)
    ;; reduces alteration greater than a half tone step
@@ -134,20 +151,12 @@
 
 %% removes all pitches without alteration, leaves only black keys
 #(define (bl-filter p-list)
-   (remove (lambda (p) (= 0 (ly:pitch-alteration p))) p-list))
+   ;  (remove (lambda (p) (= 0 (ly:pitch-alteration p))) p-list))
+   (remove white-key? p-list))
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Scheme programs for drawing stencils
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%% routine to move and scale a markup
-#(define-markup-command (move-and-scale layout props mymark faktor x-offset)
-   (markup? number? number?)
-   (ly:stencil-translate-axis
-    (ly:stencil-scale
-     (interpret-markup layout props mymark)
-     faktor faktor)
-    x-offset X))
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%calculation the starting point of a key
 #(define (start-point-key p)
@@ -317,17 +326,25 @@
 
 KeyboardwithMusic=
 #(define-music-function
-  (scale-factor music)
+  (parser location scale-factor music)
   (number? ly:music?)
   #{
     <<
-      \new Staff $TestMusik
+      \new Staff  \with
+      {
+        \remove Bar_engraver
+        \remove Bar_number_engraver
+      }
+      $TestMusik
       \new NoteNames { \textLengthOn $TestMusik }
       \new Staff \with
       {
         \remove Time_signature_engraver
         \remove Clef_engraver
         \remove Staff_symbol_engraver
+        \remove Bar_engraver
+        \override Staff.BarLine.stencil = ##f
+        \remove Bar_number_engraver
       }
       { s1-\markup \draw-keyboard-with-music #scale-factor #TestMusik }
     >>
@@ -336,12 +353,11 @@ KeyboardwithMusic=
 
 TestMusik= \relative c'' { c d cis < fes g >  ces, dis }
 
-
-\markup { "Draw a keyboard with all notes contained in music" }
+\markup { "Draw a keyboard as markup with notes from music" }
 \markup { \null \vspace #1 }
 \TestMusik
-\markup \draw-keyboard-with-music #6 #TestMusik
+\markup \draw-keyboard-with-music #4 #TestMusik
 \markup { \null \vspace #1 }
 
-\markup { "Draw a keyboard with as music function" }
+\markup { "Draw a keyboard as music function" }
 \KeyboardwithMusic #3 #TestMusik
