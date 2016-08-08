@@ -1,0 +1,13 @@
+%% gleichzeitig verschwinden alle sonstigen Zutaten (Fingering etc)
+
+toRestII =
+#(define-music-function (mus) (ly:music?)
+   (music-map
+     (lambda (m)
+       (if (music-is-of-type? m 'note-event)
+           #{ f $(ly:music-property m 'duration) #}
+           m))
+     mus))
+     
+%\displayMusic
+\toRestII \relative c' { c4 <d f>2 e8-3 f16 }
