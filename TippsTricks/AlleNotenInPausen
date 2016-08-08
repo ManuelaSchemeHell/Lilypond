@@ -11,3 +11,25 @@ toRestII =
      
 %\displayMusic
 \toRestII \relative c' { c4 <d f>2 e8-3 f16 }
+
+%% Nur Noten
+
+nurMusic =
+#(define-music-function (parser location music) (ly:music? )
+   (music-map
+    (lambda (m)
+      (case (ly:music-property m 'name)
+        ((NoteEvent RestEvent MultiMeasureRestMusic)
+         (ly:music-set-property! m 'articulations '()))
+        ((EventChord)
+         (ly:music-set-property! m 'articulations '())
+         (ly:music-set-property! m 'elements
+           (filter
+            (lambda (e)
+              (not (eq? 'TextScriptEvent (ly:music-property e 'name))))
+            (ly:music-property m 'elements)))))
+      m)
+    music))
+
+\TestMusik
+\nurMusic \TestMusik
