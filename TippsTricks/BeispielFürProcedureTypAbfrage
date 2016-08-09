@@ -1,2 +1,3 @@
 #(write-me "procedure? " (procedure? event-chord-wrap!))
 #(write-me "music-function? " (ly:music-function? event-chord-wrap!))
+% http://www.lilypondforum.de/index.php?topic=2233.0
