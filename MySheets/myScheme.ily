@@ -1,4 +1,7 @@
-\version "2.19.37"
+FootLeft = #(string-append "" )
+FootCenter = #(string-append "")
+FootLeft = #(string-append "gesetzt mit LILYPOND " (lilypond-version) " am " (strftime "%d.%m.%Y %H:%M:%S" (localtime (current-time))))
+\include "myExceptions.ily"
 
 mpdolce =
 #(make-dynamic-script
@@ -50,18 +53,52 @@ loco =
   \bold \italic \fontsize #-0.3 "loco"
 }
 
-#(define-markup-command (softnote layout props) ()
-   (interpret-markup layout props
-     (markup #:stencil
-       (ly:stencil-translate-axis
-        (ly:stencil-add
-         (make-circle-stencil 0.6 0.2 #f)
-         (ly:stencil-in-color
-          (make-filled-box-stencil '(-1 . 1) '(0 . 1.3))
-          1 1 1 )
-         )
-        0.7 X)
-       )))
+%% stencil unstress
+%% Harm's code aus dem Forum
+%% http://www.lilypondforum.de/index.php?topic=2320.0
+#(define new-stil
+   (lambda (grob)
+     (let* ((sz (ly:grob-property grob 'font-size 0.0))
+            (mult (magstep sz))
+            (dir (ly:grob-property grob 'direction))
+            (thick 0.15)
+            (radius 0.7)
+            (scaled-radius (* mult radius))
+            (ps-command-string
+             (format #f
+               "
+             0 ~a translate
+             ~a setlinewidth
+             ~a 0 moveto
+             0 0 ~a 180 0 ~a
+             stroke
+             "
+               ;mult
+               (* thick dir)
+               thick
+               (- scaled-radius)
+               scaled-radius
+               (if (negative? dir) "arcn" "arc"))))
+
+       (ly:make-stencil
+        (list 'embedded-ps
+          (format #f
+            "
+              gsave currentpoint translate
+              ~a
+              grestore
+              "
+            ps-command-string))
+        (cons (- scaled-radius) scaled-radius)
+        (cons
+         (if (negative? dir) 0 (- scaled-radius))
+         (if (negative? dir) scaled-radius 0))))))
+
+unstress =
+-\tweak stencil #new-stil
+%% maybe add:
+%-\tweak staff-padding #'()
+\fermata
 
 FSus = #(make-span-event 'SustainEvent STOP)
 NSus = #(make-span-event 'SustainEvent START)
@@ -775,3 +812,39 @@ allgShift=
           )
         (ly:script-interface::print grob))))
 
+%% brightness  =  sqrt( .299 R2 + .587 G2 + .114 B2 )
+
+%% Abkürzung für tweak fontsize+parenthesize
+twpa=
+#(define-music-function (music)
+   (ly:music?)
+   (let* ((prop 'font-size)
+          (value -2)
+          (p (check-grob-path prop (*location*)
+               #:start 1
+               #:default #t
+               #:min 2)))
+     (cond ((not p))
+       ;; p now contains at least two elements.  The first
+       ;; element is #t when no grob has been explicitly
+       ;; specified, otherwise it is a grob name.
+       (else
+        (set! (ly:music-property music 'tweaks)
+              (acons (cond ((pair? (cddr p)) p)
+                       ((symbol? (car p))
+                        (cons (car p) (cadr p)))
+                       (else (cadr p)))
+                value
+                (ly:music-property music 'tweaks)))))
+     (if (memq 'event-chord (ly:music-property music 'types))
+         ;; music is an EventChord -> set the parenthesize property
+         ;; on all child notes and rests
+         (for-each
+          (lambda (ev)
+            (if (or (memq 'note-event (ly:music-property ev 'types))
+                    (memq 'rest-event (ly:music-property ev 'types)))
+                (set! (ly:music-property ev 'parenthesize) #t)))
+          (ly:music-property arg 'elements))
+         ;; No chord, simply set property for this expression:
+         (set! (ly:music-property music 'parenthesize) #t))
+     music))
