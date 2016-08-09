@@ -1,0 +1,2 @@
+#(write-me "procedure? " (procedure? event-chord-wrap!))
+#(write-me "music-function? " (ly:music-function? event-chord-wrap!))
