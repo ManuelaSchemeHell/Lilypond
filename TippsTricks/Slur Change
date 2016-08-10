@@ -16,6 +16,8 @@ slurShiftx=
 	 %ratio (number)
 	 %control-points
 	 %control-points (list of number pairs)
+	 %max-slope
+	 %% http://lsr.di.unimi.it/LSR/Item?id=777
    #})
 
 \relative c, {
