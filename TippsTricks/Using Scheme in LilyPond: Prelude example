@@ -1,0 +1,109 @@
+% http://nicolas.sceaux.free.fr/prelude/prelude.html
+
+#(define-macro (-> . expr)
+   (define (gen-music-prop-expr music prop . rest)
+     (let ((result-expr (if (number? prop)
+                            `(list-ref ,music ,prop)
+                            `(ly:music-property ,music ',prop))))
+       (if (null? rest)
+           result-expr
+           (apply gen-music-prop-expr result-expr rest))))
+   (apply gen-music-prop-expr expr))
+   
+#(define (prelude-pattern five-note-sequence)
+  "Build half a prelude measure, from `five-note-sequence', which
+should be a five note SequentialMusic object.
+The result is a SimultaneousMusic, containing three SequencialMusic 
+objects."
+  (let ((pitch1 (-> five-note-sequence elements 0 elements 0 pitch))
+        (pitch2 (-> five-note-sequence elements 1 elements 0 pitch))
+        (pitch3 (-> five-note-sequence elements 2 elements 0 pitch))
+        (pitch4 (-> five-note-sequence elements 3 elements 0 pitch))
+        (pitch5 (-> five-note-sequence elements 4 elements 0 pitch)))
+    (make-music 'SimultaneousMusic
+               'elements (list 
+                          (make-music 'SequentialMusic
+                            'elements (list 
+                                       (make-music 'EventChord
+                                         'elements (list 
+                                                    (make-music 'RestEvent
+                                                      'duration (ly:make-duration 3 0 1 1))))
+                                       (make-music 'EventChord
+                                         'elements (list 
+                                                    (make-music 'NoteEvent
+                                                      'duration (ly:make-duration 4 0 1 1)
+                                                      'pitch pitch3) ;;; <-- pitch3
+                                                    (make-music 'BeamEvent
+                                                      'span-direction -1)))
+                                       (make-music 'EventChord
+                                         'elements (list 
+                                                    (make-music 'NoteEvent
+                                                      'duration (ly:make-duration 4 0 1 1)
+                                                      'pitch pitch4) ;;; <-- pitch4
+                                                    (make-music 'BeamEvent
+                                                      'span-direction 1)))
+                                       (make-music 'EventChord
+                                         'elements (list 
+                                                    (make-music 'NoteEvent
+                                                      'duration (ly:make-duration 4 0 1 1)
+                                                      'pitch pitch5) ;;; <-- pitch5
+                                                    (make-music 'BeamEvent
+                                                      'span-direction -1)))
+                                       (make-music 'EventChord
+                                         'elements (list 
+                                                    (make-music 'NoteEvent
+                                                      'duration (ly:make-duration 4 0 1 1)
+                                                      'pitch pitch3))) ;;; <-- pitch3
+                                       (make-music 'EventChord
+                                         'elements (list 
+                                                    (make-music 'NoteEvent
+                                                      'duration (ly:make-duration 4 0 1 1)
+                                                      'pitch pitch4))) ;;; <-- pitch4
+                                       (make-music 'EventChord
+                                         'elements (list 
+                                                    (make-music 'NoteEvent
+                                                      'duration (ly:make-duration 4 0 1 1)
+                                                      'pitch pitch5) ;;; <-- pitch5
+                                                    (make-music 'BeamEvent
+                                                      'span-direction 1)))))
+                          (make-music 'SequentialMusic
+                            'elements (list 
+                                       (make-music 'EventChord
+                                         'elements (list 
+                                                    (make-music 'RestEvent
+                                                      'duration (ly:make-duration 4 0 1 1))))
+                                       (make-music 'EventChord
+                                         'elements (list 
+                                                    (make-music 'NoteEvent
+                                                      'duration (ly:make-duration 3 1 1 1)
+                                                      'pitch pitch2) ;;; <-- pitch2
+                                                    (make-music 'TieEvent)))
+                                       (make-music 'EventChord
+                                         'elements (list 
+                                                    (make-music 'NoteEvent
+                                                      'duration (ly:make-duration 2 0 1 1)
+                                                      'pitch pitch2))))) ;;; <-- pitch2
+                          (make-music 'SequentialMusic
+                            'elements (list 
+                                       (make-music 'EventChord
+                                         'elements (list 
+                                                    (make-music 'NoteEvent
+                                                      'duration (ly:make-duration 1 0 1 1)
+                                                      'pitch pitch1))))))))) %;;; <-- pitch1
+                            
+preludeHalfMeasure = #(def-music-function (parser location music) (ly:music?)
+                        (prelude-pattern music))
+                        
+#(define (split-music-sequence music-seq n)
+  "Return a list of music sequences, which elements are taken from
+`music-seq', grouped by n elements."
+  (define (split seq acc)
+    (let ((rest (list-tail seq n)))
+      (if (pair? rest)
+          (split rest (cons (list-head seq n) acc))
+          (reverse! (cons seq acc)))))
+  (let ((elements (-> music-seq elements)))
+    (if (null? elements)
+        (list)
+        (map-in-order (lambda (seq) (make-music 'SequentialMusic 'elements seq))
+                      (split elements (list))))))
