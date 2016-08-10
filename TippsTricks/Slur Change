@@ -12,6 +12,10 @@ slurShiftx=
      \once \override Slur.positions = $offsets
      \once \override Slur.extra-offset = $amount
 	 \once \override Slur.eccentricity = #2.0
+	 %height-limit (dimension, in staff space)
+	 %ratio (number)
+	 %control-points
+	 %control-points (list of number pairs)
    #})
 
 \relative c, {
