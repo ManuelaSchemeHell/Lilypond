@@ -1,0 +1,35 @@
+\version "2.18.2"
+
+#(define-macro (-> . expr)
+   (define (gen-music-prop-expr music prop . rest)
+     (let ((result-expr (if (number? prop)
+                            `(list-ref ,music ,prop)
+                            `(ly:music-property ,music ',prop))))
+       (if (null? rest)
+           result-expr
+           (apply gen-music-prop-expr result-expr rest))))
+   (apply gen-music-prop-expr expr))
+
+#(define (split-music-sequence music-seq n)
+  "Return a list of music sequences, which elements are taken from
+`music-seq', grouped by n elements."
+  (define (split seq acc)
+    (let ((rest (list-tail seq n)))
+      (if (pair? rest)
+          (split rest (cons (list-head seq n) acc))
+          (reverse! (cons seq acc)))))
+  (let ((elements (-> music-seq elements)))
+    (if (null? elements)
+        (list)
+        (map-in-order (lambda (seq) (make-music 'SequentialMusic 'elements seq))
+                      (split elements (list))))))
+					  
+splitMusic = #(define-music-function (parser location n music) (number? ly:music?)
+               (make-music 'SimultaneousMusic 
+                           'elements (split-music-sequence music n)))
+
+\splitMusic #5 { 
+  c'   e'  g' c'' e''
+  c'   d'  a' d'' f''
+  b    d'  g' d'' f''
+  c'   e'  g' c'' e'' f g a a f }
