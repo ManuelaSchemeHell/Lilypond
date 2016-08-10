@@ -1,0 +1,25 @@
+slurShift=
+#(define-music-function (parser location amount)
+   (pair?)
+   #{
+     \once \override Slur.extra-offset = $amount
+   #})
+
+slurShiftx=
+#(define-music-function (parser location amount offsets)
+   (pair? pair?)
+   #{
+     \once \override Slur.positions = $offsets
+     \once \override Slur.extra-offset = $amount
+	 \once \override Slur.eccentricity = #2.0
+   #})
+
+\relative c, {
+  \clef bass
+  c8(-"default slur" g'' e' g, c g c g )
+  \slurShift  #'(0 . 1)
+  c,,8(-"slurShift #'(0 . 1)" g'' e' g, c g c g )
+  \slurShiftx  #'(0 . 2) #'(-4 . 0)
+  c,,8( 
+  g'' e' g, c g c g )
+}
