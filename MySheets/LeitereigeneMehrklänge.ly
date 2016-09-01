@@ -65,19 +65,6 @@ FootLeft = #(string-append "gesetzt mit LILYPOND " (lilypond-version) " am " (st
        #f
        (ly:music-property x 'name)))
 
-#(define (all-pitches-from-music music)
-   (reverse!
-    (let loop ((music music) (pitches '()))
-      (let ((p  (ly:music-property music 'pitch)))
-        (if (ly:pitch? p)
-            (cons p pitches)
-            (let ((elt (ly:music-property music 'element)))
-              (fold loop
-                (if (ly:music? elt)
-                    (loop elt pitches)
-                    pitches)
-                (ly:music-property music 'elements))))))))
-
 #(define (list-all-chords-from-music music)
    ;; each element of the list is ly:music
    (reverse!
@@ -92,12 +79,7 @@ FootLeft = #(string-append "gesetzt mit LILYPOND " (lilypond-version) " am " (st
                     pitches)
                 (music-elts music))))))))
 
-#(define (pitchlist-of-chordlist music)
-   (let* ((cl (list-all-chords-from-music music)))
-     (if (equal? cl '())
-         (all-pitches-from-music music)
-         (map (lambda(x)(all-pitches-from-music x))
-           (list-all-chords-from-music music)))))
+
 
 %% convert pitchlist to a music chord
 #(define (pitches->chord plist)
@@ -126,20 +108,6 @@ FootLeft = #(string-append "gesetzt mit LILYPOND " (lilypond-version) " am " (st
          (make-music
           'NoteEvent 'duration (ly:make-duration 0)
           'pitch plist))))
-
-#(define (p-diff-min pitchlist)
-   ;; minimum of pitch differences
-   (let* ((list1
-           (sort
-            (delete-duplicates
-             (map (lambda(x)(ly:pitch-semitones x)) pitchlist)) <))
-          (mylen (- (length list1) 1))
-          (dlist
-           (map
-            (lambda(y)(abs (- (list-ref list1 y) (list-ref list1 (+ y 1)))))(iota mylen))))
-     (write-me "pitchdiff pitchlist -------> " pitchlist)
-     (write-me "pitchdiff dlist -----------> " dlist)
-     (fold min 300 dlist)))
 
 %% create all n-th chords from scale
 %% actually we staple every other pitch from the-scale
@@ -170,9 +138,10 @@ FootLeft = #(string-append "gesetzt mit LILYPOND " (lilypond-version) " am " (st
          (iota n)))
       (iota m))))
 Dur={ c d e f g a h }
-%% create pseudochords from scale
+
+%% create chords with arbitraty intervals from the scale
 %% input: scale
-%% list: the distances of the notes
+%% list: the distances of the notes, 3=terz, 4=quart ...
 
 #(define (arbitrary-stacked-intervals the-scale dlist)
    (let* ((scpi (music-pitches the-scale))
@@ -218,7 +187,7 @@ CreateDiatonicChords=
           (new-scale (pitches->music
                       (sort
                        (delete-duplicates
-                        (all-pitches-from-music the-scale)) ly:pitch<?))))
+                        (music-pitches the-scale)) ly:pitch<?))))
      #{
        \new StaffGroup <<
          \new Staff {
@@ -240,7 +209,7 @@ CreateArbitraryChords=
           (new-scale (pitches->music
                       (sort
                        (delete-duplicates
-                        (all-pitches-from-music the-scale)) ly:pitch<?))))
+                        (music-pitches the-scale)) ly:pitch<?))))
      #{
        \new StaffGroup <<
          \new Staff {
@@ -253,12 +222,12 @@ CreateArbitraryChords=
      #}
      ))
 
-SpanishGipsy=\relative c' { < c cis e f g gis ais > }
+SpanishGipsy=\relative c' { c cis e f g gis ais }
 \CreateArbitraryChords \relative c' \Dur #'(4 4) "Two Quarts stacked in C-major"
 
 \markup { \null \vspace #3 }
-EightToneSpanish=\relative c' { < c cis dis e f fis gis ais > }
+EightToneSpanish=\relative c' { c cis dis e f fis gis ais }
 \CreateDiatonicChords \SpanishGipsy #3 "Diatonic Triads of Spanish Gipsy Scale"
 
 \markup { \null \vspace #3 }
-\CreateDiatonicChords \relative c' { < c d es f g as h > } #5 "Diatonic Pentachords of C-minor"
+\CreateDiatonicChords \relative c' { c d es f g as h } #5 "Diatonic Pentachords of C-minor"
