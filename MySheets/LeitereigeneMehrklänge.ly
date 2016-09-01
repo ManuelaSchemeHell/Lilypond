@@ -145,7 +145,7 @@ FootLeft = #(string-append "gesetzt mit LILYPOND " (lilypond-version) " am " (st
 %% actually we staple every other pitch from the-scale
 %% until we reach n
 #(define (create-chords-from-scale the-scale n)
-   (let* ((scpi (all-pitches-from-music the-scale))
+   (let* ((scpi (music-pitches the-scale))
           (pili (sort
                  (delete-duplicates scpi) ly:pitch<?))
           (m (length pili)))
@@ -175,7 +175,7 @@ Dur={ c d e f g a h }
 %% list: the distances of the notes
 
 #(define (arbitrary-stacked-intervals the-scale dlist)
-   (let* ((scpi (all-pitches-from-music the-scale))
+   (let* ((scpi (music-pitches the-scale))
           (pili (sort
                  (delete-duplicates scpi) ly:pitch<?))
           (m (length pili))
@@ -185,13 +185,12 @@ Dur={ c d e f g a h }
      ;(write-me "m --------------> "  m)
      ;(write-me "pili -----------> "  pili)
      (map
-      (lambda (z)
+      (lambda (w)
         (let ((u 0))
           (map
            (lambda (x)
-             (let* ((v u)
-                    (y (modulo (+ z v) m))
-                    (q (quotient (+ z v) m))
+             (let* ((y (modulo (+ u w) m))
+                    (q (quotient (+ u w) m))
                     (z (list-ref pili y))
                     (a (ly:pitch-alteration z))
                     (o (ly:pitch-octave z))
@@ -203,7 +202,7 @@ Dur={ c d e f g a h }
                ; (write-me "y --------> " y)
                ; (write-me "q --------> " q)
                ; (write-me "p --------> " p)
-               (set! u (+ u (list-ref elist x)))
+               (set! u (+ u (list-ref elist x) -1))
                p))
            (iota n))))
       (iota m))))
@@ -254,12 +253,12 @@ CreateArbitraryChords=
      #}
      ))
 
-SpanishGipsy=\relative c' { c cis e f g gis ais }
-\CreateArbitraryChords \relative c' \Dur #'(2 3) "Quart Sext Accords of D-major"
+SpanishGipsy=\relative c' { < c cis e f g gis ais > }
+\CreateArbitraryChords \relative c' \Dur #'(4 4) "Two Quarts stacked in C-major"
 
 \markup { \null \vspace #3 }
-EightToneSpanish=\relative c' { c cis dis e f fis gis ais }
+EightToneSpanish=\relative c' { < c cis dis e f fis gis ais > }
 \CreateDiatonicChords \SpanishGipsy #3 "Diatonic Triads of Spanish Gipsy Scale"
 
 \markup { \null \vspace #3 }
-\CreateDiatonicChords \relative c' { c d es f g as h } #5 "Diatonic Pentachords of C-minor"
+\CreateDiatonicChords \relative c' { < c d es f g as h > } #5 "Diatonic Pentachords of C-minor"
