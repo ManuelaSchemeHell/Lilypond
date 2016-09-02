@@ -2,6 +2,7 @@
 
 % Brandt & Roemer chord symbols as developed by Carl Brandt and Clinton Roemer.
 % Published as "Standardized Chord Symbol Notation (A Uniform System for the Music Profession)."
+% http://lilypond.1069038.n5.nabble.com/ChordNames-Brandt-amp-Roemer-exceptions-td183688.html
 
 chordFlat = \markup \concat { \hspace #0.1 \raise #0.5 \fontsize #-1 \flat \hspace #0.2 }
 chordSharp = \markup \concat { \hspace #0.1 \raise #0.5 \fontsize #-1 \sharp \hspace #0.2 }
