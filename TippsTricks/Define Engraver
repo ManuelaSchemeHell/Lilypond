@@ -1,5 +1,5 @@
 http://www.lilypondforum.de/index.php?topic=1948.msg10655#msg10655
-
+http://www.lilypondforum.de/index.php?topic=2205.0
 \version "2.19.17"
 
 %% Nicer output while debugging:
@@ -216,7 +216,6 @@ annotate-key-engraver =
            root-3
            " "
            (symbol->string scale-3)))))
-           
 
 %% Short-cut for \once \override ...
 annotateKey =
@@ -259,44 +258,3 @@ music =
         s1
       }	
   >>
-
-
-  \new Staff { \music \bar "||" \break \transpose c d \music }
-
-%{
-%% Testing all key-names up to DOUBLEFLAT and DOUBLESHARP ones
-%% Will ofcourse return some warnings, because TRIPLEFLAT and TRIPLESHARP
-%% are not implemented in LilyPond
-
-multipleTransposes =
-#(define-music-function (parser location m music)(ly:music? ly:music?)
-   (music-clone m
-    'elements
-    (map (lambda (pitch)
-	  (ly:music-property #{ \transpose c $pitch $music #} 'element))
-         (event-chord-pitches m))))
-
-%% Examples
-
-phrase =
-\new Voice \with { \consists #annotate-key-engraver }
-\relative c {
-  \key c \major
-  c'1\annotateKeyTweak
-  \key a \minor
-  \annotateKey a'
-  \break
-}
-
-\new Staff
-\multipleTransposes
-  {
-    c cis d dis e eis f fis g gis a ais b bis c
-    c ces b bes a aes g ges f fes e ees d des c
-    cisis disis eisis fisis gisis aisis bisis
-    ceses deses eeses feses geses aeses beses
-  }
-  \phrase
-%}
-
-
