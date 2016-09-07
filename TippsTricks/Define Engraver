@@ -1,9 +1,35 @@
 http://www.lilypondforum.de/index.php?topic=1948.msg10655#msg10655
 http://www.lilypondforum.de/index.php?topic=2205.0
+http://lsr.di.unimi.it/LSR/Item?u=1&id=856
+
 \version "2.19.17"
 
 %% Nicer output while debugging:
 %#(use-modules (ice-9 pretty-print))
+\version "2.19.36"
+
+\layout {
+  \context {
+    \Voice
+    \consists
+      #(let ((notes '()))
+         (make-engraver
+           (listeners
+            ((note-event engraver event)
+              (set! notes (cons event notes))))
+           ((finalize engraver)
+               (write-me "\nHow-many-notes? " (length notes))
+               (set! notes '()))))
+  }
+}
+
+\score {
+  \new Staff \repeat unfold 13 c''1
+}
+
+\score {
+  \new Staff \repeat unfold 17 des''1
+}
 
 %% LIMITATION: can't distuingish between minor- and aeolian-scale
 
