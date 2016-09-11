@@ -44,7 +44,7 @@ myFont=#"MS Mincho"
   \germanChords
   \override ChordName.font-name = \myFont
   \set alignAboveContext = #"leadsheet"
-s4 g1 g d:7 g g g d:7 g g g d:7 g g2
+  s4 g1 g d:7 g g g d:7 g g g d:7 g g2
 }
 
 "cLili Marleen" =
@@ -52,15 +52,15 @@ s4 g1 g d:7 g g g d:7 g g g d:7 g g2
   \germanChords
   \override ChordName.font-name = \myFont
   \set alignAboveContext = #"leadsheet"
-c1 g:7 g:7 g2:7 c2
+  c1 g:7 g:7 g:7 g:7 g:7 f c g:7 c c2 g:7 c1 c
 }
 
-"cLili Marleenx" =
+"cVom Barette schwankt die Feder" =
 \chordmode {
   \germanChords
   \override ChordName.font-name = \myFont
   \set alignAboveContext = #"leadsheet"
-
+c
 }
 "cLili Marleenx" =
 \chordmode {
