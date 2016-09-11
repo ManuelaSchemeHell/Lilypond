@@ -79,7 +79,7 @@ smallerNoteHead= #-1.5
   d4 h'4. a8 h4 c d2 h4. d8
   c4. h8 a4 c h2. h4\rest \bar "||" \bar ".|:"
   \repeat volta 2 { h2 h d h4 d c4. h8 a4. c8 }
-  \alternative { { h8 a h c d4 h4\rest } { h2 h4\rest } }
+  \alternative { { h8 a h c d4 h4\rest \bar ":|." } { h2 h4\rest } }
   \bar "|."
 }
 
@@ -95,23 +95,92 @@ smallerNoteHead= #-1.5
   < fis d >4. < a d, >8 < g g>8 < g fis > < g g> < g a > < g h >4 s < g g >2
 }
 
+voltaItalicOne = \markup { \text \fontsize #4 "1.-4." }
+voltaItalicThree = \markup { \text \fontsize #4 "5." }
 "mLili Marleen1" =
 \relative c' {
+  \set Staff.doubleRepeatType = "|"
   \autoBeamOff
   \key c \major
-  \slurDotted e8 ( e ) e8 f g4 e
-  f8. f16 f8 c' h2
-  d,8. d16 d8 e f4 f8 g h8. a16 f8. f16 e2 \breathe
+  \stemUp \repeat volta 2 {
+    \slurDotted e8 ( e ) e8 f g4 e
+    f8. f16 f8 c' h2
+    d,8. d16 d8 e f4 f8 g h8. a16 f8. f16 e2 \breathe
+    a4 h8. c16 h4 a a g h4. a8
+    g4 f a4. g8 f4 e g4. \breathe e8 g4. f8 f4 d'
+    c2. e,4 g4. f8 f4 h,
+  }
+  \alternative {
+    {
+      \set Score.repeatCommands = #(list (list 'volta voltaItalicOne) 'start-repeat)
+      c2 h'2\rest \bar ":|."
+    } {
+      \set Score.repeatCommands = #(list (list 'volta #f) (list 'volta voltaItalicThree) 'end-repeat)
+      c,1
+    }
+  }
+  \bar "|."
 }
-
 
 "mLili Marleen2" =
 \relative c' {
   \autoBeamOff
   \key c \major
-  \stemDown  \override NoteHead.font-size = #smallerNoteHead
-  \slurDotted c8 ( c ) c d e4 c
+  \stemDown
+  \override NoteHead.font-size = #smallerNoteHead
+  \override Flag.font-size = #smallerNoteHead
+  % \override Stem.length = #(magstep smallerNoteHead)
+  \slurDotted c8 ( c ) c d e4 c d8. d16 d8 a'
+  <<
+    { \stemDown  \override NoteHead.font-size = #smallerNoteHead g2 }
+    \\ {
+      \stemDown  \override NoteHead.font-size = #smallerNoteHead
+      \override Flag.font-size = #smallerNoteHead
+      \once \override NoteColumn.force-hshift = #1
+      h4.
+      \once \override NoteColumn.force-hshift = #-1
+      d,8
+    }
+  >>
+  h8. h16 h8 c8 d4 d8 e g8. f16 e8. d16 c2
+  f4 g8. a16 g4 f f e g4. f8
+  e4 d f4. e8 d4 c e4. c8
+  e4. d8 d4 f e2. c4 e4. d8 d4 f e2 s2
+  \once \override NoteColumn.force-hshift = #0.2
+  e1
+}
 
+"mVom Barette schwankt die Feder1" =
+\relative c' {
+  \autoBeamOff
+  \key g \major
+
+  \set Voice.baseMoment = #(ly:make-moment 1/8)
+  \set Voice.beatStructure = #'(2 2 2 2 )  %% abhÃ¤ngig vom Takt
+  \autoBeamOn
+  d4 d g g h8  a g a h4 g
+  g4. h8 a g fis g a4 a a r e e a a
+  c8 h a h c4 a
+  \slurDotted \slurDashed
+  d4 ( d8 ) e\noBeam d4 c h a g \breathe d \bar "||"
+  \slurSolid
+  g2 g h4 ( a g fis ) e2 e
+}
+
+"mVom Barette schwankt die Feder2" =
+\relative c'' {
+  \autoBeamOff
+  \key g \major
+  \stemDown
+  \override NoteHead.font-size = #smallerNoteHead
+  \override Flag.font-size = #smallerNoteHead
+  s1 * 8 g4 d g d
+}
+
+"mMusterLied" =
+\relative c' {
+  \autoBeamOff
+  \key f \major
 }
 
 "mMusterLied" =
