@@ -1,241 +1,110 @@
-%Absatz=#0.5
-"Hoch auf dem gelben Wagen" = \markup
-{
-  \fill-line
-  {
-    \left-column {
-      "Hoch auf dem gelben Wagen          "
-      "sitz ich beim Schwager vorn.       "
-      "Vorwärts die Rosse traben,         "
-      "lustig schmettert das Horn.        "
-      "Berge Täler und Auen,              "
-      "leuchtendes Ährengold,             "
-      "ich möcht in Ruhe gern schauen;    "
-      "aber der Wagen, der rollt.         "
-      \vspace #Absatz
-      "Flöten hör ich und Geigen,         "
-      "lustiges Baßgebrumm,               "
-      "junges Volk im Reigen              "
-      "tanzt um die Linde herum.          "
-      "Wirbelnde Blätter im Winde,        "
-      "es jauchzt und lacht und tollt,    "
-      "ich bliebe so gern bei der Linde;  "
-      "aber der Wagen, der rollt.         "
-    }
-    \left-column {
-      "Postillon in der Schenke           "
-      "füttert Rosse im Flug,             "
-      "schäumendes Gerstengetränke        "
-      "reicht uns der Wirt im Krug.       "
-      "Hinter den Fensterscheiben         "
-      "lacht ein Gesicht gar hold,        "
-      "ich möchte so gerne noch bleiben,  "
-      "aber der Wagen, der rollt.         "
-      \vspace #Absatz
-      "Sitzt einmal ein Gerippe           "
-      "hoch auf dem Wagen vorn,           "
-      "hält statt der Peitsche die Hippe, "
-      "Stundenglas statt Horn.            "
-      "Sag ich: Ade, nun, ihr Lieben,     "
-      "die ihr nicht mitfahren wollt,     "
-      "ich wäre so gern noch geblieben,   "
-      "aber der Wagen, der rollt.         "
-    }
-  }
+
+"lHoch auf dem gelben Wagen" = \lyricmode {
+
+  Hoch auf dem gel -- ben Wa -- gen
+  sitz ich beim Schwa -- ger vorn.
+  Vor -- wärts die Ros -- se tra -- ben,
+  lus -- tig schmet -- tert das Horn.
+  Ber -- ge und Tä -- ler und Au -- en,
+  leuch -- ten -- des Äh -- ren -- gold,
+  ich möch -- te so ger -- ne noch  schau -- en;
+  a -- ber der Wa -- gen, der rollt. Ich rollt.
 }
 
-"Wiegende Welle" = \markup
-
-\left-column {
-  "Wiegende Welle auf wogender See,         "
-  "wallende Fluten der Gezeiten,             "
-  "schaukelnd hernieder und wieder zur Höh,  "
-  "trägst du mein Boot im frohen Spiel.      "
-  "Ein frischer Wind weht uns geschwind"
-  "in blaue, unbegrenzte Weiten,             "
-  "weht immer, immer zu, ihr Winde, "
-  " mein Kanu fliegt mit uns fort zum fernen Ziel."
-  " "
-  "Gischtende Brandung am tückischen Riff,   "
-  "strudelnde Wasser mich umlauern,          "
-  "allen Gefahren trotzet mein Schiff,       "
-  "hei wie wir fliegen durch die Flut!       "
-  "Ein frischer Wind..."
-
+"Wiegende Welle1" = \lyricmode {
+  \set ignoreMelismata = ##t \set stanza = #"1. "
+  Wie -- gen -- de Wel -- le auf wo -- gen -- der See,
+  wal -- len -- de Flu -- ten der Ge -- zei -- ten,
+  schau -- kelnd her -- nie -- der und wie -- der zur Höh,
+  trägst du mein Boot im fro -- hen Spiel.
+  Ein fri -- scher Wind weht uns ge -- schwind
+  in blau -- e, un -- be -- grenz -- te Wei -- ten,
+  weht im -- mer, im -- mer zu,
+  ihr Win -- de, mein Ka -- nu
+  fliegt mit uns fort zum fer -- nen Ziel.
 }
 
-"Wir lieben die Stürme" = \markup
-{
-  \fill-line
-  {
-    \left-column {
-
-      "2. Unser Schiff gleitet stolz durch die schäumenden Wogen,      "
-      "jetzt strafft der Wind uns're Segel mit Macht.               "
-      "Seht ihr hoch droben die Fahne sich wenden,                  "
-      "die blutrote Fahne, ihr Seeleut, habt acht.                  "
-      \vspace #Absatz
-      "3. Wir treiben die Beute mit fliegenden Segeln,"
-      "wir jagen sei weit auf das endlose Meer."
-      "Wir stürzen auf Deck, und wir kämpfen wie Löwen,"
-      "hei, unser der Sieg, viel Feinde, viel Ehr!"
-      \vspace #Absatz
-      "4. Ja, wir sind Piraten und fahren zu Meere,"
-      "wir fürchten nicht Tod und den Teufel dazu,                  "
-      "wir lachen der Feinde und aller Gefahren,                    "
-      "am Grunde des Meeres erst finden wir Ruh.                    "
-      \vspace #(* Absatz 3)
-    }
-  }
+"Wiegende Welle2" = \lyricmode {
+  \set stanza = #"2. "
+  Gisch -- ten -- de Bran -- dung am tük -- ki -- schen Riff,
+  stru -- deln -- de Was -- ser mich um -- lau -- ern.
+  Al -- len Ge -- fah -- ren trot -- zet mein Schiff,
+  hei, wie wir flie -- gen durch die Flut!
 }
 
 
-"Die grauen Nebel" = \markup
-{
-  \fill-line
-  {
-    \left-column {
-      "2. Sie lassen alles in der Tiefe liegen,"
-      "wollen nur hinauf zum hellen Licht,"
-      "sie wollen in den klaren Höhen siegen,"
-      "einen Weg nach unten gibt es nicht. Komm komm..."
-      "3. Sie werden Männer, die ihr Reich erringen,"
-      "die es schützen vor dem großen Feind."
-      "Die Augen strahlen und die Lieder klingen,"
-      "ihre Herzen sind im Kampf vereint. Komm komm..."
-      \vspace #(* Absatz 3)
-    }
-  }
+"lWir lieben die Stürme" = \lyricmode {
+  \set stanza = #"1. "
+  Wir lie -- ben die Stür -- me, die brau -- sen -- den Wo -- gen,
+  der eis -- kal -- ten Win -- de rau -- hes Ge -- sicht.
+  Wir sind schon der Mee -- re so vie -- le ge -- zo -- gen,
+  und den -- noch sank uns' -- re Fah -- ne nicht.
+  Hei -- jo, hei -- jo, hei -- jo, hei -- jo, hei -- jo -- ho, hei -- jo, hei -- jo --ho, hei -- jo -- jo!
+
 }
 
-"Wir ziehen über die Straßen" = \markup
-{
-  \fill-line
-  {
-    \left-column {
-      "2. Voran der Trommelbube,"
-      "er schlägt die Trommel gut,"
-      "er weiß noch nichts von Liebe,"
-      "weiß nicht, wie Scheiden tut."
-      "Trum, trum, ..."
-      \vspace #Absatz
-      "3. Er trommelt schon manchen"
-      "ins Blut und in sein Grab,"
-      "und dennoch liebt ein jeder,"
-      "den frohen Trommelknab."
-      "Trum, trum, ..."
-    }
-    \left-column {
 
-      "4. Vielleicht bin ich es morgen,"
-      "der sterben muß im Blut,"
-      "der Knab weiß nicht, wie Liebn,"
-      "weiß nicht wie Sterben tut."
-      "Trum, trum, ..."
-    }
-  }
+"lDie grauen Nebel" = \lyricmode {
+  \set stanza = #"1. "
+  Die grau -- en Ne -- bel hat das Licht durch -- drun -- gen,
+  und die düs -- tern Ta -- ge sind da -- hin.
+  Wir se -- hen ei -- ne blau -- e Schar von Jun -- gen
+  an der lau -- ten Stadt vor -- ü -- ber zieh'n.
+  Komm, komm, lockt der Schritt.
+  Komm, Ka -- me -- rad wir zie -- hen mit.
+  Jei jei jei
+  Komm, komm, lockt der Schritt.
+  komm, wir mar -- schie -- ren mit.
 }
 
-"Lili Marleen" = \markup
-{
-  \fill-line
-  {
-    \left-column {
-      "2. Unsere beide Schatten"
-      "sah'n wie einer aus."
-      "Dass wir so lieb uns hatten,"
-      "das sah gleich man daraus."
-      "Und alle Leute soll'n es seh'n,"
-      "wenn wir bei der Laterne stehn"
-      "|: wie einst, Lili Marleen. :| "
-      \vspace #Absatz
-      "3. Schon rief der Posten,"
-      "sie blasen Zapfenstreich,"
-      "es kann drei Tage kosten,"
-      "Kam'rad, ich komme gleich."
-      "Da sagten wir auf Wiederseh'n."
-      "Wie gerne wollt' ich mit dir geh'n,"
-      "|: mit dir, Lili Marleen'. :|"
-    }
-    \left-column {
-      "4. Deine Schritte kennt sie,"
-      "deinen zieren Gang,"
-      "alle Abend brennt sie,"
-      "doch mich vergaß sie lang."
-      "Und sollte mir ein Leids gescheh'n,"
-      "Wer wird bei der Laterne stehn"
-      "|: mit dir, Lili Marleen? :| "
-      \vspace #Absatz
-      "5. Aus dem stillen Raume,"
-      "aus der Erden Grund"
-      "hebt mich wie im Traume"
-      "dein verliebter Mund."
-      "Wenn sich die späten Nebel drehn,"
-      "werd' ich bei der Lanterne stehn"
-      "|: wie einst, Lili Marlen'. :| "
-    }
-  }
+
+"lWir ziehen über die Straßen" = \lyricmode {
+  \set stanza = #"1. "
+  Wir zie -- hen ü -- ber die Stras -- sen
+  im schwe -- ren fes- ten Tritt,
+  und ü -- ber uns die Fah -- ne,
+  sie knallt und flat -- tert mit.
+  Trum, trum, di -- ri, hei, di -- ri -- di -- ri di -- ri -- di -- ri dum! dum!
 }
 
-"Vom Barette schwankt die Feder" = \markup
-{
-  \fill-line
-  {
-    \left-column {
-      "2. Unsre Linke an dem Schwerte,"
-      "in der Rechten einen Spieß,"
-      "kämpfen wir, so weit die Erde,"
-      "bald für das und bald für dies."
-      "Ja |: dies und das, Suff und Fraß"
-      "muß ein, ja muß ein""Landsknecht haben.:|"
-      \vspace #Absatz
-      "3. Ruhm und Beute zu gewinnen,"
-      "zieh'n wir mutig in die Schlacht;"
-      "einmal müssen wir von hinnen"
-      "lustig drum bei Tag und Nacht."
-      "Bei |: Nacht und Tag, was er mag,"
-      "muß ein, ja muß ein""Landsknecht haben.:|"
-    }
-    \left-column {
-      "4. Landsknechtleben, lustig Leben,"
-      "in der Schenk' bei Tag und Nacht!"
-      "Sitzt ein fader Kerl daneben,"
-      "der nicht singt und der nicht lacht."
-      "Ja |: schmeißt in raus, reines Haus,"
-      "muß ein, ja muß ein""Landsknecht haben! :|"
-      \vspace #Absatz
-      "5. Sollte ich einst liegen bleiben"
-      "in der blutdurchtränkten Schlacht,"
-      "sollt ihr uns ein Kreuzlein schreiben"
-      "über dem tiefen, dunklen Schacht."
-      "Mit |: Trommelspiel, Pfeifen viel"
-      "sollt ihr mich begraben.:|"
-    }
-  }
+"lLili Marleen" = \lyricmode {
+  \set stanza = #"1. "
+  Vor der Ka -- ser -- ne,
+  vor dem gros -- sen Tor
+  stand ei -- ne La -- ter -- ne
+  und steht sie noch da -- vor,
+  so woll'n wir da uns wie -- der seh'n
+  bei der La -- ter -- ne wolln wir steh'n
+  wie einst, Li -- li Mar -- leen,
+  wie einst, Li -- li Mar -- leen.
+  -leen.
 }
 
-"MusterLiedtext" = \markup
-{
-  \fill-line
-  {
-    \left-column {
 
-    }
-    \left-column {
-
-    }
-  }
+"lVom Barette schwankt die Feder" = \lyricmode {
+  \set stanza = #"1. "
+  Vom Ba -- ret -- te schwankt -- _ die -- _  Fe --  der,
+  wiegt und biegt -- _ im -- _ Win -- de sich.
+  Un -- ser Wams von Büf -- _ fel -- _ le -- der
+  ist   zer -- fetzt von Hieb und Stich.
+  Ja
+\override Lyrics.VerticalAxisGroup.staff-affinity = #DOWN
+  Stich und Hieb __  und ein Lieb __
+  muß ein, ja muß ein Lands -- knecht ha -- ben.
 }
 
-"MusterLiedtext" = \markup
-{
-  \fill-line
-  {
-    \left-column {
 
-    }
-    \left-column {
+"lVom Barette schwankt die Feder2" = \lyricmode {
+  \override LyricText.font-size = #smallerNoteHead
+  Stich und Hieb
+}
 
-    }
-  }
+
+"lLili Marleenx" = \lyricmode {
+
+}
+
+
+"lLili Marleenx" = \lyricmode {
+
 }
