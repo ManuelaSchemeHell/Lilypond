@@ -1,6 +1,9 @@
 \version "2.19.37"
 \language "deutsch"
 Absatz=#0.5
+smallerNoteHead= #-1.5
+KommSingMit=\markup { \italic "Komm sing mit 2" }
+
 \include "Lyrics.ly"
 \include "Melody.ly"
 \include "Chords.ly"
@@ -53,6 +56,10 @@ FootLeft = #(string-append "gesetzt mit LILYPOND " (lilypond-version) " am " (st
     \override RehearsalMark.self-alignment-X = #LEFT
     \override RehearsalMark.outside-staff-priority=##f
     \override RehearsalMark.extra-offset = #'(-3 . 4)
+    startRepeatType = #"|"
+    endRepeatType = #":|"
+    doubleRepeatType = #":|:"
+    beamExceptions = #'()
   }
   \context {
     \ChordNames
@@ -64,6 +71,7 @@ FootLeft = #(string-append "gesetzt mit LILYPOND " (lilypond-version) " am " (st
     \Voice
     \override NoteCollision.merge-differently-dotted = ##t
     \override NoteCollision.merge-differently-headed = ##t
+    beamExceptions = #'()
   }
 }
 \markuplist \table-of-contents \pageBreak
@@ -175,17 +183,20 @@ FootLeft = #(string-append "gesetzt mit LILYPOND " (lilypond-version) " am " (st
   \header {
     title = "Wir ziehen über die Straßen"
     composer = "Wort und Weise: Robert Götz (1892-1978)"
+    piece = "Komm sing mit 2"
+    opus = "S. 300"
   }
 }
 \"Wir ziehen über die Straßen"
 
-%mystring="Lili Marleen"
+
+mystring="Lili Marleen"
 \score
 {
   <<
     \context Staff="leadsheet"
     <<
-      \tocItem \markup "Lili Marleen"
+      \tocItem \markup #mystring
       <<
         \context Voice="melody" { \"mLili Marleen1" }
         \context Voice="tiefer" { \"mLili Marleen2" }
@@ -196,9 +207,48 @@ FootLeft = #(string-append "gesetzt mit LILYPOND " (lilypond-version) " am " (st
     \context ChordNames {  \"cLili Marleen" }
   >>
   \header {
-    title = "Lili Marleen"
+    title = #mystring
     poet = "Worte: Hans Leip"
-   composer = "Weise: Norbert Schultze, 1940"
+    composer = "Weise: Norbert Schultze, 1940"
+    piece = #KommSingMit
+    opus = "S. 305"
   }
 }
 \"Lili Marleen"
+
+mystring="Vom Barette schwankt die Feder"
+%#'()
+%myvoiceII=#(ly:parser-include-string (string-append "\\" "m" mystring "2"))
+
+\score
+{
+  <<
+    \new Staff="leadsheet" \with {
+
+
+    }
+    <<
+      \tocItem \markup #mystring
+      <<
+        \context Voice="melody" { \"mVom Barette schwankt die Feder1" }
+        \context Voice="tiefer" { \"mVom Barette schwankt die Feder2" }
+      >>
+      \new Lyrics \with { alignAboveContext = "leadsheet"
+       \override LyricText.outside-staff-priority = ##f
+      \override LyricText.padding = #3
+      }
+      \lyricsto "melody" { \"lVom Barette schwankt die Feder" }
+         \new Lyrics \with { alignBelowContext = "leadsheet" }
+      \lyricsto "tiefer" { \"lVom Barette schwankt die Feder2" }
+    >>
+    \context ChordNames {  \"cVom Barette schwankt die Feder" }
+  >>
+  \header {
+    title = #mystring
+    poet = ""
+    composer = "Landsknechtlied"
+    piece = #KommSingMit
+    opus = "S. 296"
+  }
+}
+\"Vom Barette schwankt die Feder"
