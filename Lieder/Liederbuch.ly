@@ -246,7 +246,7 @@ mystring="Vom Barette schwankt die Feder"
   \header {
     title = #mystring
     poet = "Text: Heinrich Ritter von Reder, 1824-1909"
-    composer = "Melodie: Heinz Thum, 1914"
+    composer = "Melodie: Heinz Thum (1890-?), 1914"
     piece = #KommSingMit
     opus = "S. 296"
   }
