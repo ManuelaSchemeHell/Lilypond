@@ -3,6 +3,7 @@
 Absatz=#0.5
 smallerNoteHead= #-1.5
 KommSingMit=\markup { \italic "Komm sing mit 2" }
+myFont=#"MS Mincho"
 
 \include "Lyrics.ly"
 \include "Melody.ly"
@@ -20,7 +21,7 @@ FootLeft = #(string-append "gesetzt mit LILYPOND " (lilypond-version) " am " (st
   ragged-bottom = ##t
   bottom-margin = 25\mm
   indent = #0
-  line-width = 140\mm
+  line-width = 150\mm
   #(include-special-characters)
   print-all-headers = ##t
   % system-system-spacing.minimum-distance = #60 %50
@@ -40,7 +41,7 @@ FootLeft = #(string-append "gesetzt mit LILYPOND " (lilypond-version) " am " (st
     explicitClefVisibility = #end-of-line-invisible
     explicitKeySignatureVisibility = #end-of-line-invisible
     %\consists Mark_engraver
-    \override StaffSymbol.thickness = #0.35 %0.3=optimaler wert
+    \override StaffSymbol.thickness = #0.5 %0.3=optimaler wert
     \override DynamicLineSpanner.staff-padding = #3
     % \set Beam.autoBeaming = ##f
     %\remove System_start_delimiter_engraver
@@ -66,6 +67,10 @@ FootLeft = #(string-append "gesetzt mit LILYPOND " (lilypond-version) " am " (st
     chordNameLowercaseMinor = ##f
     majorSevenSymbol = \markup { maj7 }
     chordChanges = ##f
+    \override ChordName.font-name = \myFont
+    \override ChordName.font-series = #'bold
+    \germanChords
+    alignAboveContext = #"leadsheet"
   }
   \context {
     \Voice
@@ -224,8 +229,6 @@ mystring="Vom Barette schwankt die Feder"
 {
   <<
     \new Staff="leadsheet" \with {
-
-
     }
     <<
       \tocItem \markup #mystring
@@ -233,22 +236,55 @@ mystring="Vom Barette schwankt die Feder"
         \context Voice="melody" { \"mVom Barette schwankt die Feder1" }
         \context Voice="tiefer" { \"mVom Barette schwankt die Feder2" }
       >>
-      \new Lyrics \with { alignAboveContext = "leadsheet"
-       \override LyricText.outside-staff-priority = ##f
-      \override LyricText.padding = #3
-      }
-      \lyricsto "melody" { \"lVom Barette schwankt die Feder" }
-         \new Lyrics \with { alignBelowContext = "leadsheet" }
-      \lyricsto "tiefer" { \"lVom Barette schwankt die Feder2" }
+      \new Lyrics \with {
+        alignBelowContext = "leadsheet"
+      } \lyricsto "melody" { \"lVom Barette schwankt die Feder" }
+
+      \new Lyrics \with {
+        alignBelowContext = "leadsheet"
+      } \lyricsto "tiefer" { \"lVom Barette schwankt die Feder2" }
     >>
     \context ChordNames {  \"cVom Barette schwankt die Feder" }
   >>
   \header {
     title = #mystring
-    poet = "Text: Heinrich Ritter von Reder, 1824-1909"
-    composer = "Melodie: Heinz Thum (1890-?), 1914"
+    poet = ""
+    composer = "Landsknechtlied"
     piece = #KommSingMit
     opus = "S. 296"
   }
+
 }
+
 \"Vom Barette schwankt die Feder"
+\pageBreak
+mystring="Das Schönste auf der Welt"
+
+\score
+{
+  <<
+    \new Staff="leadsheet" \with {
+    }
+    <<
+      \tocItem \markup #mystring
+      <<
+        \context Voice="melody" { \"mDas Schönste auf der Welt1" }
+        \context Voice="tiefer" { \"mDas Schönste auf der Welt2" }
+      >>
+      \new Lyrics \with {
+        alignBelowContext = "leadsheet"
+      } \lyricsto "melody" { \"lDas Schönste auf der Welt" }
+    >>
+    \context ChordNames {  \"cDas Schönste auf der Welt" }
+  >>
+  \header {
+    title = #mystring
+    poet = "aus Tirol"
+    composer = "Volkslied"
+    piece = #KommSingMit
+    opus = "S. 294"
+  }
+  \layout { line-width = 150\mm }
+}
+
+\"Das Schönste auf der Welt"
