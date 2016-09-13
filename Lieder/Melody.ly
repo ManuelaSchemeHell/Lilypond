@@ -1,4 +1,15 @@
 smallerNoteHead= #-1.5
+slurShifts=
+#(define-music-function (amount offsets)
+   (pair? pair?)
+   #{
+     \once \override Slur.positions =
+     #(lambda (grob)
+        `(,(+ (car offsets) (cdar (ly:slur::calc-control-points grob))) .
+           ,(+ (cdr offsets) (cdr (cadddr (ly:slur::calc-control-points grob))))))
+     \once \override Voice.Slur.extra-offset = $amount
+   #}
+   )
 
 "mHoch auf dem gelben Wagen" =
 \relative c' {
@@ -164,29 +175,84 @@ voltaItalicThree = \markup { \text \fontsize #4 "5." }
   \slurDotted \slurDashed
   d4 ( d8 ) e\noBeam d4 c h a g \breathe d \bar "||"
   \slurSolid
-  g2 g h4 ( a g fis ) e2 e
+  \bar ".|:" \stemUp
+  g2 g
+  \slurShifts   #'(0 . 2) #'(-1 . -1)
+  h4^( a g fis ) e2 e
+  \slurShifts   #'(0 . 0.5) #'(-1 . -2)
+  a4^( h c a )
+  h2 h4. h8 h4 c d h
+  \slurShifts   #'(0 . 0.5) #'(-1 . -2)
+  c^( d c d ) h2 r \bar ":|."
 }
 
 "mVom Barette schwankt die Feder2" =
 \relative c'' {
   \autoBeamOff
   \key g \major
-  \stemDown
+  \stemDown \slurDown
   \override NoteHead.font-size = #smallerNoteHead
   \override Flag.font-size = #smallerNoteHead
   s1 * 8 g4 d g d
+  \shiftOff
+  g d
+  \slurShifts  #'(0 . -1) #'(-1.5 . 1)
+  g ( d )
+  e h
+  \slurShifts  #'(0 . -1) #'(-1.5 . 1)
+  e( h ) e
+  h e ( fis )
+  g2 g4. g8
+  g4 a h g
+  %\once \override Voice.Slur.extra-offset =#'(0 . 1)
+  \slurShifts  #'(0 . 1) #'(1 . 0)
+  a ( d, e fis ) g2
 }
 
-"mMusterLied" =
-\relative c' {
-  \autoBeamOff
-  \key f \major
+"mVom Barette schwankt die Feder3" =
+\relative c'' {
+  \key g \major
+  \stemUp
+  s1 * 8  \slurSolid
+  g2 g h4 ( a g fis ) e2 e
 }
 
-"mMusterLied" =
-\relative c' {
+"mDas Schönste auf der Welt1" =
+\relative c'' {
   \autoBeamOff
-  \key f \major
+  \key c \major \stemUp \slurUp
+  \partial 4
+  g4 c,4. e8 e4. g8
+  g2. g4 g4. g8 a4 g d2 h'4\rest c,
+  h4. d8 d4. h'8 h4. ( a8 ) h4 a g4. g8 a4 g e2 h'4\rest
+  g8. e16 c8. c16 c8. c16 c4 c8. e16
+  g8. g16 g8. g16 g4 c h4. h8 a4 h c h4\rest h4\rest g \bar ".|:"
+  \repeat volta 2 {
+    c4. c8 c c d c
+    a4 f' d c h4. h8 h h a h
+  }
+  \alternative {
+    { c4 h8 a g4 \breathe g8 g \bar ":|." }
+    { c2 h4\rest }
+  } \bar "|."
+}
+
+"mDas Schönste auf der Welt2" =
+\relative c'' {
+  \autoBeamOff
+  \key c \major
+  \partial 4
+  \stemDown \shiftOff \slurDown
+  g4  c,4. e8 e4. g8
+  g2. g4
+  \override NoteHead.font-size = #smallerNoteHead
+  \override Flag.font-size = #smallerNoteHead
+  e4. e8 f4 e h2 s4 c
+  h4. d8 d4. d8 d4. ( c8 ) d4 f e4. e8 f4 e c2 s4
+  g'8. e16 c8. c16 c8. c16 c4 c8. e16
+  g8. g16 g8. g16 e4 e g4. g8 f4 g e s s g
+  e4. e8 e e f e f4 a f a
+  g4. g8 g g f g e4 g8 f e4 g8 g e2
 }
 
 "mMusterLied" =
