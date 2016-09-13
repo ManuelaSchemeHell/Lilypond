@@ -14,3 +14,11 @@ sik = "SIK"
 (string-append "\\\"c" mu sik "\""))
 >>
 }
+
+mystring="Vom Barette schwankt die Feder"
+
+#(ly:parser-include-string
+(string-append "\"m" mystring "\"")) = { c d e }
+
+#(ly:parser-include-string
+(string-append "\\\"m" mystring "\""))
