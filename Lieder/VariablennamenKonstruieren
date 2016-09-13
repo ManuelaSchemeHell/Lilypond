@@ -17,8 +17,10 @@ sik = "SIK"
 
 mystring="Vom Barette schwankt die Feder"
 
+%% definieren der Variable "mVom Barette schwankt die Feder" (mit Hochkomma als Teil des Namens!)
 #(ly:parser-include-string
 (string-append "\"m" mystring "\"")) = { c d e }
 
+%% abrufen der Variablen "mVom Barette schwankt die Feder" : \"mVom Barette schwankt die Feder" 
 #(ly:parser-include-string
 (string-append "\\\"m" mystring "\""))
