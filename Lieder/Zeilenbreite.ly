@@ -22,3 +22,25 @@
 { \override #'(line-width . 50)
 \fill-with-pattern #1 #RIGHT . 50 right
 }
+
+\header {
+  title = "My title"
+  myText = "Lorem ipsum dolor sit amet, consectetur adipisicing
+    elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+    aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+    laboris nisi ut aliquip ex ea commodo consequat."
+}
+
+\paper {
+  bookTitleMarkup = \markup {
+    \column {
+      \fill-line { \fromproperty #'header:title }
+      \null
+      \justify-field #'header:myText
+    }
+  }
+}
+
+\markup {
+  \null
+}
