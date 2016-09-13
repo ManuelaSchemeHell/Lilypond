@@ -1,0 +1,16 @@
+\version "2.19.38"
+
+"cMUSIK" = \relative {
+  c' d e f g2 g
+}
+
+mu = "MU"
+
+sik = "SIK"
+
+\score {
+\new Staff <<
+#(ly:parser-include-string 
+(string-append "\\\"c" mu sik "\""))
+>>
+}
