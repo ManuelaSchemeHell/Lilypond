@@ -83,22 +83,39 @@
 
 "lVom Barette schwankt die Feder" = \lyricmode {
   \set stanza = #"1. "
-  Vom Ba -- ret -- te schwankt die Fe -- der,
-  wiegt und biegt im Win -- de sich.
-  Un -- ser Wams von Büf -- fel -- le -- der
-  ist zer -- fetzt von Hieb und Stich.
-  Ja Stich und Hieb und Stich und Hieb und ein Lieb und ein Lieb
-  muß ein, ja muß ein Lands -- knecht ha -- ben.
+  Vom Ba -- ret -- te schwankt -- _ die -- _  Fe --  der,
+  wiegt und biegt -- _ im -- _ Win -- de sich.
+  Un -- ser Wams von Büf -- _ fel -- _ le -- der
+  ist   zer -- fetzt von
+  %\override LyricText.extra-offset = #'(0 . 5)
+  %\override LyricHyphen.extra-offset = #'(0 . 5)
+  Hieb und Stich.
+  Ja
+  %\override LyricText.extra-offset = #'(0 . 13.5)
+  %\override LyricExtender.extra-offset = #'(0 . 13.5)
+  Stich und Hieb __  und ein Lieb __
+  %\override LyricText.extra-offset = #'(0 . 4)
+  %\override LyricHyphen.extra-offset = #'(0 . 4)
+  %\override LyricExtender.extra-offset = #'(0 . 4)
+  muß ein, ja muß ein Lands -- knecht ha --  ben.
+}
+
+"lVom Barette schwankt die Feder2" = \lyricmode {
+  \override LyricText.font-size = #smallerNoteHead
+  Stich und Hieb und Stich und Hieb __ und ein Lieb __ und ein Lieb __
 }
 
 
-"lLili Marleenx" = \lyricmode {
-
-}
-
-
-"lLili Marleenx" = \lyricmode {
-
+"lDas Schönste auf der Welt" = \lyricmode {
+  \set stanza = #"1. " Das Schöns -- te auf der Welt
+  ist mein Ti -- ro -- ler -- land,
+  mit sei -- nen stei -- len Hö -- hen,
+  mit sei -- ner Fel -- sen -- wand.
+  \set stanza = #"1.-5." Hol -- la -- ri -- a, hol -- la -- ro,
+  hol -- la -- ri -- a, hol -- la -- ro
+  hoch dro -- ben auf der Alm.
+  Ti -- ro -- ler -- land, wie bist du schön, so schön
+  wer weiß, ob wir uns wie -- der -- sehn
 }
 
 
