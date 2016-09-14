@@ -44,3 +44,42 @@
 \markup {
   \null
 }
+
+\markup
+{ \hspace #10
+      \override #'(line-width . 300) 
+ 
+    \line {
+      
+      \column {
+      
+          "2. Ubi sunt qui ante nos"
+          "in mundo fuere?"
+          "vadite ad superos"
+          "transite ad inferos"
+          "ubi iam fuere."
+      " "
+          "3. Vita nostra brevis est,"
+          "brevi finietur,"
+          "venit mors velociter,"
+          "rapit nos atrociter"
+          "nemini parcetur!"  }
+\column {
+          "2. Sagt mir doch, wo trifft man an,"
+          "Die vor uns gewesen?"
+          "Schwingt euch auf zur Sternenbahn,"
+          "Geht hinab zu Charons Kahn,"
+          "Wo sie längst gewesen!"
+          " "
+          "3. Kurz ist unsre Lebenszeit,"
+          "Sie vergeht geschwinde;"
+          "Unter Sorgen, Müh’ und Streit"
+          "Schwindet Jugend-Fröhlichkeit,"
+          "Wie der Rauch vom Winde."
+        
+        }
+      }
+   } 
+   
+  
+	
