@@ -30,52 +30,6 @@ myTitel="Bergvagabunden"
 \chordmode {
   g1 g d:7 g c g d:7 g c g d:7 g
 }
-%% Text
-#(ly:parser-include-string (string-append "\"" myTitel "\"")) =
-\markup {
-  \fill-line {
-    \hspace #0.1 % moves the column off the left margin;
-    % can be removed if space on the page is tight
-    \column {
-      \line {
-        \bold "2."
-        \column {
-          "Mit Seil und Haken, alles zu wagen,"
-          "hängen wir an der steilen Wand."
-          "Herzen erglühen, Edelweiß blühen,"
-          "vorbei geht´s mit sicherer Hand."
-        }
-      }
-      \vspace #Absatz
-      \line {
-        \bold "3."
-        \column {
-          "Fels ist bezwungen, frei atmen Lungen,"
-          "ach, wie so schön ist die Welt."
-          "Handschlag, ein Lächeln," "Mühen vergessen,"
-          "alles aufs Beste bestellt."
-        }
-      }
-    }
-    \hspace #0.1 % adds horizontal spacing between columns;
-    \column {
-      \line {
-        \bold "4."
-        \column {
-          "Beim Alpenglühen" "heimwärts wir ziehen,"
-          "Berge, die leuchten so rot."
-          "Wir kommen wieder," "denn wir sind Brüder,"
-          "Brüder auf Leben und Tod."
-          "Lebt wohl ihr Berge," "sonnige Höhen,"
-          "Bergvagabunden sind treu."
-        }
-      }
-
-    }
-    \hspace #0.1 % gives some extra space on the right margin;
-    % can be removed if page space is tight
-  }
-}
 
 %% Song Lyrics
 #(ly:parser-include-string (string-append "\"l" myTitel "a\"")) = \lyricmode {
@@ -141,4 +95,47 @@ myTitel="Bergvagabunden"
 
 }
 %% Songtext
-#(ly:parser-include-string (string-append "\\\"" myTitel "\""))
+\markup {
+  \fill-line {
+    \hspace #0.1 % moves the column off the left margin;
+    % can be removed if space on the page is tight
+    \column {
+      \line {
+        \bold "2."
+        \column {
+          "Mit Seil und Haken, alles zu wagen,"
+          "hängen wir an der steilen Wand."
+          "Herzen erglühen, Edelweiß blühen,"
+          "vorbei geht´s mit sicherer Hand."
+        }
+      }
+      \vspace #Absatz
+      \line {
+        \bold "3."
+        \column {
+          "Fels ist bezwungen, frei atmen Lungen,"
+          "ach, wie so schön ist die Welt."
+          "Handschlag, ein Lächeln," "Mühen vergessen,"
+          "alles aufs Beste bestellt."
+        }
+      }
+    }
+    \hspace #0.1 % adds horizontal spacing between columns;
+    \column {
+      \line {
+        \bold "4."
+        \column {
+          "Beim Alpenglühen" "heimwärts wir ziehen,"
+          "Berge, die leuchten so rot."
+          "Wir kommen wieder," "denn wir sind Brüder,"
+          "Brüder auf Leben und Tod."
+          "Lebt wohl ihr Berge," "sonnige Höhen,"
+          "Bergvagabunden sind treu."
+        }
+      }
+
+    }
+    \hspace #0.1 % gives some extra space on the right margin;
+    % can be removed if page space is tight
+  }
+}
