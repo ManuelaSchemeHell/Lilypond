@@ -1,5 +1,5 @@
 \version "2.19.37"
-\version "2.19.37"
+
 \language "deutsch"
 Absatz=#0.5
 smallerNoteHead= #-1.5
