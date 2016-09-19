@@ -1,0 +1,20 @@
+=== Melodie ===
+<score vorbis="1">
+\relative es' {\key as \major \time 3/4
+\partial 4 es | as4. g8 as4 | c, f4. es8 | des4. g8 f4 | es2 r4 | des4. g8 f4 | es2 f4 | es4. c'8 as4 | es2 es4 |
+as4. g8 as4 | c, f4. es8 | des4. g8 f4 | es2 r4 | des4. g8 f4 | des'2 g,4 | as2. ~ | as4 r es |
+f2 des'4 | des2 des4 | c4. c8 c4 | as2 as4 | bes4. bes8 bes4 | g2 es4 | c'4. c8 c4 | as2 es4
+f2 des'4 | des2 des4 | c4. c8 c4 | as2 as4 | bes4. bes8 bes4 | es2 g,4 | as2. ~ | as4 r \bar "|."
+}
+\addlyrics {
+Kann schinn -- ’rn Baam gippt’s, wie dann Vu -- gl -- bär -- baam,
+Vu -- gl -- bär -- baam, ann Vu -- gl -- bär -- baam.
+As wärd a su lächt nett ann schinn -- ’rn Baam gahm,
+schinn -- ’rn Baam gahm, ei ja,
+ei ja, ei ja, ann Vu -- gl -- bär -- baam,
+ann Vu -- gl -- bär -- baam,
+ann Vu -- gl -- bär -- baam,
+ei ja, ei ja, ann Vu -- gl -- bär -- baam,
+ann Vu -- gl -- bär -- baam, ei ja.
+}
+</score>
