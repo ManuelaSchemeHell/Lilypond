@@ -14,3 +14,4 @@ markuplist \index
 \indexSection #"N" \markup { "Schlemmerlieder" }
 \indexSection #"O" \markup { "Beim Bauer" }
 \indexSection #"P" \markup { "Tanz" }
+\indexSection #"Q" \markup { "Schnurren" }
