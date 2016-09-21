@@ -1,0 +1,74 @@
+\version "2.19.24"
+
+#(define part-first-pages '(0))
+
+#(define (part-first-page? layout props)
+  (= (chain-assoc-get 'page:page-number props -1)
+     (ly:output-def-lookup layout 'first-page-number)))
+
+#(define (print-part-first-page-as-one layout props arg)
+
+  (if (part-first-page? layout props)
+      (set! part-first-pages
+            (cons (1- (chain-assoc-get 'page:page-number props -1))
+                  part-first-pages)))
+
+  (set! props
+    (cons
+      (list
+        (cons 'page:page-number-string
+              (number->string
+                (- (chain-assoc-get 'page:page-number props -1)
+                   (car part-first-pages))))
+        (cons 'page:page-number
+              (- (chain-assoc-get 'page:page-number props -1)
+                 (car part-first-pages))))
+      props))
+     
+  (interpret-markup layout props arg))
+
+\paper {
+  oddHeaderMarkup = \markup
+  \fill-line {
+    " "
+    \on-the-fly #not-part-first-page \fromproperty #'header:instrument
+   
+    \on-the-fly #print-page-number-check-first
+      \on-the-fly #print-part-first-page-as-one
+      \fromproperty #'page:page-number-string
+  }
+ 
+  evenHeaderMarkup = \markup
+  \fill-line {
+    \on-the-fly #print-page-number-check-first
+      \on-the-fly #print-part-first-page-as-one
+      \fromproperty #'page:page-number-string
+    \on-the-fly #not-part-first-page \fromproperty #'header:instrument
+    " "
+  }
+}
+
+%%%%%%%%%%%%%%%%%%
+%% EXAMPLE
+%%%%%%%%%%%%%%%%%%
+
+#(set-default-paper-size "a6")
+
+\book {
+  \bookpart {
+    \markup "first bookpart"
+    \repeat unfold 3 { c''1 \pageBreak }
+  }
+  \bookpart {
+    \markup "second bookpart"
+    \repeat unfold 2 { d''1 \pageBreak }
+  }
+  \bookpart {
+    \markup "third bookpart"
+    \repeat unfold 4 { e''1 \pageBreak }
+  }
+  \bookpart {
+    \markup "fourth bookpart"
+    \repeat unfold 5 { f''1 \pageBreak }
+  }
+}
