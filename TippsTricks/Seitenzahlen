@@ -1,3 +1,4 @@
+%% http://www.lilypondforum.de/index.php?topic=2045.msg11255
 \version "2.19.24"
 
 #(define part-first-pages '(0))
