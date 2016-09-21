@@ -1,0 +1,74 @@
+%% http://www.lilypondforum.de/index.php?topic=1393.msg7673#msg7673
+
+\version "2.16.2"
+
+#(set-default-paper-size "a6")
+
+% Hier können die Ausnahmen eingetragen werden:
+% Format: (<seite> . (<x-offset> <y-offset>)
+#(define folio-offset '(
+    (3 . (-2 . 1))      ; Seite 3 um 2 nach links und 1 nach oben
+    (4 . (-3 . -4))    ; Seite 4 um 3 nach links und 4 nach unten
+))
+
+#(define-markup-command (place-folio layout props folio) (markup?)
+   (let* ((nn (ly:output-def-lookup layout 'page:page-number-string))
+         (pageno (chain-assoc-get 'page:page-number props))
+         (offs (assoc-get pageno folio-offset '(0 . 0)))
+         (m (interpret-markup layout props  (markup folio)))
+         (x-ext (ly:stencil-extent m X))
+         (y-ext (ly:stencil-extent m Y)))
+   (interpret-markup layout props
+     (markup
+        #:box   ; nur zum Test - dann auskommentieren!
+        #:with-dimensions x-ext y-ext
+        #:line (#:translate offs folio)
+       ))))
+
+\paper {
+  indent = 0
+  ragged-right = ##f
+  oddHeaderMarkup = \markup \fill-line { \place-folio \fromproperty #'page:page-number-string \null }
+  evenHeaderMarkup = \markup \fill-line { \null \place-folio \fromproperty #'page:page-number-string }
+  oddFooterMarkup = \markup \column{
+    \fill-line {
+      \on-the-fly #first-page { \fromproperty #'header:copyright }
+    }
+    \fill-line {
+      \on-the-fly #not-first-page { \fromproperty #'header:tagline  }
+    }
+  }
+}
+
+\header {
+  copyright = "Copyright-Text"
+  tagline = "Tagline-Text"
+}
+
+{ \repeat unfold 10 { s1 \pageBreak } }
+
+%% Harms Anmerkungen
+
+#(define-markup-command (place-folio layout props folio) (markup?)
+   (let* (
+;; `nn´ wird nicht benutzt. Kann man streichen
+         (nn (ly:output-def-lookup layout 'page:page-number-string))
+         (pageno (chain-assoc-get 'page:page-number props))
+         (offs (assoc-get pageno folio-offset '(0 . 0)))
+;; (markup folio) ist m.E. überflüssig. `folio´ reicht
+         (m (interpret-markup layout props  (markup folio)))
+         (x-ext (ly:stencil-extent m X))
+         (y-ext (ly:stencil-extent m Y)))
+   (interpret-markup layout props
+     (markup
+        #:box   ; nur zum Test - dann auskommentieren!
+;; Der Trick with-dimensions in dieser Art und Weise zu benutzen ist klasse.
+;; Er war mir nicht geläufig und ich habe eine gewisse Zeit gebraucht ihn
+;; zu verstehen.
+        #:with-dimensions x-ext y-ext
+;; \line ist eigentlich auch überflüssig, da der einzige Vorteil \line zu benutzen
+;; im Ausschluß von empty-stencil liegt
+;; Das wird in der Regel aber auch von \fill-line und/oder \column geleistet bzw von #not-first-page etc
+;; Ich würde es aber der Robustheit wegen auch drin lassen.
+        #:line (#:translate offs folio)
+       ))))
