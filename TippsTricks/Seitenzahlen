@@ -1,4 +1,6 @@
 %% http://www.lilypondforum.de/index.php?topic=2045.msg11255
+%% http://lilypond.org/doc/v2.19/Documentation/notation/custom-titles-headers-and-footers
+
 \version "2.19.24"
 
 #(define part-first-pages '(0))
