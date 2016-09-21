@@ -1,0 +1,68 @@
+%% http://lists.gnu.org/archive/html/lilypond-user/2010-08/msg00403.html
+
+\version "2.13.30"
+
+\paper {
+  print-first-page-number = ##t
+  oddHeaderMarkup = \markup {
+    \column {
+      \fill-line {
+        \line { }
+        \line {
+          Page
+          \on-the-fly #print-page-number-check-first
+          \fromproperty #'page:page-number-string
+          of \concat { \page-ref #'lastPage "0" "?" }
+        }
+      }
+    }
+  }
+  evenHeaderMarkup = \markup {
+    \column {
+      \fill-line {
+        \line { }
+        \line {
+          Page
+          \on-the-fly #print-page-number-check-first
+          \fromproperty #'page:page-number-string
+          of \concat {\page-ref #'lastPage "0" "?"}
+        }
+      }
+    }
+  }
+  oddFooterMarkup = \markup {
+    \column {
+      \fill-line {
+        \line { }
+        \line {
+          Page
+          \on-the-fly #print-page-number-check-first
+          \fromproperty #'page:page-number-string
+          of \concat {\page-ref #'lastPage "0" "?"}
+        }
+      }
+    }
+  }
+  evenFooterMarkup = \markup {
+    \column {
+      \fill-line {
+        \line { }
+        \line {
+          Page
+          \on-the-fly #print-page-number-check-first
+          \fromproperty #'page:page-number-string
+          of \concat {\page-ref #'lastPage "0" "?"}
+        }
+      }
+    }
+  }
+}
+
+music = {
+  \repeat unfold 250 { c''1 }
+  \label #'lastPage
+}
+
+\score {
+ \music
+}
