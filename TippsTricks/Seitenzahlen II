@@ -1,0 +1,46 @@
+%% http://lists.gnu.org/archive/html/lilypond-user/2016-01/msg00161.html
+
+\version "2.18.2"
+% produce a pagenumber with full pagenumber: n / m
+% rough idea sketch by Jan-Peter Voigt
+
+
+% record the highest pagenumber
+#(define-markup-command (record-page-num layout props sym)(symbol?)
+   (let ((pn (ly:chain-assoc-get 'page:page-number props 0)) ; current page number
+          (smn (if (defined? sym) (eval sym (current-module)) 0))) ; current stored value
+     ; max pagenumber | stored value
+     (if (and (integer? pn)(> pn smn)) (set! smn pn))
+     ; set variable
+     (module-define! (current-module) sym smn)
+     ; report pagenumber for debugging
+     (ly:message "page ~A" smn)
+     )
+   ; this an empty markup
+   empty-stencil)
+
+% get the stored value delayed
+#(define-markup-command (get-delayed layout props sym)(symbol?)
+   ; provide space for the delayed value like in table of contents
+   (let* ((gauge-stencil (interpret-markup layout props "123"))
+          (x-ext (ly:stencil-extent gauge-stencil X))
+          (y-ext (ly:stencil-extent gauge-stencil Y)))
+
+     ; produce delayed stencil
+     (ly:make-stencil
+      `(delay-stencil-evaluation
+        ,(delay (ly:stencil-expr ; this will be run, when all pages are calculated
+                 (interpret-markup layout props (format "~A" (eval sym (current-module))))
+                 )))
+      x-ext y-ext)
+     ))
+
+\paper {
+  oddFooterMarkup = \markup {
+    \record-page-num #'pn \fromproperty #'page:page-number-string
+    /
+    \get-delayed #'pn % This will be one page high!
+  }
+}
+
+\relative c'' \repeat unfold 4 { \repeat unfold 240 c4 \pageBreak }
