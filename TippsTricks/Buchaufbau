@@ -1,0 +1,157 @@
+%http://www.lilypondforum.de/index.php?topic=678.msg3692#msg3692
+
+\version "2.12.3"  % Lily-Version
+#(set-global-staff-size 20)  % Die Zeilengröße für das Dokument angeben.
+#(set-default-paper-size "a4")  % Papierformat und -ausrichtung für das Dokument angeben.
+
+% Jetzt Variablen definieren, die im gesamten Dokument verwendet werden sollen.
+myTitle = "Zwei Etüden"
+mySubtitle = "für das Pianoforte zu drei Händen"
+myDedication = "Meiner Klavierlehrerin in tiefster Abneigung gewidmet."
+myComposer = "Ano Nymus"
+
+% Hier können auch schon die Variablen mit den Noten kommen;
+% alternativ in Dateien auslagern und an dieser Stelle per \include einbinden.
+EtuedeEinsGlobal = { Tonart, Takt, Taktstriche, Umbrüche etc. für erstes Stück }
+EtuedeEinsNotenRH = { Noten für die rechte Hand bzw. obere Zeile des ersten Stücks }
+EtuedeEinsNotenLH = { Noten für die linke Hand bzw. untere Zeile des ersten Stücks }
+
+EtuedeZweiGlobal = { Tonart, Takt, Taktstriche, Umbrüche etc. für zweites Stück }
+EtuedeZweiNotenRH = { Noten für die rechte Hand bzw. obere Zeile des zweiten Stücks }
+EtuedeZweiNotenLH = { Noten für die linke Hand bzw. untere Zeile des zweiten Stücks }
+
+% JETZT NEHMEN WIR DAS BUCH AUS DEM REGAL:
+\book {
+  % Welche gemeinsamen Seiteneinstellungen hat das BUCH?
+  % (Format, Ausrichtung und staff size sind schon auf oberster Ebene definiert.)
+  \paper {
+    left-margin = 2\cm
+    line-width = 17\cm
+    ragged-last-bottom = ##f
+    first-page-number = #-1  % Titelblatt = -1, dann [leere] Rückseite = 0, dann erst Seite "1"
+    % optional globales even[/odd]Header[/Footer]Markup
+    % falls Fonts umdefiniert werden: hier! (myStaffSize = ... #(define fonts ...) etc.)
+  }
+
+  % Welche gemeinsamen Header-Optionen sollen für das BUCH gelten?
+  \header {
+    tagline = ##f
+    breakbefore = ##t  % Titel auf einer neuen Seite beginnen
+  }
+
+% JETZT BETRACHTEN WIR DIE VORDERSEITE DES BUCHES (1. BUCHTEIL: Titelblatt):
+  \bookpart {
+    \markup \abs-fontsize #20 \fill-line {
+      \center-column {
+        \myComposer
+        \myTitle
+        \mySubtitle
+      }
+    }
+
+    % abweichende Seiteneinstellungen für diesen bookpart:
+    \paper {
+      oddHeaderMarkup = \markup { \null }
+      evenHeaderMarkup = \markup { \null }
+      oddFooterMarkup = \markup { \null }
+      evenFooterMarkup = \markup { \null }
+    }
+  }
+
+% JETZT SCHLAGEN WIR DAS BUCH AUF (2. BUCHTEIL: [leere] Titelblattrückseite):
+  \bookpart {
+    \markup { \null }  % leeres Markup, sonst keine Ausgabe; kann stattdessen auch Herausgeberhinweise, Vorwort u.ä. enthalten
+    \paper {
+      oddHeaderMarkup = \markup { \null }
+      evenHeaderMarkup = \markup { \null }
+      oddFooterMarkup = \markup { \null }
+      evenFooterMarkup = \markup { \null }
+    }
+  }
+
+% JETZT ENDLICH KOMMT DAS ERSTE MUSIKSTÜCK (3. BUCHTEIL: Etüde I):
+  \bookpart {
+    \paper {
+      % abweichende Seiteneinstellungen für aktuellen bookpart
+    }
+
+    \header {  % Kopfdaten für aktuellen \bookpart-Block
+      dedication = \myDedication
+      title = "Etüde I"
+      subtitle = \markup { "aus" \myTitle \mySubtitle }
+      composer = \myComposer
+    }
+
+    \score {  % Partiturdefinition
+      \context PianoStaff = "Klavier"
+      <<
+        \context Staff = "rechte Hand" << \EtuedeEinsGlobal \EtuedeEinsNotenRH >>
+        \context Staff = "linke Hand" << \EtuedeEinsGlobal \EtuedeEinsNotenLH >>
+      >>
+
+      \layout {  % Notenlayout für aktuellen \score-Block; erzeugt Notenausgabe
+        indent = #0
+      }
+    }
+  }
+
+% JETZT KOMMT NOCH DAS ZWEITE MUSIKSTÜCK (4. BUCHTEIL: Etüde II):
+  \bookpart {
+    \paper {
+      % abweichende Seiteneinstellungen für aktuellen bookpart
+    }
+
+    \header {  % Kopfdaten für aktuellen \bookpart-Block
+      dedication = \myDedication
+      title = "Etüde II"
+      subtitle = \markup { "aus" \myTitle \mySubtitle }
+      composer = \myComposer
+    }
+
+    \score {  % Partiturdefinition
+      \context PianoStaff = "Klavier"
+      <<
+        \context Staff = "rechte Hand" << \EtuedeZweiGlobal \EtuedeZweiNotenRH >>
+        \context Staff = "linke Hand" << \EtuedeZweiGlobal \EtuedeZweiNotenLH >>
+      >>
+
+      \layout {  % Notenlayout für aktuellen \score-Block; erzeugt Notenausgabe
+        indent = #0
+      }
+    }
+  }
+
+% MITTLERWEILE HABEN WIR (angenommen) 6 SEITEN UND BRAUCHEN NOCH 2 FÜR EINE 8-SEITEN-BROSCHÜRE (letzter BUCHTEIL: Blindseiten):
+  \bookpart {
+    \markup { \null } \pageBreak \markup { \null }  % leeres Markup, sonst keine Ausgabe
+    \paper {
+      oddHeaderMarkup = \markup { \null }
+      evenHeaderMarkup = \markup { \null }
+      oddFooterMarkup = \markup { \null }
+      evenFooterMarkup = \markup { \null }
+    }
+  }
+
+% MIDI-AUSGABE FEHLT NOCH!
+% (benötigt keinen eigenen \bookpart, sollte aber innerhalb von \book stehen)
+% 2 \score-Blöcke für je 1 MIDI-Datei pro Stück
+  \score {  % definiert MIDI-Partitur #1
+    \context PianoStaff = "Klavier"
+      <<
+        \context Staff = "rechte Hand" << \EtuedeEinsGlobal \unfoldRepeats \EtuedeEinsNotenRH >>
+        \context Staff = "linke Hand" << \EtuedeEinsGlobal \unfoldRepeats \EtuedeEinsNotenLH >>
+      >>
+
+    \midi { }  % erzeugt MIDI-Datei #1
+  }
+
+  \score {  % definiert MIDI-Partitur #2
+    \context PianoStaff = "Klavier"
+      <<
+        \context Staff = "rechte Hand" << \EtuedeZweiGlobal \unfoldRepeats \EtuedeZweiNotenRH >>
+        \context Staff = "linke Hand" << \EtuedeZweiGlobal \unfoldRepeats \EtuedeZweiNotenLH >>
+      >>
+
+    \midi { }  % erzeugt MIDI-Datei #2
+  }
+}
