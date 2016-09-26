@@ -1,0 +1,357 @@
+%% http://www.lilypondforum.de/index.php?topic=1040.msg7745#msg7745
+
+\version "2.16.0"
+
+% Thanks to Jan-Peter Vogt
+% http://old.nabble.com/v2.15.24%3A-void-%2C-scheme--or-music-function-in-toc-section--td33144901.html
+
+% Code taken from toc-init.ly and modified
+% see also: http://lsr.dsi.unimi.it/LSR/Item?id=763
+
+\pointAndClickOff
+
+#(use-modules (srfi srfi-1))
+
+#(define (delete-eq-cdr lst)
+        "In einer Liste von Listen werden Einträge gelöscht,
+  falls der cdr des (aufeinanderfolgenden) Listenelements identisch ist.
+  eg. '((a 1 2 3)
+        (b 1 2 3)
+        (c 1 2 3)
+        (d 2 3 4))
+       
+   -> '((c 1 2 3)
+        (d 2 3 4))
+ "
+        (fold-right (lambda (elem ret)
+                  (if (equal? (cdr elem) (cdr (first ret)))
+                      ret
+                      (cons elem ret)))
+          (list (last lst))
+          lst))
+         
+% nach: http://lsr.dsi.unimi.it/LSR/Snippet?id=464
+
+#(define-markup-command (columns layout props text) (markup?)
+  (let* ((text-rev (if (string? text)
+                       text
+                       (markup->string text)))
+         (arg (if (= (string-length text-rev) 1)
+                  (string-append text-rev "#")
+                  text-rev))
+         (args (string-split arg #\#))
+         ;; currently not used!
+         (line-width (/ (chain-assoc-get 'line-width props
+                (ly:output-def-lookup layout 'line-width))
+              (max (length args) 1))))
+        (interpret-markup layout props
+          (make-line-markup (map (lambda (line)
+                         (markup
+                           ;#:box
+                           #:pad-to-box `(0 . 31) '(0 . 2)
+                           #:override `(50 . 50)
+                           line))
+                 args)))))
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% CUSTOMTOC
+
+#(define-public (add-customtoc-item! markup-symbol text . lab)
+  #f)
+#(define-public (customtoc-items)
+  #f)
+
+#(let ((customtoc-item-list (list)))
+     (set! add-customtoc-item!
+       (lambda (markup-symbol text . lab)
+               (let ((label (if (> (length lab) 0) (car lab) (gensym "customtoc"))))
+                    (set! customtoc-item-list
+                      (cons (list label markup-symbol text)
+                            customtoc-item-list))
+                    (make-music 'EventChord
+                      'page-marker #t
+                      'page-label label
+                      'elements (list (make-music 'LabelEvent
+                              'page-label label))))))
+     (set! customtoc-items (lambda ()
+               (reverse customtoc-item-list))))
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% ABCTOC
+
+#(define-public (add-abctoc-item! markup-symbol text . lab) #f)
+#(define-public (abctoc-items) #f)
+
+#(let ((abctoc-item-list (list)))
+     (set! add-abctoc-item!
+       (lambda (markup-symbol text . lab)
+               (let ((label (if (> (length lab) 0) (car lab) (gensym "abctoc"))))
+                    (set! abctoc-item-list
+                      ;; We insert index items sorted from the beginning on and do
+                      ;; not sort them later - this saves pretty much computing time
+                      (insert-alphabetical-sorted! (list label markup-symbol text)
+                        abctoc-item-list))
+                    (make-music 'EventChord
+                      'page-marker #t
+                      'page-label label
+                      'elements (list (make-music 'LabelEvent
+                              'page-label label))))))
+     (set! abctoc-items (lambda ()
+               abctoc-item-list)))
+
+#(define (insert-alphabetical-sorted! iitem ilist)
+        (if
+          (null? ilist) (list iitem)
+          (if
+            (string-ci<? (caddr iitem) (caddr (car ilist))) (cons iitem ilist)
+            (cons (car ilist) (insert-alphabetical-sorted! iitem (cdr ilist))))))
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% INDEX
+
+#(define-public (add-index-item! markup-symbol text . lab) #f)
+#(define-public (index-items) #f)
+
+#(let ((index-item-list (list)))
+     (set! add-index-item!
+       (lambda (markup-symbol text . lab)
+               (let ((label (if (> (length lab) 0) (car lab) (gensym "index"))))
+                    (set! index-item-list
+                      ;; We insert index items sorted from the beginning on and do
+                      ;; not sort them later - this saves pretty much computing time
+                      (delete-eq-cdr (insert-alphabetical-sorted! (list label markup-symbol text)
+                          index-item-list)))
+                    (make-music 'EventChord
+                      'page-marker #t
+                      'page-label label
+                      'elements (list (make-music 'LabelEvent
+                              'page-label label))))))
+     (set! index-items (lambda ()
+               index-item-list)))
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% PAPER
+
+\paper {
+  customTocTitleMarkup = \markup  \column {
+    \vspace #2
+    \fill-line { \null \fontsize #5  "Inhaltsverzeichnis" \null }
+    \vspace #3
+  }
+  customTocItemMarkup = \markup { \hspace #6 \large \override #'(line-width . 100) \fill-line {
+      \fromproperty #'customtoc:text 
+      \fromproperty #'customtoc:page
+    }
+  }
+ 
+ 
+  abctocTitleMarkup = \markup \column {
+    \vspace #2
+    \fill-line { \null \fontsize #5 "Alphabetisches Inhaltsverzeichnis" \null }
+    \vspace #3
+  }
+  abcTocItemMarkup = \markup { \hspace #6 \large \override #'(line-width . 100) \fill-line {
+      \fromproperty #'abctoc:text
+      \fromproperty #'abctoc:page
+    }
+  }
+ 
+  indexTitleMarkup = \markup \column {
+    \vspace #2
+    \fill-line { \null \fontsize #5 "Alphabetischer Index" \null }
+    \vspace #3
+  }
+  indexItemMarkup = \markup { \hspace #6 \large \override #'(line-width . 100) \fill-line {
+      \fromproperty #'index:text
+      \fromproperty #'index:page }
+    \hspace #5
+  }
+  indexSectionMarkup = \markup { \hspace #6 \override #'(baseline-skip . 1) \column  {
+      \vspace #0.7
+      \fill-line { \bold \fontsize #3 \fromproperty #'index:text \null }
+      \null
+    }
+  }
+ 
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% custom-table-of-contents
+
+#(define-markup-list-command (custom-table-of-contents layout props) ()
+  ( _i "Outputs the table of contents, using the paper variable
+@code{tocTitleMarkup} for its title, then the list of lines
+built using the @code{tocItem} music function
+Usage: @code{\\markuplist \\table-of-contents}" )
+  (cons (interpret-markup layout props
+          (ly:output-def-lookup layout 'customTocTitleMarkup))
+        (space-lines (chain-assoc-get 'baseline-skip props)
+          (map (lambda (customtoc-item)
+                       (let ((label (car customtoc-item))
+                             (customtoc-markup (cadr customtoc-item))
+                             (text (caddr customtoc-item)))
+                            (interpret-markup
+                              layout
+                              (cons (list (cons 'customtoc:page
+                                            (markup #:with-link label #:page-ref label "XXX" "?"))
+                                          (cons 'customtoc:text (markup #:with-link label #:columns text))
+                                          (cons 'customtoc:label label))
+                                    props)
+                              (ly:output-def-lookup layout customtoc-markup))))
+               (customtoc-items)))))
+               
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% abc-table-of-contents
+
+#(define-markup-list-command (abc-table-of-contents layout props) ()
+  ( _i "Outputs an alphabetical sorted index, using the paper
+  variable @code{indexTitleMarkup} for its title, then the list of
+  lines built using the @code{indexItem} music function
+  Usage: @code{\\markuplist \\index}" )
+  (cons (interpret-markup layout props
+          (ly:output-def-lookup layout 'abctocTitleMarkup))
+        (space-lines (chain-assoc-get 'baseline-skip props)
+          (map (lambda (abctoc-item)
+                       (let ((label (car abctoc-item))
+                             (abctoc-markup (cadr abctoc-item))
+                             (text (caddr abctoc-item)))
+                            (interpret-markup
+                              layout
+                              (cons (list (cons 'abctoc:page
+                                            (markup #:with-link label #:page-ref label "XXX" "?"))
+                                          (cons 'abctoc:text (markup #:with-link label #:columns text))
+                                          (cons 'abctoc:label label)
+                                    )
+                                    props)
+                              (ly:output-def-lookup layout abctoc-markup))))
+               (abctoc-items)))))
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% index
+
+#(define-markup-list-command (index layout props) ()
+  ( _i "Outputs an alphabetical sorted index, using the paper
+  variable @code{indexTitleMarkup} for its title, then the list of
+  lines built using the @code{indexItem} music function
+  Usage: @code{\\markuplist \\index}" )
+  (cons (interpret-markup layout props
+          (ly:output-def-lookup layout 'indexTitleMarkup))
+        (space-lines (chain-assoc-get 'baseline-skip props)
+          (map (lambda (index-item)
+                       (let ((label (car index-item))
+                             (index-markup (cadr index-item))
+                             (text (caddr index-item)))
+                            (interpret-markup
+                              layout
+                              (cons (list (cons 'index:page
+                                            (markup #:with-link label #:page-ref label "XXX" "?"))
+                                          (cons 'index:text (markup #:with-link label #:columns text))
+                                          (cons 'indextoc:label label)
+                                    )
+                                    props)
+                              (ly:output-def-lookup layout index-markup))))
+               (index-items)))))
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%{
+abcTocItem =
+#(define-music-function (parser location text) (markup?)
+  "Add a line to the alphabetical table of content,
+    using the @code{abcTocItemMarkup} paper variable markup."
+  (let* ((new-text (if (string? text)
+                       text
+                       (markup->string text))))
+        (add-abctoc-item! 'abcTocItemMarkup new-text)))
+
+indexItem =
+#(define-music-function (parser location text) (markup?)
+  "Add a line to the alphabetical index, using the @code{indexItemMarkup} paper variable markup."
+  (let* ((new-text (if (string? text)
+                       text
+                       (markup->string text))))
+        (add-index-item! 'indexItemMarkup new-text)))   
+
+indexSection =
+#(define-music-function (parser location text) (markup?)
+  "Add a section line to the alphabetical index, using @code{indexSectionMarkup} paper variable
+   markup. This can be used to divide the alphabetical index into different sections,
+   one section for each first letter."
+  (let* ((new-text (if (string? text)
+                       text
+                       (markup->string text))))
+        (add-index-item! 'indexSectionMarkup new-text)))
+
+customTocItem =
+#(define-music-function (parser location text) (markup?)
+  "Add a line to the table of content,
+    using the @code{customTocItemMarkup} paper variable markup."
+  (let* ((new-text (if (string? text)
+                       text
+                       (markup->string text))))
+        (add-customtoc-item! 'customTocItemMarkup new-text)))
+%}
+
+indexItems =
+#(define-music-function (parser location text) (markup?)
+  (let* ((text-rev (if (string? text)
+                       text
+                       (markup->string text)))
+         
+         (args (string-split text-rev #\#))
+         (initial (string-upcase (substring (car args) 0 1)))
+         (label (gensym "index-item")))
+        (add-abctoc-item! 'abcTocItemMarkup text-rev label)
+        (add-index-item! 'indexItemMarkup text-rev label)
+        (add-index-item! 'indexSectionMarkup initial label)
+        (add-customtoc-item! 'customTocItemMarkup text-rev label)))
+
+% ------- test
+
+mus = { \key c\minor \time 2/4 r8 g'[ g' g'] ees'2 }
+
+\book {
+  \bookpart {
+    \markuplist
+    %\markuplist  % 2.15.24
+    \custom-table-of-contents
+            }
+  \bookpart {
+    \markuplist
+    %\markuplist  % 2.15.24
+    \abc-table-of-contents
+            }
+  \bookpart {
+    \indexItems "Symphony No. 5#Ludwig van Beethoven"
+    \new Staff { \mus }
+            }
+    \bookpart {
+    \indexItems "Te Deum#M.A. Charpentier"
+    \new Staff \mus
+            }
+    \bookpart {
+    \indexItems "Concerto#A. Vivaldi"
+    \new Staff \mus
+            }
+    \bookpart {
+    \indexItems "Magnificat#J.S. Bach"
+    \new Staff \mus
+            }
+    \bookpart {
+    \indexItems "Stabat Mater#Pergolesi"
+    \new Staff \mus
+            }
+    \bookpart {
+    \indexItems "Cosi fan tutte#W.A. Mozart"
+    \new Staff \mus
+  }
+  \bookpart {
+    \indexItems "Alphabetischer Index"   
+    \markuplist
+    %\markuplist % 2.15.24
+    \index
+  }
+}
