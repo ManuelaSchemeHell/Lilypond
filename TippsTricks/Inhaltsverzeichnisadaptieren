@@ -1,0 +1,100 @@
+%http://www.lilypondforum.de/index.php?topic=1040.msg8502#msg8502
+
+\version "2.14.2"
+
+% With 2.16.0 use:
+
+% #(define (my-format- args)
+%   "Works since 2.16.0"
+%   (let* ((lngth (length args))
+%          (fake-args (append args (make-list 10 "x")))
+%          (mrkp
+%               #{
+%               	\markup {
+%               	         \override #'(font-name . "Comic Sans MS") #(list-ref fake-args 0)
+%               	         \fontsize #4 \with-color #red             #(list-ref fake-args 1)
+%               	         \scale #'(2 . 1)                          #(list-ref fake-args 2)
+%               	         \rotate #45 	                   #(list-ref fake-args 3)
+%               	         \rotate #45                               #(list-ref fake-args 4)
+%               	         \rotate #45                               #(list-ref fake-args 5)
+%               	         \rotate #45                               #(list-ref fake-args 6)
+%               	         \rotate #45                               #(list-ref fake-args 8)
+%               	}
+%               #})
+%          (new-mrkp #{ \markup #(list-head (cadr mrkp) lngth) #}))
+%   new-mrkp))
+ 
+% With 2.14.2 use:
+
+#(define (my-format args)
+"Works with 2.14.2"
+  (let* ((lngth (length args))
+         (fake-args (append args (make-list 10 "x")))
+         (mrkp (markup
+              	         #:override '(font-name . "Comic Sans MS")  (list-ref fake-args 0)
+              	         #:fontsize 4 #:with-color red              (list-ref fake-args 1)
+              	         #:scale '(2 . 1)                           (list-ref fake-args 2)
+              	         #:rotate 45 	                    (list-ref fake-args 3)
+              	         #:rotate 45                                (list-ref fake-args 4)
+              	         #:rotate 45                                (list-ref fake-args 5)
+              	         #:rotate 45                                (list-ref fake-args 6)
+              	         #:rotate 45                                (list-ref fake-args 8)))
+         (new-mrkp (make-line-markup (list-head (cadr mrkp) lngth))))
+  new-mrkp))
+
+myTocItem =
+#(define-music-function (parser location text) (markup?)
+   "Add a line to the table of content, using the @code{tocItemMarkup} paper
+variable markup"
+   (let* ((text-args (cadr text))
+          (new-text (my-format text-args)))
+   (add-toc-item! 'tocItemMarkup new-text)))
+
+\paper {
+        tocItemMarkup = \tocItemWithDotsMarkup
+        tocTitleMarkup = \markup {
+        		\fontsize #6
+        		\bold
+        		\column {
+        		        \fill-line { \null "INHALTSVERZEICHNIS" \null }
+        		        \vspace #2
+        		}
+        }
+}
+
+\book {
+  \bookpart {
+          \markup \fill-line { \fontsize #6 "TITEL" }
+  % Titelseite
+  }
+ 
+  \bookpart {
+          \markup
+              \fill-line {
+          	    \center-column
+          	            \override-lines #'(line-width . 80)
+          	            \override-lines #'(baseline-skip . 5)
+          	            \table-of-contents
+          }
+  % Inhaltsverzeichnis
+  }
+ 
+  \bookpart {
+         
+    \header {
+      title = "Titel"
+      subtitle = "Subtitle"
+      composer = "Composer"
+    }
+    % book-header
+   
+    \myTocItem \markup { " I." "Pavana" "a 3" }
+    \score { \new Staff { c''1 } }
+    %Pavane 1
+   
+    \myTocItem \markup { "II." "Pavana" "a 4"}
+    \score { \new Staff { cis''1 } }
+    %Pavane 2
+
+  }
+}
