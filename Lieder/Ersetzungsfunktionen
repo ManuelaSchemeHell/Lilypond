@@ -10,9 +10,12 @@ secondverse
 thirdverse
 songchords
 
-keine regular Expression
+keine regular Expression!!!
 "^p%% Voice 1^pfirstvoice =
-
+wird ersetzt durch
 ")
 %% Voice 1
 #(define firstvoice #{ 
+
+myTitel="
+#(define myTitel "
