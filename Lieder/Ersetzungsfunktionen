@@ -10,6 +10,11 @@ secondverse
 thirdverse
 songchords
 
+Titelschluss+firstvoice als regular Ex:
+
+"^p^%^% Voice 1^pfirstvoice =
+
+
 keine regular Expression!!!
 "^p%% Voice 1^pfirstvoice =
 wird ersetzt durch
