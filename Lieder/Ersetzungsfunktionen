@@ -10,3 +10,9 @@ secondverse
 thirdverse
 songchords
 
+keine regular Expression
+"^p%% Voice 1^pfirstvoice =
+
+")
+%% Voice 1
+#(define firstvoice #{ 
