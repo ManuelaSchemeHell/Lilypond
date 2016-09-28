@@ -13,7 +13,8 @@ songchords
 Titelschluss+firstvoice als regular Ex:
 
 "^p^%^% Voice 1^pfirstvoice =
-
+oder
+"^p^%^% *^pfirstvoice =
 
 keine regular Expression!!!
 "^p%% Voice 1^pfirstvoice =
