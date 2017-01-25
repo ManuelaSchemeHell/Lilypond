@@ -4,6 +4,8 @@ Tonleiter = \relative c' { c1 d e f g a b }
 {
 \new Staff {
 \override Staff.BarLine.stencil = ##f
+\override Score.BarNumber.stencil = ##f
+\override Staff.TimeSignature.stencil = ##f
 \set Staff.explicitKeySignatureVisibility = #end-of-line-invisible
 \override Staff.KeyCancellation.break-visibility = #center-visible
 \mark "C-Dur"
@@ -16,4 +18,12 @@ Tonleiter = \relative c' { c1 d e f g a b }
 \key d \major
 \transpose c d \Tonleiter
 }
+\layout {
+  indent = #0
+  ragged-last-bottom = ##t
+  ragged-right= ##t
+  ragged-last = ##t
+ragged-bottom = ##t
+}
+
 }
