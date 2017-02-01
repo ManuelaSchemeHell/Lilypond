@@ -6,6 +6,7 @@ Tonleiter = \relative c' { c1 d e f g a b }
 \override Staff.BarLine.stencil = ##f
 \override Score.BarNumber.stencil = ##f
 \override Staff.TimeSignature.stencil = ##f
+\override Score.RehearsalMark.X-offset = #1
 \set Staff.explicitKeySignatureVisibility = #end-of-line-invisible
 \override Staff.KeyCancellation.break-visibility = #center-visible
 \mark "C-Dur"
