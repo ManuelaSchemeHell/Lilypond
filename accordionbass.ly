@@ -111,7 +111,17 @@ summe= {
 	\context {
 \ChordNames
 chordNameExceptions = #chExceptions 
+chordChanges = ##f
   }
+  \context {
+\Staff
+printPartCombineTexts = ##f
+}
+\context {
+\Voice
+\override Rest.staff-position = #0
+}
+
   }
   
 }
