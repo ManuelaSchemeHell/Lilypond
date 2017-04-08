@@ -1,0 +1,41 @@
+\version "2.19.58" 
+\language "english" 
+%% http://lilypond.1069038.n5.nabble.com/Offset-beam-positions-td202065.html
+global = { 
+  \key e \minor 
+  \time 4/4 
+} 
+
+rightOne = \relative c'' { 
+  \global 
+  b16 as b cs as8. b16 b8 fs'16 cs! d8 as! | 
+} 
+
+rightTwo = \relative c'' { 
+  \global 
+  d,8 [cs~] \stemDown \tweak Beam.positions #'(-4.5 . -5.25) cs \change Staff = "left" \stemUp fs16 cs d8 as b8 fs'16 cs | 
+} 
+
+leftOne = \relative c' { 
+  \global 
+} 
+
+leftTwo = \relative c' { 
+  \global 
+  fs,8 e fs4 r2 | 
+} 
+
+pedal = \relative c { 
+  \global 
+   r2 r8 fs fs4-\parenthesize \mordent | 
+} 
+
+\score { 
+  << 
+    \new PianoStaff \with { \override StaffGrouper.staff-staff-spacing.padding = #3 } << 
+      \new Staff = "right" << \rightOne \\ \rightTwo >> 
+      \new Staff = "left" { \clef bass << \leftOne \\ \leftTwo >> } 
+    >> 
+    \new Staff = "pedal" { \clef bass \pedal } 
+  >> 
+} 
