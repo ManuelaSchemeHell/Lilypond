@@ -10,7 +10,7 @@ toRestII =
      mus))
      
 %% r kann ich durch jede beliebige Note ersetzen, dann kriege ich nur eine Tonhöhe raus
-TestMusik=relative c' { c4 <d f>2 e8-3 f16 }
+TestMusik=relative c' { c4\sfz <d f>2\< e8-3\> f16\! }
 %\displayMusic
 \toRestII \TestMusik
 
