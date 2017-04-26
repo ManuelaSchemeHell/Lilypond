@@ -5,12 +5,14 @@ toRestII =
    (music-map
      (lambda (m)
        (if (music-is-of-type? m 'note-event)
-           #{ f $(ly:music-property m 'duration) #}
+           #{ r $(ly:music-property m 'duration) #}
            m))
      mus))
      
+%% r kann ich durch jede beliebige Note ersetzen, dann kriege ich nur eine Tonhöhe raus
+TestMusik=relative c' { c4 <d f>2 e8-3 f16 }
 %\displayMusic
-\toRestII \relative c' { c4 <d f>2 e8-3 f16 }
+\toRestII \TestMusik
 
 %% Nur Noten
 
